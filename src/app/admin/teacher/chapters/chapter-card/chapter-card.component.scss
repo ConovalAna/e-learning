@@ -1,0 +1,33 @@
+.subject-container {
+  height: 100%;
+  width: 100%;
+  background: white;
+  min-height: 3rem;
+  display: grid;
+  grid-gap: 8px;
+  grid-template-columns: 100%;
+}
+
+.subject-card-header-container {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.subject-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  word-break: break-word;
+  margin: 0;
+}
+
+.selected {
+  border-color: #1e8363;
+}
+
+.card:hover {
+  border-color: #2fb187;
+  cursor: pointer;
+}

@@ -1,0 +1,106 @@
+<div class="container mt-5" style="max-width: 1000px;">
+    <div class="row d-flex">
+        <div class="col-12 col-sm-4 d-flex justify-content-center">
+            <div class="rounded-circle overflow-hidden " style="height: 20vh; width: 20vh;">
+                <img _ngcontent-ylx-c26="" [src]="course.imageSrc" alt="mdo" class="  h-100">
+            </div>
+        </div>
+        <div class="col-12  col-sm-8 pt-3  px-3 ">
+            <h2>{{newcourse.name}}</h2>
+            <h6 class="text-muted">{{newcourse.longDescription}}</h6>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card shadow-sm p-3">
+                <div class="row">
+                    <div class="col-12 col-sm-4  col-md-2 align-self-center text-center">
+                        <circle-progress [percent]="85" [radius]="40" [outerStrokeWidth]="6"
+                            [outerStrokeColor]="'#78C000'" [animation]="true" [showSubtitle]="false"
+                            [titleFontSize]="'12'" [showInnerStroke]="false"
+                            [animationDuration]="300"></circle-progress>
+                    </div>
+                    <div class="col-12 col-sm-8 col-md-7 ">
+                        <p class="text-success lead">Course overview</p>
+                        <p class="text-muted ">
+                            <b>Achievements: </b>{{newcourse.achievements}}
+                            <br />
+                            <b>Requirements: </b>{{newcourse.requirements}}
+                        </p>
+                        <div class="row pb-2 pb-lg-0">
+                            <div class="col-6">Level:
+                                <i class="bi bi-star-fill" *ngFor="let star of [].constructor(newcourse.level);"></i>
+                                <i class="bi bi-star" *ngFor="let star of [].constructor(3-newcourse.level);"></i>
+                            </div>
+                            <div class=" col-6">
+                                <i class="bi bi-hourglass-split"></i> {{newcourse.duration}} h
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12   col-md-3 d-flex  flex-column  justify-content-center">
+                        <div class="row ">
+                            <div class="d-grid w-100 pb-2">
+                                <button class="btn btn-success btn-lg" (click)="openDetailsPage()">Open more
+                                    details</button>
+                            </div>
+                        </div>
+                        <div class=" row ">
+                            <div class=" d-grid w-100 ">
+                                <a class=" btn btn-outline-success btn-lg" href="/student/dashboard/summary">Join</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- extra progress bar -->
+                <!-- <hr />
+                <div class="flex-row justify-content-between align-items-center d-inline d-sm-flex">
+                    <strong class="me-4 ">Please join our course</strong>
+                    <div class="progress flex-grow-1">
+                        <div class="progress-bar bg-success" role="progressbar" aria-label="Success example"
+                            style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <a class="btn btn-success">Join</a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="row top-buffer" *ngFor="let model of sections; let isLast=last;">
+        <div class="col-2 align-self-center" style="position: relative;">
+            <div class=" d-flex justify-content-center m-auto align-items-center" alt="Avatar" data-bs-toggle="tooltip"
+                data-bs-placement="right" title="You pass {{model.pass}}% from this section">
+                <circle-progress [percent]="model.pass" [radius]="30" [outerStrokeWidth]="4"
+                    [outerStrokeColor]="'#78C000'" [space]="-5" [animation]="true" [showSubtitle]="false"
+                    [titleFontSize]="'12'" [showInnerStroke]="false" [animationDuration]="300"
+                    [imageSrc]="'assets/img/open-book-64.png'" [showImage]="true" [backgroundColor]="'#fff'"
+                    [innerStrokeWidth]="0" [imageHeight]="50" [imageWidth]="50" [backgroundPadding]="0">
+                </circle-progress>
+            </div>
+
+            <div class="vl" *ngIf="!isLast"></div>
+        </div>
+        <div class="col-10 ">
+            <div class="card rounded-3 shadow card-container" style=" box-sizing:border-box;"
+                [ariaDisabled]="model.block ? true : false">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row justify-content-between">
+                            <div class="col">
+                                <h5 class="card-title">{{model.title}}</h5>
+                                <p class="card-text">{{model.description}}</p>
+                            </div>
+                            <div class="col-auto align-self-center">
+                                <a href={{model.link}} class="btn btn-outline-primary"
+                                    [ariaDisabled]="model.block ? true : false">
+                                    <i class="bi bi-chevron-right" style="-webkit-text-stroke: 3px"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

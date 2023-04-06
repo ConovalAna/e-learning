@@ -1,0 +1,16 @@
+@import "../../../../sass/utilities.scss";
+
+.energy-badge {
+    font-size: 40px;
+    color: $orange-400;
+}
+
+.streak-badge {
+    font-size: 40px;
+    color: $red-500;
+}
+
+.league-badge {
+    font-size: 40px;
+    color: $blue-300;
+}

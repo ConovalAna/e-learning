@@ -1,0 +1,8 @@
+<div style="min-height: 100vh;" [id]="model.id">
+    <app-course-lesson-info *ngIf="model.type=='info'" [callbackFunction]="callbackFunction"
+        [model]="model"></app-course-lesson-info>
+    <app-course-lesson-right-answer *ngIf="model.type=='right-answer'" [callbackFunction]="callbackFunction"
+        [model]="model"></app-course-lesson-right-answer>
+    <app-course-lesson-input-answer *ngIf="model.type=='input-answer'" [callbackFunction]="callbackFunction"
+        [model]="model"></app-course-lesson-input-answer>
+</div>

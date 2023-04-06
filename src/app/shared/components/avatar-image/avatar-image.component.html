@@ -1,0 +1,10 @@
+<div class="avatar-div">
+  <img *ngIf="imageURL && imageURL !== ''" [src]="imageURL" alt="Avatar" class="avatar {{shape}}" />
+  <div class="edit-icon" *ngIf="isEditable">
+    <label class="edit-icon-label">
+      <input (change)="onFileSelected($event)" #fileUpload accept="image/*" name="image" class="image-input"
+        type="file" />
+      <i class="bi bi-pen" style="color: white"></i>
+    </label>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="album py-5">
+  <div class="container">
+    <div class="card-margin">
+      <div class="card search-form">
+        <div class="card-body p-0">
+          <div class="row no-gutters">
+            <div class="col-9 col-lg-11 pt-0 pe-1">
+              <input type="text" placeholder="Search..." class="form-control" id="search" name="search" />
+            </div>
+            <div class="col-3 col-lg-1 p-0">
+              <button type="submit" class="btn btn-light">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+      <div class="col" *ngFor="let course of courses">
+        <div class="card h-100 course-overview ">
+          <div class="embed-responsive">
+            <img alt="Card image cap" class="card-img-top "
+              src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg" />
+          </div>
+          <div class="card-body p-2">
+            <h6 class="card-title">{{ course.name }}</h6>
+            <small class="card-text modernWay">{{ course.shortDescription }}</small>
+          </div>
+          <div class="d-grid p-2" (click)="viewMoreClick(course.id)">
+            <button class="btn btn-primary" type="button">View more</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+aside {
+  border-right: solid 1px rgba(0, 0, 0, 0.12);
+  width: 25rem;
+  transition: width 0.2s ease-in-out;
+  height: 100%;
+  overflow: hidden;
+  overflow: auto;
+}
+
+main {
+  height: 100%;
+  overflow: hidden;
+}
+
+.course-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  height: 100%;
+  overflow: hidden;
+}

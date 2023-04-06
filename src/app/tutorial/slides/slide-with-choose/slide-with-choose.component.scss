@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.options {
+    position: relative;
+    display: flex;
+    margin-top: 20px;
+    padding: 8px 7px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background-color: white;
+}
+
+.options p {
+    margin: 0px;
+}
+
+.options input {
+    opacity: 0;
+}
+
+.options:hover {
+    background-color: rgb(215, 236, 245);
+}
+
+.options:has(:checked) {
+    background-color: rgb(16, 180, 250);
+}

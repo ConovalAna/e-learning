@@ -1,0 +1,72 @@
+<div class="container pt-5" style="max-width: 1000px;">
+    <div class="row">
+        <div class="col-auto ">
+
+            <div class="rounded-circle overflow-hidden " style="height: 30vh; width: 30vh;">
+                <img style="left:-15vh; position:relative;"
+                    [src]="'https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=50,format=auto/sources/images/actu/google-images-rechercher.jpg'"
+                    alt="mdo" class="h-100 ">
+            </div>
+        </div>
+        <div class="col">
+            <h2>Heading</h2>
+            <h5 class="text-muted">Donec sed odio dui.</h5>
+            <p> Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies
+                vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
+                cursus
+                magna.</p>
+        </div>
+    </div>
+    <div class="row top-buffer" *ngFor="let sectionDetails of model.sectionsDetails; let last = last;">
+        <div class="col-3 col-sm-2 pt-3">
+            <div class=" d-flex justify-content-center m-auto align-items-center" alt="Avatar" data-bs-toggle="tooltip"
+                data-bs-placement="right" title="You pass {{sectionDetails.pass}}% from this section">
+                <circle-progress [percent]="sectionDetails.pass" [radius]="30" [outerStrokeWidth]="4"
+                    [outerStrokeColor]="'#78C000'" [space]="-5" [animation]="true" [showSubtitle]="false"
+                    [titleFontSize]="'12'" [showInnerStroke]="false" [animationDuration]="300"
+                    [imageSrc]="'assets/img/open-book-64.png'" [showImage]="true" [backgroundColor]="'#fff'"
+                    [innerStrokeWidth]="0" [imageHeight]="50" [imageWidth]="50" [backgroundPadding]="0">
+                </circle-progress>
+            </div>
+            <div class="vl m-auto" *ngIf="!last"></div>
+        </div>
+        <div class="col-9 col-sm-10">
+            <div class="card rounded-3 shadow card-container" style=" box-sizing:border-box;">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row justify-content-between">
+                            <div class="col">
+                                <h5 class="card-title">{{sectionDetails.title}}</h5>
+                                <p class="card-text">{{sectionDetails.description}}</p>
+                            </div>
+                            <div class="col-auto align-self-center">
+                                <button class="btn btn-outline-primary" (click)="onClick(sectionDetails.index)"
+                                    clickable>
+                                    <i [class]="sectionDetails.isActive ? 'bi bi-chevron-up' :'bi bi-chevron-down' "
+                                        style="-webkit-text-stroke: 3px"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="sectionDetails.isActive">
+                            <div class="row mt-3">
+                                <hr>
+                            </div>
+                            <div class="row justify-content-between" *ngFor="let lesson of sectionDetails.lessons">
+
+                                <div class="col-1">
+                                    <i [class]="lesson.icon" style="font-size: large;"></i>
+                                </div>
+                                <div class="col" style="padding-left: 10px;">
+                                    <p>{{lesson.title}}</p>
+                                </div>
+                                <div class="col-auto fw-semibold" [ngClass]="lesson.pass>0? '':'text-muted'">
+                                    {{lesson.pass}}/{{lesson.total}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

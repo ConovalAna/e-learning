@@ -1,0 +1,35 @@
+<div class="p-4">
+    <div class="row gx-5 pb-4">
+        <div class="col-4">
+            <button mat-raised-button class="w-100 my-3" style="height: 6em"> <mat-icon
+                    style=" transform: scale(1.5);">add</mat-icon>
+                <span style="font-size: larger;">Add Slide</span>
+            </button>
+        </div>
+    </div>
+    <div class="row gx-4 gy-1">
+        <div class="col-4" *ngFor="let slide of slides">
+            <div class="card  mt-2 mb-3">
+                <div class="card-body">
+                    <div class="subject-container">
+                        <div class="subject-card-header-container d-flex justify-content-between">
+                            <h5 class="card-title">{{slide.name}}</h5>
+                            <button mat-icon-button [matMenuTriggerFor]="slidemenu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #slidemenu="matMenu">
+                                <button mat-menu-item>Edit</button>
+                                <button mat-menu-item>Hide</button>
+                                <button mat-menu-item>Delete</button>
+                            </mat-menu>
+                        </div>
+
+                        <div class="slide-view" style="height:10em">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+.step-icon {
+    font-size: 40px;
+}
+
+.step-icon-container {
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    border-style: solid;
+    border-color: #7cb2f3;
+    border-width: 3px;
+}
+
+.card-container {
+    border-width: 2px;
+}
+
+
+
+.vl {
+    border-left: 2px solid #cdcfd3;
+    height: 100px;
+    width: 1px;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: calc((100% / 2) - 12px) !important;
+    top: 65px;
+    text-align: center;
+}
+
+
+/* here the rules for small windows */
+@media (max-width: 700px) {
+    .card-container {
+        width: 100%;
+    }
+
+    .step-icon {
+        font-size: 30px;
+    }
+
+    .step-icon-container {
+        width: 50px;
+        height: 50px;
+    }
+
+    .vl {
+        height: 200px;
+        margin-top: 0px;
+        margin-left: 25px;
+        top: 50px;
+
+    }
+}
+
+
+.card-container:hover {
+    border-color: hsl(208, 21%, 57%);
+}
+
+.top-buffer {
+    margin-top: 40px;
+}
+
+a[aria-disabled="true"] {
+    color: #af183b;
+    display: none;
+}
+
+[aria-disabled="true"] {
+    background-color: #e4f0f6 !important;
+    pointer-events: none;
+    color: #4c4f8066;
+    border-color: #cdcfd3;
+}
+
+.custom-tooltip {
+    --bs-tooltip-bg: var(--bs-primary);
+}

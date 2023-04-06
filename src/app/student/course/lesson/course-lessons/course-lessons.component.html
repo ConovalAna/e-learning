@@ -1,0 +1,4 @@
+<div *ngFor="let lesson of model">
+    <app-course-lesson [callbackFunction]="myCallbackFunction" [model]="lesson"
+        *ngIf="lesson.pressedContinue"></app-course-lesson>
+</div>
