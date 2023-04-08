@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ILesson } from 'src/app/admin/shared/services/lesson';
+import { ILesson } from 'src/app/shared/services/lesson';
 
 @Component({
   selector: 'app-lesson-detail',

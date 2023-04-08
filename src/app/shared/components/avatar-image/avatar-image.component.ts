@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-avatar-image',
@@ -15,6 +16,9 @@ export class AvatarImageComponent implements OnInit {
   fileName = '';
   uploadForm: FormGroup;
 
+  public storage: Storage = inject(Storage);
+
+
   constructor(public fb: FormBuilder) {
     // Reactive Form
     this.imageURL = this.imageURL ?? "https://images.unsplash.com/photo-1554080353-a576cf803bda?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGhvdG98ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60";
@@ -26,6 +30,19 @@ export class AvatarImageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  uploadImagess(file: File) {
+    if (file) {
+      const storageRef = ref(this.storage, file.name);
+      uploadBytesResumable(storageRef, file);
+      getDownloadURL(ref(this.storage, file.name)).then((url) => {
+        console.log(url);
+      })
+        .catch((error) => {
+          // Handle any errors
+        });
+    }
   }
 
   onFileSelected(event: any) {
@@ -42,6 +59,6 @@ export class AvatarImageComponent implements OnInit {
       this.imageURL = reader.result as string;
     }
     reader.readAsDataURL(file)
-
+    this.uploadImagess(file);
   }
 }

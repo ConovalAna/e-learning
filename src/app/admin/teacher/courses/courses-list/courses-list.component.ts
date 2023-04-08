@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CourseService, ICourse } from '../../../shared/services/course';
+import { CourseService, ICourse } from 'src/app/shared/services/course';
 
 @Component({
   selector: 'app-courses-list',
@@ -10,13 +10,13 @@ import { CourseService, ICourse } from '../../../shared/services/course';
 export class CoursesListComponent {
   courses?: ICourse[];
 
-  courseClickFunction(courseId: number): void {
+  courseClickFunction(courseId: string): void {
     let selectedCourse = this.courses?.find(course => course.id === courseId);
     this.router.navigate(['/teacher/courses', selectedCourse?.id]);
   };
 
   constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService) {
-    this.courseService.getCourses().subscribe((fetchedCourses) => {
+    this.courseService.getAllCourses().subscribe((fetchedCourses) => {
       this.courses = fetchedCourses;
     })
   }

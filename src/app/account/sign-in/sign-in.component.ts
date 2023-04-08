@@ -11,7 +11,7 @@ import { UserFacade, UserRole } from 'src/app/state/users';
 export class SignInComponent implements OnInit {
 
   constructor(
-    private userService: UserFacade,
+    private userService: UserFacade               // Injects the default storage instance
   ) { }
 
   user$ = this.userService.user$;

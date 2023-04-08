@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CourseService } from './services/course';
-import { LessonService } from './services/lesson';
-import { SlideService } from './services/slide';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -12,6 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   exports: [],
-  providers: [CourseService, LessonService, SlideService]
+  providers: []
 })
-export class SharedModule { }
+export class AdminSharedModule { }

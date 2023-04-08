@@ -5,14 +5,28 @@ import { LessonService } from './services/lesson';
 import { SlideService } from './services/slide';
 import { HttpClientModule } from '@angular/common/http';
 import { AvatarImageComponent } from './components/avatar-image/avatar-image.component';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { environment } from 'src/enviorment/enviorment';
+import { CloudStorageService } from './services/firebase';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [AvatarImageComponent],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideStorage(() => {
+      console.log("test");
+      const storage = getStorage();
+      console.log(storage);
+
+      return storage;
+    }
+    ),
   ],
   exports: [AvatarImageComponent],
-  providers: [CourseService, LessonService, SlideService]
+  providers: [CourseService, LessonService, SlideService, CloudStorageService]
 })
 export class SharedModule { }

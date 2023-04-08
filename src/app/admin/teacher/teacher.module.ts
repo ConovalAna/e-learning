@@ -21,6 +21,11 @@ import { ChapterEditComponent } from './chapters/chapter-edit/chapter-edit.compo
 import { ChapterDetailsComponent } from './chapters/chapter-details/chapter-details.component';
 import { ChapterCardComponent } from './chapters/chapter-card/chapter-card.component';
 import { SharedModule } from '../../shared/shared.module';
+import { initializeApp } from 'firebase/app';
+import { environment } from 'src/enviorment/enviorment';
+import { getFirestore } from 'firebase/firestore';
+import { provideFirestore } from '@angular/fire/firestore';
+import { provideFirebaseApp } from '@angular/fire/app';
 
 @NgModule({
   declarations: [
@@ -45,7 +50,9 @@ import { SharedModule } from '../../shared/shared.module';
     CommonModule,
     TeacherRoutingModule,
     SharedModule,
-    SmartbyteMaterialModule
+    SmartbyteMaterialModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
   ]
 })
 export class TeacherModule { }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ICourse } from '../../../shared/services/course';
+import { ICourse } from 'src/app/shared/services/course';
 
 @Component({
   selector: 'app-courses-card',
@@ -8,7 +8,7 @@ import { ICourse } from '../../../shared/services/course';
 })
 export class CourseCardComponent {
   @Input() course?: ICourse;
-  @Output() onClickEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output() onClickEvent: EventEmitter<string> = new EventEmitter<string>();
 
   onClick() {
     this.onClickEvent.emit(this.course?.id);

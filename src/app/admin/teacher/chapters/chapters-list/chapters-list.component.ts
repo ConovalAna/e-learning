@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CourseService, IChapter } from 'src/app/admin/shared/services/course';
+import { CourseService, IChapter } from 'src/app/shared/services/course';
 
 @Component({
   selector: 'app-chapters-list',
