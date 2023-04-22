@@ -34,6 +34,8 @@ import { WeekChartComponent } from './student-profile/week-chart/week-chart.comp
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { SharedModule } from '../shared/shared.module';
+import { FooterComponent } from './footer/footer.component';
+import { FormsModule } from '@angular/forms';
 
 export function playerFactory(): any {
   return import('lottie-web');
@@ -58,7 +60,8 @@ export function playerFactory(): any {
     ProfileComponent,
     AchievementsComponent,
     CoursesComponent,
-    WeekChartComponent
+    WeekChartComponent,
+    FooterComponent
 
   ],
   imports: [
@@ -68,7 +71,8 @@ export function playerFactory(): any {
     NgCircleProgressModule.forRoot({}),
     NgChartsModule,
     LottieModule.forRoot({ player: playerFactory }),
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class StudentModule { }
