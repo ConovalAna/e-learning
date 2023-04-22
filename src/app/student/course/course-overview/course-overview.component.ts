@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ChapterService, IChapter } from 'src/app/shared/services/chapter';
 import { CourseService, ICourse } from 'src/app/shared/services/course';
 
 @Component({
@@ -10,11 +11,15 @@ import { CourseService, ICourse } from 'src/app/shared/services/course';
 export class CourseOverviewComponent implements OnInit {
 
   newcourse!: ICourse;
+  chapters!: IChapter[];
   courseId: string;
+  courseImage!: string;
 
-  constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService) {
+  constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService, private chapterService: ChapterService) {
 
     let courseRouteId = this.route.snapshot.paramMap.get('id');
+    //TODO update image 
+    this.courseImage = "https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=50,format=auto/sources/images/actu/google-images-rechercher.jpg";
 
     if (courseRouteId) {
       this.courseId = courseRouteId;
@@ -29,47 +34,17 @@ export class CourseOverviewComponent implements OnInit {
       console.log(fetchedCourses);
       console.log(this.newcourse);
     })
+
+    this.chapterService.getAllChapters(this.courseId).subscribe((fetchedChapters) => {
+      this.chapters = fetchedChapters;
+
+      console.log(fetchedChapters);
+      console.log(this.chapters);
+    })
   }
 
-
-  sections: any = [];
-  course: any;
   ngOnInit(): void {
-    this.sections = [
-      {
-        'title': 'Card title',
-        'description': 'With supporting text below as a natural lead-in to additional content.',
-        'link': 'https://getmimo.com/web/50/overview',
-        'block': false,
-        'pass': 100,
-      },
-      {
-        'title': 'Card title',
-        'description': 'With supporting text below as a natural lead-in to additional content.',
-        'link': 'https://getmimo.com/web/50/overview',
-        'block': false,
-        'pass': 13,
-      },
-      {
-        'title': 'Card title',
-        'description': 'With supporting text below as a natural lead-in to additional content.',
-        'link': 'https://getmimo.com/web/50/overview',
-        'block': true,
-        'pass': 0,
-      },
-      {
-        'title': 'Card title',
-        'description': 'With supporting text below as a natural lead-in to additional content.',
-        'link': 'https://getmimo.com/web/50/overview',
-        'block': true,
-        'pass': 0,
-      }
-    ];
-    this.course = {
-      imageSrc: "https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=50,format=auto/sources/images/actu/google-images-rechercher.jpg",
-      title: "Artificial inteligence",
-      shortDescription: "This is a longer card with supporting text below as a natural lead-in to additional content.",
-    }
+
   }
 
 
@@ -81,5 +56,11 @@ export class CourseOverviewComponent implements OnInit {
   joinTheCourse() {
 
   }
+
+  openChapterDetailsPage(chapterId: string) {
+    console.log(chapterId);
+    this.router.navigate(['chapter', chapterId], { relativeTo: this.route });
+  }
+
 
 }

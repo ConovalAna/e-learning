@@ -2,7 +2,7 @@
     <div class="row d-flex">
         <div class="col-12 col-sm-4 d-flex justify-content-center">
             <div class="rounded-circle overflow-hidden " style="height: 20vh; width: 20vh;">
-                <img _ngcontent-ylx-c26="" [src]="course.imageSrc" alt="mdo" class="  h-100">
+                <img _ngcontent-ylx-c26="" [src]="courseImage" alt="mdo" class="  h-100">
             </div>
         </div>
         <div class="col-12  col-sm-8 pt-3  px-3 ">
@@ -66,7 +66,7 @@
             </div>
         </div>
     </div>
-    <div class="row top-buffer" *ngFor="let model of sections; let isLast=last;">
+    <div class="row top-buffer" *ngFor="let model of chapters; let isLast=last;">
         <div class="col-2 align-self-center" style="position: relative;">
             <div class=" d-flex justify-content-center m-auto align-items-center" alt="Avatar" data-bs-toggle="tooltip"
                 data-bs-placement="right" title="You pass {{model.pass}}% from this section">
@@ -87,14 +87,14 @@
                     <div class="container">
                         <div class="row justify-content-between">
                             <div class="col">
-                                <h5 class="card-title">{{model.title}}</h5>
+                                <h5 class="card-title">{{model.name}}</h5>
                                 <p class="card-text">{{model.description}}</p>
                             </div>
                             <div class="col-auto align-self-center">
-                                <a href={{model.link}} class="btn btn-outline-primary"
+                                <button class="btn btn-outline-primary" (click)="openChapterDetailsPage(model.id)"
                                     [ariaDisabled]="model.block ? true : false">
                                     <i class="bi bi-chevron-right" style="-webkit-text-stroke: 3px"></i>
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>

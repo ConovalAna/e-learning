@@ -9,14 +9,14 @@ import { IChapter, ICourse } from './course.interface';
 export class CourseService {
     constructor(private http: HttpClient) { }
 
-    apiUrl = "https://localhost:44302/Course/";
+    apiUrl = "https://localhost:44302/Courses/";
 
     getAllCourses() {
         return this.http.get<ICourse[]>(this.apiUrl + "GetAllCourses");
     }
 
     getCourseById(id: string) {
-        return this.http.get<ICourse>(this.apiUrl + "GetCourseById/" + id);
+        return this.http.get<ICourse>(this.apiUrl + id);
     }
 
 

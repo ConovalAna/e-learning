@@ -39,7 +39,7 @@ const routes: Routes = [
             component: CourseSummaryComponent,
           },
           {
-            path: ':id/section',
+            path: ':id/chapter/:chapterId',
             component: CoursesSectionComponent,
           },
           {
