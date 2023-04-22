@@ -26,6 +26,7 @@ import { environment } from 'src/enviorment/enviorment';
 import { getFirestore } from 'firebase/firestore';
 import { provideFirestore } from '@angular/fire/firestore';
 import { provideFirebaseApp } from '@angular/fire/app';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { provideFirebaseApp } from '@angular/fire/app';
     ChapterCardComponent,
   ],
   imports: [
+    FormsModule,
     CommonModule,
     TeacherRoutingModule,
     SharedModule,

@@ -1,13 +1,15 @@
 export interface ICourse {
     id: string;
     name: string;
-    numberOfLessons: number;
-    longDescription: string;
+    imageUrl: string;
     shortDescription: string;
+    longDescription: string;
     duration: number;
-    level: number;
     requirements: string;
     achievements: string;
+    level: number;
+
+    numberOfLessons: number;
 }
 
 export interface IChapter {

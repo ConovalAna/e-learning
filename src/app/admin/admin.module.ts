@@ -6,13 +6,14 @@ import { SmartbyteMaterialModule } from '../smartbyte-material.module';
 import { SharedModule } from '../shared/shared.module';
 import { TeacherModule } from './teacher/teacher.module';
 
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     DashboardComponent
   ],
   imports: [
+    FormsModule,
     CommonModule,
     AdminRoutingModule,
     TeacherModule,

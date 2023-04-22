@@ -18,15 +18,13 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
     HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideStorage(() => {
-      console.log("test");
       const storage = getStorage();
       console.log(storage);
 
       return storage;
-    }
-    ),
+    }),
   ],
   exports: [AvatarImageComponent],
-  providers: [CourseService, LessonService, SlideService, CloudStorageService]
+  providers: [CourseService, LessonService, SlideService, CloudStorageService],
 })
 export class SharedModule { }

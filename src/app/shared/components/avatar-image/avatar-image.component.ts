@@ -9,7 +9,7 @@ import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fir
 })
 export class AvatarImageComponent implements OnInit {
   @Input() isEditable?: boolean;
-  @Output() onChangeEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output() onChangeUrlEvent: EventEmitter<string> = new EventEmitter<string>();
   @Input() shape: string;
   @Input() imageURL?: string;
 
@@ -37,7 +37,7 @@ export class AvatarImageComponent implements OnInit {
       const storageRef = ref(this.storage, file.name);
       uploadBytesResumable(storageRef, file);
       getDownloadURL(ref(this.storage, file.name)).then((url) => {
-        console.log(url);
+        if (url) this.onChangeUrlEvent.emit(url);
       })
         .catch((error) => {
           // Handle any errors

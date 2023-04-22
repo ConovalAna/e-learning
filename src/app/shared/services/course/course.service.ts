@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IChapter, ICourse } from './course.interface';
+import { IdResult } from '../../interfaces/id-result.interface';
 
 
 @Injectable({
@@ -22,5 +23,9 @@ export class CourseService {
 
     getChapters() {
         return this.http.get<IChapter[]>(this.apiUrl + "chapters");
+    }
+
+    addCourse(course: ICourse) {
+        return this.http.post<IdResult<string>>(this.apiUrl, course);
     }
 }

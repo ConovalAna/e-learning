@@ -27,6 +27,10 @@ import { provideFirebaseApp, initializeApp, getApp } from '@angular/fire/app';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { FirebaseApp } from '@angular/fire/compat';
 
+
+import { FormsModule } from '@angular/forms';
+
+
 export function playerFactory(): any {
   return import('lottie-web');
 }
@@ -51,9 +55,9 @@ export function playerFactory(): any {
     AdminModule,
     SmartbyteMaterialModule,
     LottieModule.forRoot({ player: playerFactory }),
+    FormsModule
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideStorage(() => {
-    //   console.log("test");
     //   const storage = getStorage(getApp());
     //   console.log(storage);
 

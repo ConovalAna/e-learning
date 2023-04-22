@@ -1,16 +1,15 @@
 <div class="course-container">
   <aside class="px-3 pt-2">
     <h3 class="text-center">Create Course</h3>
-
     <div class="pt-3">
       <div class="course-image d-flex justify-content-center mb-4">
-        <app-avatar-image [isEditable]="true" [shape]="'rounded-circle'"
+        <app-avatar-image [isEditable]="true" [shape]="'rounded-circle'" (onChangeUrlEvent)="onChangeImageUrl($event)"
           [imageURL]="'https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=50,format=auto/sources/images/actu/google-images-rechercher.jpg'">
         </app-avatar-image>
       </div>
       <mat-form-field class="w-100" appearance="outline">
         <mat-label>Name</mat-label>
-        <input matInput />
+        <input matInput [(ngModel)]="course.name" name="name"  />
       </mat-form-field>
       <mat-form-field class="w-100" appearance="outline">
         <mat-label>Category</mat-label>
@@ -21,14 +20,17 @@
       </mat-form-field>
       <mat-form-field class="w-100" appearance="outline">
         <mat-label>Short description</mat-label>
-        <textarea matInput></textarea>
+        <textarea matInput [(ngModel)]="course.shortDescription" name="shortDescription"></textarea>
       </mat-form-field>
       <mat-form-field class="w-100" appearance="outline">
         <mat-label>Long description</mat-label>
-        <textarea matInput></textarea>
+        <textarea matInput [(ngModel)]="course.longDescription" name="longDescription"></textarea>
       </mat-form-field>
 
-      <button mat-raised-button disabled="true" class="w-100 my-3" style="height: 4em">
+      <button mat-raised-button color="primary" 
+      (click)="addCourse()"
+      class="w-100 my-3" 
+      style="height: 4em">
         <span style="font-size: larger">Create</span>
       </button>
     </div>
