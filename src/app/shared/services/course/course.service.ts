@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IChapter, ICourse } from './course.interface';
+import { ICourse } from './course.interface';
 import { IdResult } from '../../interfaces/id-result.interface';
 
 
@@ -13,16 +13,11 @@ export class CourseService {
     apiUrl = "https://localhost:44302/Courses/";
 
     getAllCourses() {
-        return this.http.get<ICourse[]>(this.apiUrl + "GetAllCourses");
+        return this.http.get<ICourse[]>(this.apiUrl);
     }
 
     getCourseById(id: string) {
         return this.http.get<ICourse>(this.apiUrl + id);
-    }
-
-
-    getChapters() {
-        return this.http.get<IChapter[]>(this.apiUrl + "chapters");
     }
 
     addCourse(course: ICourse) {

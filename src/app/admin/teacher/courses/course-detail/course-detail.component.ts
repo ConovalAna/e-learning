@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CourseService, IChapter } from 'src/app/shared/services/course';
+import { ChapterService, IChapter } from 'src/app/shared/services/chapter';
+import { CourseService, ICourse } from 'src/app/shared/services/course';
 
 @Component({
   selector: 'app-course-detail',
@@ -10,24 +11,31 @@ import { CourseService, IChapter } from 'src/app/shared/services/course';
 export class CourseDetailComponent {
   selectedChapter?: IChapter;
   chapters?: IChapter[];
-  courseId: number;
+  courseId: string;
+  course?: ICourse;
 
-  chapterClickFunction(courseId: number): void {
-    this.selectedChapter = this.chapters?.find(chapter => chapter.id === courseId) ?? this.selectedChapter;
+  chapterClickFunction(chapterId: string): void {
+    this.selectedChapter = this.chapters?.find(chapter => chapter.id === chapterId) ?? this.selectedChapter;
     this.router.navigate(['/teacher/courses', this.courseId, 'chapter', this.selectedChapter?.id]);
   };
 
-  constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService) {
-    let courseRouteId = this.route.snapshot.paramMap.get('id');
+  constructor(private route: ActivatedRoute, private router: Router,
+    private courseService: CourseService, private chapterService: ChapterService) {
+    let courseRouteId = this.route.snapshot.paramMap.get('courseId');
 
     if (courseRouteId) {
-      this.courseId = Number(courseRouteId);
+      this.courseId = courseRouteId;
     }
     else {
-      this.courseId = 0;
+      this.courseId = "";
       this.router.navigate(['/teacher/courses']);
     }
-    this.courseService.getChapters().subscribe((fetchedChapters) => {
+
+    this.courseService.getCourseById(this.courseId).subscribe(course => {
+      console.log(course);
+      this.course = course;
+    })
+    this.chapterService.getAllChapters(this.courseId).subscribe((fetchedChapters) => {
       this.chapters = fetchedChapters;
       this.selectedChapter = this.chapters[0];
       this.router.navigate(['/teacher/courses', this.courseId, 'chapter', this.selectedChapter?.id]);

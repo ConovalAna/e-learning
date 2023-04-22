@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IChapter } from 'src/app/shared/services/course';
+import { IChapter } from 'src/app/shared/services/chapter';
 
 @Component({
   selector: 'app-chapter-details',

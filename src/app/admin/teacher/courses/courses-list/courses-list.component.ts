@@ -15,6 +15,10 @@ export class CoursesListComponent {
     this.router.navigate(['/teacher/courses', selectedCourse?.id]);
   };
 
+  newCourseClick(): void {
+    this.router.navigate(['/teacher/courses/new']);
+  };
+
   constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService) {
     this.courseService.getAllCourses().subscribe((fetchedCourses) => {
       this.courses = fetchedCourses;

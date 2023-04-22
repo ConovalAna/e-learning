@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChapterService, IChapter } from 'src/app/shared/services/chapter';
+import { ChapterService, IChapter, IStudentChapter } from 'src/app/shared/services/chapter';
 import { CourseService, ICourse } from 'src/app/shared/services/course';
 
 @Component({
@@ -11,7 +11,7 @@ import { CourseService, ICourse } from 'src/app/shared/services/course';
 export class CourseOverviewComponent implements OnInit {
 
   newcourse!: ICourse;
-  chapters!: IChapter[];
+  chapters!: IStudentChapter[];
   courseId: string;
   courseImage!: string;
 
@@ -35,7 +35,7 @@ export class CourseOverviewComponent implements OnInit {
       console.log(this.newcourse);
     })
 
-    this.chapterService.getAllChapters(this.courseId).subscribe((fetchedChapters) => {
+    this.chapterService.getAllStudentChapters(this.courseId).subscribe((fetchedChapters) => {
       this.chapters = fetchedChapters;
 
       console.log(fetchedChapters);

@@ -30,7 +30,7 @@ const routes: Routes = [
             component: CourseAddComponent,
           },
           {
-            path: ':id',
+            path: ':courseId',
             component: CourseDetailComponent,
           },
           {
@@ -45,7 +45,7 @@ const routes: Routes = [
                 component: LessonDetailComponent,
               },
               {
-                path: ':id',
+                path: ':chapterId',
                 component: CourseDetailComponent,
               },
               {

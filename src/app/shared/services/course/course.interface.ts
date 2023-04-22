@@ -11,12 +11,3 @@ export interface ICourse {
 
     numberOfLessons: number;
 }
-
-export interface IChapter {
-    id: number;
-    name: string;
-    courseId: number;
-    numberOfLessons: number;
-    numberOfPractice: number;
-    numberOfTests: number;
-}

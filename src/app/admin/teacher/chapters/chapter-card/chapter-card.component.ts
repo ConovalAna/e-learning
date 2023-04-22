@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IChapter } from 'src/app/shared/services/course';
+import { IChapter } from 'src/app/shared/services/chapter';
 
 @Component({
   selector: 'app-chapter-card',
@@ -9,7 +9,7 @@ import { IChapter } from 'src/app/shared/services/course';
 export class ChapterCardComponent {
   @Input() chapter?: IChapter;
   @Input() isSelected: boolean;
-  @Output() onClickEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output() onClickEvent: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {
     this.isSelected = false;

@@ -1,18 +1,35 @@
 <div class="course-container">
   <aside class="px-3 pt-2">
-      <h3 class="text-center">Course </h3>
-      <button mat-raised-button class="w-100 my-3" routerLink="/teacher/courses/new" style="height: 4em" > <mat-icon
-              style=" transform: scale(1.5);">add</mat-icon>
-          <span style="font-size: larger;">Add Chapter</span>
-      </button>
-      <h5 class="my-3">Your chapters</h5>
-      <div class="mt-2 mb-3" *ngFor="let chapter of chapters">
-          <app-chapter-card [chapter]="chapter" (onClickEvent)="chapterClickFunction($event)" [isSelected]="
-          chapter.id===selectedChapter?.id" />
-      </div>
+    <h3 class="text-center">Course</h3>
+    <div class="course-image d-flex justify-content-center mb-4">
+      <app-avatar-image
+        [isEditable]="false"
+        [shape]="'rounded-circle'"
+        [imageURL]="course?.imageUrl ?? ''"
+      >
+      </app-avatar-image>
+    </div>
+    <h4 class="text-center">{{ course?.name }}</h4>
+    <h5 class="my-3">Your chapters</h5>
 
+    <button
+      mat-raised-button
+      class="w-100 my-3"
+      routerLink="/teacher/courses/new"
+      style="height: 4em"
+    >
+      <mat-icon style="transform: scale(1.5)">add</mat-icon>
+      <span style="font-size: larger">Add Chapter</span>
+    </button>
+    <div class="mt-2 mb-3" *ngFor="let chapter of chapters">
+      <app-chapter-card
+        [chapter]="chapter"
+        (onClickEvent)="chapterClickFunction($event)"
+        [isSelected]="chapter.id === selectedChapter?.id"
+      />
+    </div>
   </aside>
   <main>
-      <app-chapter-details [chapter]="selectedChapter"></app-chapter-details>
+    <app-chapter-details [chapter]="selectedChapter"></app-chapter-details>
   </main>
 </div>
