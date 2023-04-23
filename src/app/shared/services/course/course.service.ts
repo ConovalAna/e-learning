@@ -42,7 +42,7 @@ export class CourseService {
     getAllTeacherCourses() {
         return this.useQuery([queryKeys.teacherCourses], () => {
             return this.http.get<ICourse[]>(this.apiUrl);
-        });
+        }, { staleTime: Infinity });
     }
 
     getTeacherCourseById(id: string) {

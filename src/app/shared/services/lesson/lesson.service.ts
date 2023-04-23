@@ -1,8 +1,26 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ILesson } from './lesson.interface';
+import { IdResult } from '../../interfaces/id-result.interface';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class LessonService {
-    // service logic here
+  constructor(private http: HttpClient) {}
+
+  apiUrl = 'https://localhost:44302/lessons/';
+
+  getAllLessonForChapter(chapterId: string) {
+    return this.http.get<ILesson[]>(this.apiUrl + 'for-chapter/' + chapterId);
+  }
+
+  /// Teacher Region
+
+  addLessonForChapter(lesson: ILesson, chapterId: string) {
+    return this.http.post<IdResult<string>>(
+      this.apiUrl + 'for-chapter/' + chapterId,
+      lesson
+    );
+  }
 }

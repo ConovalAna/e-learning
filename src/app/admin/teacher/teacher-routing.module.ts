@@ -50,58 +50,50 @@ const routes: Routes = [
                 component: CourseDetailComponent,
               },
               {
-                path: ':lessonId/slides',
+                path: ':chapterId/lessons/:lessonId',
                 children: [
                   {
                     path: '',
-                    component: SlidesListComponent,
-                  },
-                  {
-                    path: 'new',
-                    component: SlideDetailComponent,
-                  },
-                  {
-                    path: ':id',
-                    component: SlideDetailComponent,
+                    component: LessonDetailComponent,
                   },
                 ],
               },
             ],
           },
-          {
-            path: ':courseId/lessons',
-            children: [
-              {
-                path: '',
-                component: LessonsListComponent,
-              },
-              {
-                path: 'new',
-                component: LessonDetailComponent,
-              },
-              {
-                path: ':id',
-                component: LessonDetailComponent,
-              },
-              {
-                path: ':lessonId/slides',
-                children: [
-                  {
-                    path: '',
-                    component: SlidesListComponent,
-                  },
-                  {
-                    path: 'new',
-                    component: SlideDetailComponent,
-                  },
-                  {
-                    path: ':id',
-                    component: SlideDetailComponent,
-                  },
-                ],
-              },
-            ],
-          },
+          // {
+          //   path: ':courseId/lessons',
+          //   children: [
+          //     {
+          //       path: '',
+          //       component: LessonsListComponent,
+          //     },
+          //     {
+          //       path: 'new',
+          //       component: LessonDetailComponent,
+          //     },
+          //     {
+          //       path: ':id',
+          //       component: LessonDetailComponent,
+          //     },
+          //     {
+          //       path: ':lessonId/slides',
+          //       children: [
+          //         {
+          //           path: '',
+          //           component: SlidesListComponent,
+          //         },
+          //         {
+          //           path: 'new',
+          //           component: SlideDetailComponent,
+          //         },
+          //         {
+          //           path: ':id',
+          //           component: SlideDetailComponent,
+          //         },
+          //       ],
+          //     },
+          //   ],
+          // },
         ],
       },
       {
@@ -120,4 +112,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TeacherRoutingModule { }
+export class TeacherRoutingModule {}
