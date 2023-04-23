@@ -8,6 +8,7 @@ import { SlidesListComponent } from './slides/slides-list/slides-list.component'
 import { StatisticsComponent } from './statistics/statistics.component';
 import { CourseAddComponent } from './courses/course-add/course-add.component';
 import { CourseDetailComponent } from './courses/course-detail/course-detail.component';
+import { ChapterAddComponent } from './chapters/chapter-add/chapter-add.component';
 
 const routes: Routes = [
   {
@@ -34,7 +35,7 @@ const routes: Routes = [
             component: CourseDetailComponent,
           },
           {
-            path: ':courseId/chapter',
+            path: ':courseId/chapters',
             children: [
               {
                 path: '',
@@ -42,7 +43,7 @@ const routes: Routes = [
               },
               {
                 path: 'new',
-                component: LessonDetailComponent,
+                component: ChapterAddComponent,
               },
               {
                 path: ':chapterId',

@@ -1,1 +1,33 @@
-<p>chapter-add works!</p>
+<div class="course-container">
+  <aside class="px-3 pt-2">
+    <h3 class="text-center">Create Chapter</h3>
+    <div class="pt-3">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="chapter.name" name="name" />
+      </mat-form-field>
+
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label> Description</mat-label>
+        <textarea
+          matInput
+          [(ngModel)]="chapter.description"
+          name="description"
+        ></textarea>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addChapter()"
+        class="w-100 my-3"
+        style="height: 4em"
+      >
+        <span style="font-size: larger">Create</span>
+      </button>
+    </div>
+  </aside>
+  <main>
+    <!-- <app-course-detail></app-course-detail> -->
+  </main>
+</div>

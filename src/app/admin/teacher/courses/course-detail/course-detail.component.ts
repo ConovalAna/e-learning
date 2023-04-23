@@ -16,7 +16,7 @@ export class CourseDetailComponent {
 
   chapterClickFunction(chapterId: string): void {
     this.selectedChapter = this.chapters?.find(chapter => chapter.id === chapterId) ?? this.selectedChapter;
-    this.router.navigate(['/teacher/courses', this.courseId, 'chapter', this.selectedChapter?.id]);
+    this.router.navigate(['/teacher/courses', this.courseId, 'chapters', this.selectedChapter?.id]);
   };
 
   constructor(private route: ActivatedRoute, private router: Router,
@@ -38,7 +38,7 @@ export class CourseDetailComponent {
     this.chapterService.getAllChapters(this.courseId).subscribe((fetchedChapters) => {
       this.chapters = fetchedChapters;
       this.selectedChapter = this.chapters[0];
-      this.router.navigate(['/teacher/courses', this.courseId, 'chapter', this.selectedChapter?.id]);
+      this.router.navigate(['/teacher/courses', this.courseId, 'chapters', this.selectedChapter?.id]);
     })
   }
 }
