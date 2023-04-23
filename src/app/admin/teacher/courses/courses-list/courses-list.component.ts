@@ -20,8 +20,9 @@ export class CoursesListComponent {
   };
 
   constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService) {
-    this.courseService.getAllCourses().subscribe((fetchedCourses) => {
-      this.courses = fetchedCourses;
+    this.courseService.getAllTeacherCourses().result$.subscribe((fetchedCourses) => {
+      if (fetchedCourses.isSuccess)
+        this.courses = fetchedCourses.data;
     })
   }
 

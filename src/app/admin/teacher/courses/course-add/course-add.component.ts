@@ -9,6 +9,8 @@ import { CourseService, ICourse } from 'src/app/shared/services/course';
 })
 export class CourseAddComponent {
 
+  addCourseMutation = this.courseService.addCourseByTeacher();
+
   course: ICourse = {
     id: '',
     name: '',
@@ -34,7 +36,7 @@ export class CourseAddComponent {
   };
 
   addCourse() {
-    this.courseService.addCourse(this.course).subscribe(result => {
+    this.addCourseMutation.mutate(this.course).then(result => {
       console.log(result.id);
       this.router.navigate([`/teacher/courses`, result.id]);
     })
