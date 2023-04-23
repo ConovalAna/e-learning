@@ -1,13 +1,13 @@
-<div class="container mt-5" style="max-width: 1000px;">
+<div class="container mt-5 mb-5" style="max-width: 1000px;">
     <div class="row d-flex">
         <div class="col-12 col-sm-4 d-flex justify-content-center">
             <div class="rounded-circle overflow-hidden " style="height: 20vh; width: 20vh;">
-                <img _ngcontent-ylx-c26="" [src]="courseImage" alt="mdo" class="  h-100">
+                <img _ngcontent-ylx-c26="" [src]="course.imageUrl" alt="course image" class="  h-100">
             </div>
         </div>
         <div class="col-12  col-sm-8 pt-3  px-3 ">
-            <h2>{{newcourse.name}}</h2>
-            <h6 class="text-muted">{{newcourse.longDescription}}</h6>
+            <h2>{{course.name}}</h2>
+            <h6 class="text-muted">{{course.longDescription}}</h6>
         </div>
     </div>
     <div class="row mt-5">
@@ -23,30 +23,33 @@
                     <div class="col-12 col-sm-8 col-md-7 ">
                         <p class="text-success lead">Course overview</p>
                         <p class="text-muted ">
-                            <b>Achievements: </b>{{newcourse.achievements}}
+                            <b>Achievements: </b>{{course.achievements}}
                             <br />
-                            <b>Requirements: </b>{{newcourse.requirements}}
+                            <b>Requirements: </b>{{course.requirements}}
                         </p>
                         <div class="row pb-2 pb-lg-0">
                             <div class="col-6">Level:
-                                <i class="bi bi-star-fill" *ngFor="let star of [].constructor(newcourse.level);"></i>
-                                <i class="bi bi-star" *ngFor="let star of [].constructor(3-newcourse.level);"></i>
+                                <i class="bi bi-star-fill" *ngFor="let star of [].constructor(course.level);"></i>
+                                <i class="bi bi-star" *ngFor="let star of [].constructor(3-course.level);"></i>
                             </div>
                             <div class=" col-6">
-                                <i class="bi bi-hourglass-split"></i> {{newcourse.duration}} h
+                                <i class="bi bi-hourglass-split"></i> {{course.duration}} h
                             </div>
                         </div>
                     </div>
                     <div class="col-12   col-md-3 d-flex  flex-column  justify-content-center">
                         <div class="row ">
                             <div class="d-grid w-100 pb-2">
-                                <button class="btn btn-success btn-lg" (click)="openDetailsPage()">Open more
-                                    details</button>
+                                <button class="btn btn-success btn-lg" (click)="openDetailsPage()">
+                                    Open more details
+                                </button>
                             </div>
                         </div>
-                        <div class=" row ">
+                        <div class=" row " *ngIf="!joined">
                             <div class=" d-grid w-100 ">
-                                <a class=" btn btn-outline-success btn-lg" href="/student/dashboard/summary">Join</a>
+                                <button class=" btn btn-outline-success btn-lg" (click)="joinTheCourse()">
+                                    Join
+                                </button>
                             </div>
                         </div>
 

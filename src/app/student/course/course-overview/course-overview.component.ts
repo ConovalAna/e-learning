@@ -10,57 +10,46 @@ import { CourseService, ICourse } from 'src/app/shared/services/course';
 })
 export class CourseOverviewComponent implements OnInit {
 
-  newcourse!: ICourse;
+  course!: ICourse;
   chapters!: IStudentChapter[];
   courseId: string;
-  courseImage!: string;
+  joined: boolean;
 
   constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService, private chapterService: ChapterService) {
 
-    let courseRouteId = this.route.snapshot.paramMap.get('id');
-    //TODO update image 
-    this.courseImage = "https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=50,format=auto/sources/images/actu/google-images-rechercher.jpg";
+    this.courseId = '';
+    this.joined = false;
 
-    if (courseRouteId) {
-      this.courseId = courseRouteId;
-    } else {
-      this.courseId = "";
-    }
-    console.log(courseRouteId);
-
-    this.courseService.getCourseById(this.courseId).subscribe((fetchedCourses) => {
-      this.newcourse = fetchedCourses;
-
-      console.log(fetchedCourses);
-      console.log(this.newcourse);
-    })
-
-    this.chapterService.getAllStudentChapters(this.courseId).subscribe((fetchedChapters) => {
-      this.chapters = fetchedChapters;
-
-      console.log(fetchedChapters);
-      console.log(this.chapters);
-    })
+    this.route.paramMap.subscribe((param) => {
+      this.courseId = param.get('id') ?? '';
+      this.loadCourseInfomation();
+    });
   }
 
   ngOnInit(): void {
 
   }
 
-
-
   openDetailsPage() {
     this.router.navigate(['summary'], { relativeTo: this.route });
   }
 
   joinTheCourse() {
-
+    this.joined = true;
+    this.courseService.subscribeToCourse(this.courseId).subscribe();
   }
 
   openChapterDetailsPage(chapterId: string) {
-    console.log(chapterId);
     this.router.navigate(['chapter', chapterId], { relativeTo: this.route });
   }
 
+  loadCourseInfomation() {
+    this.courseService.getCourseById(this.courseId).subscribe((fetchedCourses) => {
+      this.course = fetchedCourses;
+    })
 
+    this.chapterService.getAllStudentChapters(this.courseId).subscribe((fetchedChapters) => {
+      this.chapters = fetchedChapters;
+    })
+  }
 }

@@ -8,6 +8,5 @@ export interface ICourse {
     requirements: string;
     achievements: string;
     level: number;
-
     numberOfLessons: number;
 }

@@ -17,15 +17,15 @@
             </li>
             <li *ngFor=" let course of filteredCourses">
                 <div class="card mb-3 border-0 shadow rounded-3 course-dropdown-item" style="max-width: 500px;"
-                    (click)="clickOnCourse(course.id)">
+                    (click)="clickOnCourse(course.courseId)">
                     <div class="row g-0">
                         <div class="col-4 pt-3 ps-2">
-                            <img [src]="course.image" class="img-fluid rounded card-img-top" alt="...">
+                            <img [src]="course.imageUrl" class="img-fluid rounded card-img-top" alt="...">
                         </div>
                         <div class="col-8">
                             <div class="card-body">
-                                <h6 class="card-title custom-text-title">{{course.name}}</h6>
-                                <small class="card-text custom-text-description">{{course.shortDescription}}</small>
+                                <h6 class="card-title custom-text-title">{{course.courseName}}</h6>
+                                <small class="card-text custom-text-description">{{course.courseDescription}}</small>
                                 <!-- <p class="card-text"><small class="text-muted">Last time learned
                                         {{course.lastLearned}}
                                         mins
