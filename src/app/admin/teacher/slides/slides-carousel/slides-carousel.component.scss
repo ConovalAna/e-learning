@@ -1,0 +1,110 @@
+@use "igniteui-angular/theming" as *;
+@use "../../../variables" as *;
+
+@include core();
+@include typography();
+@include theme($palette: $palette, $schema: $schema);
+
+:root {
+  @include palette($palette);
+}
+
+.light-theme {
+  @include light-theme($palette);
+}
+
+.dark-theme {
+  background: #333;
+  color: #fff;
+  @include dark-theme($palette: $green-palette);
+
+  .grid-chart-contextmenu-wrapper {
+    @include fluent-dark-theme($fluent-excel-palette);
+  }
+}
+
+.fin-dark-theme {
+  @include dark-theme($green-palette);
+  background: #333;
+
+  ::-moz-placeholder {
+    opacity: 1;
+  }
+}
+
+.carousel-wrapper {
+  width: 80%;
+}
+
+.list-wrapper {
+  height: 90vh;
+  overflow: auto;
+}
+
+.carousel-animation-wrapper {
+  margin: 20px auto;
+  display: flex;
+}
+
+:host ::ng-deep {
+  .promo-price {
+    position: relative;
+    display: flex;
+    background: rgba(color($palette: $palette, $color: "surface"), 0.54);
+    color: contrast-color($color: "surface");
+    padding: 1rem;
+    border-bottom: transparent 1px solid;
+    backdrop-filter: blur(10px);
+  }
+
+  .description {
+    font-size: 1.2rem;
+    color: black;
+  }
+
+  .titles {
+    display: inline-flex;
+    flex-flow: column;
+    margin-left: 1rem;
+    align-self: center;
+
+    .subTitle {
+      font-size: 1rem;
+      font-weight: 600;
+      color: color($color: "gray", $variant: 600);
+    }
+  }
+
+  .price {
+    padding-left: 0.5rem;
+    font-size: 1.5rem;
+    color: color($color: secondary);
+  }
+
+  igx-list {
+    justify-content: space-between;
+  }
+
+  igx-list-item {
+    padding: 0 16px;
+    cursor: pointer;
+    transition: all 0.25s $ease-out-quad;
+    will-change: filter, opacity;
+    border-radius: 0 8px 8px 0;
+
+    img {
+      margin: 8px;
+      border-radius: 8px;
+    }
+
+    &.disabled {
+      filter: blur(2px);
+      opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+        filter: none;
+      }
+    }
+  }
+}

@@ -1,4 +1,6 @@
 export interface ISlide {
-    id: number,
-    name: string;
+  id: string;
+  type: string;
+  delta: string;
+  order: number;
 }

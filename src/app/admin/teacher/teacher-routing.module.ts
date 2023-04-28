@@ -4,11 +4,12 @@ import { CoursesListComponent } from './courses/courses-list/courses-list.compon
 import { LessonDetailComponent } from './lessons/lesson-detail/lesson-detail.component';
 import { LessonsListComponent } from './lessons/lessons-list/lessons-list.component';
 import { SlideDetailComponent } from './slides/slide-detail/slide-detail.component';
-import { SlidesListComponent } from './slides/slides-list/slides-list.component';
+import { SlidesCarouselComponent } from './slides/slides-carousel/slides-carousel.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { CourseAddComponent } from './courses/course-add/course-add.component';
 import { CourseDetailComponent } from './courses/course-detail/course-detail.component';
 import { ChapterAddComponent } from './chapters/chapter-add/chapter-add.component';
+import { SlideAddComponent } from './slides/slide-add/slide-add.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,10 @@ const routes: Routes = [
                   {
                     path: '',
                     component: LessonDetailComponent,
+                  },
+                  {
+                    path: 'slides/:slideId',
+                    component: SlideAddComponent,
                   },
                 ],
               },

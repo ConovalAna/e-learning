@@ -12,7 +12,7 @@ import { LessonDetailComponent } from './lessons/lesson-detail/lesson-detail.com
 import { LessonsListComponent } from './lessons/lessons-list/lessons-list.component';
 import { SlideAddComponent } from './slides/slide-add/slide-add.component';
 import { SlideDetailComponent } from './slides/slide-detail/slide-detail.component';
-import { SlidesListComponent } from './slides/slides-list/slides-list.component';
+import { SlidesCarouselComponent } from './slides/slides-carousel/slides-carousel.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { CourseCardComponent } from './courses/course-card/course-card.component';
 import { ChaptersListComponent } from './chapters/chapters-list/chapters-list.component';
@@ -27,6 +27,8 @@ import { getFirestore } from 'firebase/firestore';
 import { provideFirestore } from '@angular/fire/firestore';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { FormsModule } from '@angular/forms';
+import { AdminSharedModule } from '../shared/admin-shared.module';
+import { IgxCarouselModule, IgxListModule } from 'igniteui-angular';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,7 @@ import { FormsModule } from '@angular/forms';
     LessonsListComponent,
     SlideAddComponent,
     SlideDetailComponent,
-    SlidesListComponent,
+    SlidesCarouselComponent,
     StatisticsComponent,
     CourseCardComponent,
     ChaptersListComponent,
@@ -56,6 +58,8 @@ import { FormsModule } from '@angular/forms';
     SmartbyteMaterialModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
-  ]
+    IgxCarouselModule,
+    IgxListModule,
+  ],
 })
-export class TeacherModule { }
+export class TeacherModule {}

@@ -42,11 +42,7 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "./node_modules/bootstrap/scss/functions/",
-                "./node_modules/bootstrap/scss/variables",
-                "./node_modules/bootstrap/scss/maps",
-                "./node_modules/bootstrap/scss/mixins",
-                "./node_modules/bootstrap/scss/utilities"
+                "./node_modules/"
               ]
             },
             "scripts": [
