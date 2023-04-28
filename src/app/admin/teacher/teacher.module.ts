@@ -29,6 +29,7 @@ import { provideFirebaseApp } from '@angular/fire/app';
 import { FormsModule } from '@angular/forms';
 import { AdminSharedModule } from '../shared/admin-shared.module';
 import { IgxCarouselModule, IgxListModule } from 'igniteui-angular';
+import { SlideThumbnailComponent } from './slides/slide-thumbnail/slide-thumbnail.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { IgxCarouselModule, IgxListModule } from 'igniteui-angular';
     ChapterEditComponent,
     ChapterDetailsComponent,
     ChapterCardComponent,
+    SlideThumbnailComponent,
   ],
   imports: [
     FormsModule,

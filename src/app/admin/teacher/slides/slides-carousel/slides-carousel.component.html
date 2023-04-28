@@ -3,12 +3,7 @@
     <igx-carousel [navigation]="true" [pause]="false" animationType="fade">
       <igx-slide #slide *ngFor="let item of slides">
         <div style="height: 100%" [ngStyle]="slideStyle(item.image)">
-          <section class="promo-price" [ngClass]="{ animated: slide.active }">
-            <div class="description">{{ item.description }}</div>
-            <div class="price">
-              {{ item.price | currency : "USD" : "symbol" : "3.0" }}
-            </div>
-          </section>
+          <app-slide-add></app-slide-add>
         </div>
       </igx-slide>
       <ng-template igxCarouselIndicator></ng-template>
@@ -16,15 +11,19 @@
   </div>
   <div class="list-wrapper">
     <igx-list displayDensity="compact">
+      <igx-list-item>
+        <button mat-raised-button color="primary" class="me-5 w-100">
+          Add new slide
+        </button>
+      </igx-list-item>
+      <igx-list-item class="d-flex">
+        <app-slide-thumbnail></app-slide-thumbnail>
+      </igx-list-item>
       <igx-list-item
         *ngFor="let item of slides; let i = index"
         [ngClass]="{ disabled: i !== currentIndex }"
       >
-        <img igxListThumbnail src="{{ item.thumb }}" />
-        <div class="titles">
-          <h6>{{ item.title }}</h6>
-          <span class="subTitle">{{ item.subTitle }}</span>
-        </div>
+        <app-slide-thumbnail></app-slide-thumbnail>
       </igx-list-item>
     </igx-list>
   </div>
