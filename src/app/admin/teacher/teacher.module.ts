@@ -52,6 +52,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     TeacherRoutingModule,
     SharedModule,
+    AdminSharedModule,
     SmartbyteMaterialModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),

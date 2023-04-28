@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { QuillEditorComponent } from './quill-editor/quill-editor.component';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    HttpClientModule
-  ],
-  exports: [],
-  providers: []
+  declarations: [QuillEditorComponent],
+  imports: [CommonModule, HttpClientModule],
+  exports: [QuillEditorComponent],
+  providers: [],
 })
-export class AdminSharedModule { }
+export class AdminSharedModule {}

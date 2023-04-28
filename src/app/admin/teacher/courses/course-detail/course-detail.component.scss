@@ -4,7 +4,7 @@
 
 aside {
   border-right: solid 1px rgba(0, 0, 0, 0.12);
-  width: 25rem;
+  width: 16rem;
   transition: width 0.2s ease-in-out;
   height: 100%;
   overflow: hidden;
@@ -13,7 +13,7 @@ aside {
 
 main {
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .course-container {

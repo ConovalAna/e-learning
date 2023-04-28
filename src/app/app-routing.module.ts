@@ -14,13 +14,20 @@ const routes: Routes = [
   { path: 'register-user', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
-  { path: 'student', loadChildren: () => import('./student/student.module').then(m => m.StudentModule) },//, canActivate: [AuthGuard]
-  { path: 'profesor', loadChildren: () => import('./profesor/profesor.module').then(m => m.ProfesorModule) },//, canActivate: [AuthGuard]
-  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+  {
+    path: 'student',
+    loadChildren: () =>
+      import('./student/student.module').then((m) => m.StudentModule),
+  }, //, canActivate: [AuthGuard]
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
