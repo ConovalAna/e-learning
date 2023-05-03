@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import html2canvas from 'html2canvas';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
+import { ISlide } from 'src/app/shared/services/slide';
 
 @Component({
   selector: 'app-slide-thumbnail',
@@ -8,20 +8,23 @@ import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
   styleUrls: ['./slide-thumbnail.component.scss'],
 })
 export class SlideThumbnailComponent implements OnInit {
-  name = 'html2canvas capture in Angular';
+  @Input() slide?: ISlide;
 
-  content!: any;
-
-  constructor() {}
+  content!: string;
 
   ngOnInit() {
-    const json =
-      '{"ops":[{"insert":"Centered hero"},{"attributes":{"align":"center","header":1},"insert":"\\n"},{"insert":"Quickly design and customize responsive mobile-first sites with Bootstrap, the worlds most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins."},{"attributes":{"align":"center"},"insert":"\\n\\n\\n"},{"insert":"\\n"}]}';
-    const delta = JSON.parse(json);
-
-    const converter = new QuillDeltaToHtmlConverter(delta.ops, {});
-    this.content = converter.convert();
+    if (this.slide) {
+      const delta = JSON.parse(this.slide.delta);
+      const converter = new QuillDeltaToHtmlConverter(delta.ops, {});
+      this.content = converter.convert();
+    }
   }
 
-  clickme() {}
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['slide']) {
+      const delta = JSON.parse(changes['slide']?.currentValue.delta);
+      const converter = new QuillDeltaToHtmlConverter(delta.ops, {});
+      this.content = converter.convert();
+    }
+  }
 }

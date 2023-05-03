@@ -2,28 +2,33 @@
   <div class="carousel-wrapper">
     <igx-carousel [navigation]="true" [pause]="false" animationType="fade">
       <igx-slide #slide *ngFor="let item of slides">
-        <div style="height: 100%" [ngStyle]="slideStyle(item.image)">
-          <app-slide-add></app-slide-add>
+        <div style="height: 100%; background-color: white">
+          <app-slide-add
+            [slide]="item"
+            [lessonId]="lessonId"
+            (slideChange)="onChangeSlide($event)"
+          ></app-slide-add>
         </div>
       </igx-slide>
-      <ng-template igxCarouselIndicator></ng-template>
     </igx-carousel>
   </div>
   <div class="list-wrapper">
+    <div class="w-100 d-flex justify-content-center">
+      <button mat-raised-button color="primary" (click)="onAddNewSlide()">
+        Add new slide
+      </button>
+    </div>
     <igx-list displayDensity="compact">
-      <igx-list-item>
-        <button mat-raised-button color="primary" class="me-5 w-100">
-          Add new slide
-        </button>
-      </igx-list-item>
-      <igx-list-item class="d-flex">
-        <app-slide-thumbnail></app-slide-thumbnail>
-      </igx-list-item>
       <igx-list-item
         *ngFor="let item of slides; let i = index"
         [ngClass]="{ disabled: i !== currentIndex }"
       >
-        <app-slide-thumbnail></app-slide-thumbnail>
+        <div igxListThumbnail>
+          <app-slide-thumbnail
+            [slide]="item"
+            class="d-flex justify-content-center my-2"
+          ></app-slide-thumbnail>
+        </div>
       </igx-list-item>
     </igx-list>
   </div>

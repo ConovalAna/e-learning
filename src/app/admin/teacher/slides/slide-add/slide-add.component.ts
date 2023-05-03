@@ -1,20 +1,58 @@
-import { Component, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { QuillEditorComponent } from 'src/app/admin/shared/quill-editor/quill-editor.component';
+import { ISlide, SlideService } from 'src/app/shared/services/slide';
 
 @Component({
   selector: 'app-slide-add',
   templateUrl: './slide-add.component.html',
   styleUrls: ['./slide-add.component.scss'],
 })
-export class SlideAddComponent {
-  @ViewChild(QuillEditorComponent) child?: QuillEditorComponent;
+export class SlideAddComponent implements OnInit {
+  @Input() slide?: ISlide;
+  @Input() lessonId: string = '';
+
+  @Output() slideChange: EventEmitter<ISlide> = new EventEmitter<ISlide>();
+  @ViewChild(QuillEditorComponent) quillChild?: QuillEditorComponent;
+
+  deleteSlideMutation = this.slideService.deleteSlideForLesson();
+
+  ngOnInit(): void {}
+
+  constructor(private slideService: SlideService) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['slide']) {
+      this.quillChild?.setContents(changes['slide']?.currentValue.delta);
+    }
+  }
 
   ngAfterViewInit() {
     // child is set
-    this.child?.getContents();
+    if (this.slide) {
+      this.quillChild?.setContents(this.slide.delta);
+    }
   }
 
   onSave() {
-    console.log(this.child?.getContents());
+    this.slide!.delta = JSON.stringify(this.quillChild?.getContents());
+    this.slideChange?.emit(this.slide);
+  }
+
+  cancelChanges() {}
+
+  deleteSlide() {
+    if (this.slide)
+      this.deleteSlideMutation.mutate({
+        slide: this.slide,
+        lessonId: this.lessonId,
+      });
   }
 }

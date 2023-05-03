@@ -71,4 +71,9 @@ export class QuillEditorComponent implements AfterViewInit {
   getContents(): Delta {
     return this.quill.getContents() as Delta;
   }
+
+  setContents(content: string) {
+    const delta = JSON.parse(content);
+    this.quill.setContents(delta);
+  }
 }

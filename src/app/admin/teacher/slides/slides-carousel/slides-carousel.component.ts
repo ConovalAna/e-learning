@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import {
   IListItemClickEventArgs,
   ISlideEventArgs,
   IgxCarouselComponent,
   IgxListComponent,
 } from 'igniteui-angular';
+import { ISlide, SlideService } from 'src/app/shared/services/slide';
 
 @Component({
   selector: 'app-slides-carousel',
@@ -12,21 +13,41 @@ import {
   styleUrls: ['./slides-carousel.component.scss'],
 })
 export class SlidesCarouselComponent implements OnInit {
+  @Input() public lessonId: string;
+
   @ViewChild(IgxCarouselComponent, { static: true })
   public carousel?: IgxCarouselComponent;
 
   @ViewChild(IgxListComponent, { static: true })
   public list?: IgxListComponent;
 
-  public slides: any[] = [];
+  addSlideMutation = this.slideService.addSlideForLesson();
+  updateSlideMutation = this.slideService.updateSlideForLesson();
+
+  public slides: ISlide[] = [];
   public currentIndex = 0;
-  constructor() {}
+  public currentSlide?: ISlide;
+
+  constructor(private slideService: SlideService) {
+    this.lessonId = '';
+  }
+
+  setCurrentSlide() {
+    this.currentSlide = this.slides[this.currentIndex];
+  }
 
   public ngOnInit() {
-    this.addSlides();
+    this.slideService
+      .fetchSlidesForLesson(this.lessonId)
+      .result$.subscribe((slidesFetch) => {
+        if (slidesFetch.isSuccess) {
+          this.slides = slidesFetch.data;
+        }
+      });
 
     this.list?.itemClicked.subscribe((args: IListItemClickEventArgs) => {
       this.currentIndex = args.item.index;
+      this.setCurrentSlide();
       this.carousel?.select(this.carousel.get(this.currentIndex));
     });
 
@@ -35,70 +56,18 @@ export class SlidesCarouselComponent implements OnInit {
     });
   }
 
-  public slideStyle(image: string) {
-    return {
-      background: `url(${image})`,
-      backgroundSize: 'cover',
+  onAddNewSlide() {
+    let slide: ISlide = {
+      id: '',
+      order: 0,
+      type: '',
+      delta: `{"ops":[{"insert":"Title hero ${this.slides?.length}"},{"attributes":{"align":"center","header":1},"insert":"\\n"},{"insert":"Example of subtext"},{"attributes":{"align":"center"},"insert":"\\n\\n\\n"},{"insert":"\\n"}]}`,
     };
+    this.addSlideMutation.mutate({ slide: slide, lessonId: this.lessonId });
   }
 
-  public addSlides() {
-    this.slides.push(
-      {
-        title: 'Wonderful Coast',
-        subTitle: 'May to October',
-        image:
-          'https://www.infragistics.com/angular-demos-lob/assets/images/carousel/WonderfulCoast.png',
-        thumb:
-          'https://www.infragistics.com/angular-demos-lob/assets/images/carousel/WonderfulCoastThumb.png',
-        price: 1299,
-        description:
-          'Delicious seafood and wines along the coasts of beautiful Italy',
-      },
-      {
-        title: 'Cultural Dip',
-        subTitle: 'July and August',
-        image:
-          'https://www.infragistics.com/angular-demos-lob/assets/images/carousel/CulturalDip.png',
-        thumb:
-          'https://www.infragistics.com/angular-demos-lob/assets/images/carousel/CulturalDipThumb.png',
-        price: 1949,
-        description:
-          'Immerse yourself in the history and culture of the far East',
-      },
-      {
-        title: 'Golden Beaches',
-        subTitle: 'October to March',
-        image:
-          'https://www.infragistics.com/angular-demos-lob/assets/images/carousel/GoldenBeaches.png',
-        thumb:
-          'https://www.infragistics.com/angular-demos-lob/assets/images/carousel/GoldenBeachesThumb.png',
-        price: 2799,
-        description:
-          'Endless beachfronts, crystal blue water and the finest grains of sand',
-      },
-      {
-        title: 'Island Of History',
-        subTitle: 'May to October',
-        image:
-          'https://www.infragistics.com/angular-demos-lob/assets/images/carousel/IslandOfHistory.png',
-        thumb:
-          'https://www.infragistics.com/angular-demos-lob/assets/images/carousel/IslandOfHistoryThumb.png',
-        price: 1419,
-        description:
-          'Discover this hidden gem of the Mediterranean rich of antiquity',
-      },
-      {
-        title: 'Amazing Bridge',
-        subTitle: 'Spring and Autumn',
-        image:
-          'https://www.infragistics.com/angular-demos-lob/assets/images/carousel/AmazingBridge.png',
-        thumb:
-          'https://www.infragistics.com/angular-demos-lob/assets/images/carousel/AmazingBridgeThumb.png',
-        price: 1049,
-        description:
-          'Walk along one of the engineering wonders of the twentieth century',
-      }
-    );
+  onChangeSlide(slide: ISlide) {
+    this.updateSlideMutation.mutate({ lessonId: this.lessonId, slide: slide });
+    window.location.reload();
   }
 }
