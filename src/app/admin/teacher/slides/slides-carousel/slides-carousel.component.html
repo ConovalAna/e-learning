@@ -1,16 +1,12 @@
 <div class="carousel-animation-wrapper">
   <div class="carousel-wrapper">
-    <igx-carousel [navigation]="true" [pause]="false" animationType="fade">
-      <igx-slide #slide *ngFor="let item of slides$">
-        <div style="height: 100%; background-color: white">
-          <app-slide-add
-            [slide]="item"
-            [lessonId]="lessonId"
-            (slideChange)="onChangeSlide($event)"
-          ></app-slide-add>
-        </div>
-      </igx-slide>
-    </igx-carousel>
+    <div style="height: 100%; background-color: white">
+      <app-slide-add
+        [slide]="currentSlide"
+        [lessonId]="lessonId"
+        (slideChange)="onChangeSlide($event)"
+      ></app-slide-add>
+    </div>
   </div>
   <div class="list-wrapper">
     <div class="w-100 d-flex justify-content-center">

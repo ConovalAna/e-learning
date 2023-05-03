@@ -13,12 +13,11 @@ import {
   IDragBaseEventArgs,
   IDragMoveEventArgs,
   IListItemClickEventArgs,
-  ISlideEventArgs,
-  IgxCarouselComponent,
   IgxDragDirective,
   IgxDragLocation,
   IgxListComponent,
 } from 'igniteui-angular';
+import { tap } from 'rxjs';
 import { ISlide, SlideService } from 'src/app/shared/services/slide';
 
 @Component({
@@ -28,14 +27,6 @@ import { ISlide, SlideService } from 'src/app/shared/services/slide';
 })
 export class SlidesCarouselComponent implements OnInit {
   @Input() public lessonId: string;
-
-  @ViewChild(IgxCarouselComponent, { static: true })
-  public carousel?: IgxCarouselComponent;
-
-  public isFetchingPosts$ = inject(UseIsFetching)([
-    'slides',
-    '2aa2710d5d6941dd8ceb742e5cca6f77',
-  ]);
 
   @ViewChild(IgxListComponent, { static: true })
   public list?: IgxListComponent;
@@ -68,7 +59,7 @@ export class SlidesCarouselComponent implements OnInit {
 
   updateSlides(newSlides: ISlide[]) {
     this.slides$ = newSlides;
-    console.log('update');
+    this.setCurrentSlide();
   }
 
   public ngOnInit() {
@@ -83,11 +74,6 @@ export class SlidesCarouselComponent implements OnInit {
     this.list?.itemClicked.subscribe((args: IListItemClickEventArgs) => {
       this.currentIndex = args.item.index;
       this.setCurrentSlide();
-      this.carousel?.select(this.carousel.get(this.currentIndex));
-    });
-
-    this.carousel?.slideChanged.subscribe((args: ISlideEventArgs) => {
-      this.currentIndex = args.slide.index;
     });
   }
 
