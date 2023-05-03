@@ -28,7 +28,13 @@ import { provideFirestore } from '@angular/fire/firestore';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { FormsModule } from '@angular/forms';
 import { AdminSharedModule } from '../shared/admin-shared.module';
-import { IgxCarouselModule, IgxListModule } from 'igniteui-angular';
+import {
+  IgxCarouselModule,
+  IgxListModule,
+  IgxDragDropModule,
+  IgxDragDirective,
+  IgxDropDirective,
+} from 'igniteui-angular';
 import { SlideThumbnailComponent } from './slides/slide-thumbnail/slide-thumbnail.component';
 
 @NgModule({
@@ -62,6 +68,7 @@ import { SlideThumbnailComponent } from './slides/slide-thumbnail/slide-thumbnai
     provideFirestore(() => getFirestore()),
     IgxCarouselModule,
     IgxListModule,
+    IgxDragDropModule,
   ],
 })
 export class TeacherModule {}
