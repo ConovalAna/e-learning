@@ -14,7 +14,7 @@ const queryKeys = {
 @Injectable({
   providedIn: 'root',
 })
-export class CourseService {
+export class UserCourseService {
   private useQuery = inject(UseQuery);
   private useMutation = inject(UseMutation);
   private queryClient = inject(QueryClientService);
@@ -22,14 +22,6 @@ export class CourseService {
 
   apiUrl = 'https://localhost:44302/Courses/';
   userCourseApiUrl = 'https://localhost:44302/UserCourses';
-
-  getAllCourses() {
-    return this.http.get<ICourse[]>(this.apiUrl);
-  }
-
-  getCourseById(id: string) {
-    return this.http.get<ICourse>(this.apiUrl + id);
-  }
 
   getAllPagedFilteredCourses(search: string, offset: number, limit: number) {
     return this.http.get<ICourse[]>(
@@ -43,48 +35,28 @@ export class CourseService {
     );
   }
 
-  /// Teacher region
-
-  getAllTeacherCourses() {
+  getSubscribedCourses() {
     return this.useQuery(
-      [queryKeys.teacherCourses],
+      [queryKeys.studentSubscribedCourses],
       () => {
-        return this.http.get<ICourse[]>(this.apiUrl + 'for-teacher');
+        return this.http.get<ICourseEnrolment[]>(this.userCourseApiUrl);
       },
       { staleTime: Infinity }
     );
   }
 
-  addCourseByTeacher() {
-    return this.useMutation((course: ICourse) => {
-      return this.http.post<IdResult<string>>(this.apiUrl, course).pipe(
-        tap((result) => {
-          // Invalidate to refetch
-          this.queryClient.invalidateQueries([queryKeys.teacherCourses]);
-        })
-      );
-    });
-  }
-
-  updateCourseByTeacher() {
-    return this.useMutation((course: ICourse) => {
-      return this.http.put<any>(this.apiUrl, course).pipe(
-        tap((result) => {
-          // Invalidate to refetch
-          this.queryClient.invalidateQueries([queryKeys.teacherCourses]);
-        })
-      );
-    });
-  }
-
-  deleteCourseByTeacher() {
+  subscribeToCourse() {
     return this.useMutation((courseId: string) => {
-      return this.http.delete<any>(this.apiUrl + courseId).pipe(
-        tap((result) => {
-          // Invalidate to refetch
-          this.queryClient.invalidateQueries([queryKeys.teacherCourses]);
-        })
-      );
+      return this.http
+        .post(this.userCourseApiUrl + '?courseId=' + courseId, null)
+        .pipe(
+          tap(() => {
+            // Invalidate to refetch
+            this.queryClient.invalidateQueries([
+              queryKeys.studentSubscribedCourses,
+            ]);
+          })
+        );
     });
   }
 }

@@ -1,25 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChapterService, IChapter, IStudentChapter } from 'src/app/shared/services/chapter';
-import { CourseService, ICourse } from 'src/app/shared/services/course';
+import {
+  ChapterService,
+  IStudentChapter,
+} from 'src/app/shared/services/chapter';
+import {
+  UserCourseService,
+  ICourse,
+  CourseService,
+} from 'src/app/shared/services/course';
 
 @Component({
   selector: 'app-course-overview',
   templateUrl: './course-overview.component.html',
-  styleUrls: ['./course-overview.component.scss']
+  styleUrls: ['./course-overview.component.scss'],
 })
 export class CourseOverviewComponent implements OnInit {
-
   course!: ICourse;
   progress!: number;
   chapters!: IStudentChapter[];
   courseId: string;
   joined: boolean;
 
-  joinCourseMutation = this.courseService.subscribeToCourse();
+  joinCourseMutation = this.userCourseService.subscribeToCourse();
 
-  constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService, private chapterService: ChapterService) {
-
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private userCourseService: UserCourseService,
+    private courseService: CourseService,
+    private chapterService: ChapterService
+  ) {
     this.courseId = '';
     this.joined = false;
     this.progress = 0;
@@ -30,18 +41,16 @@ export class CourseOverviewComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   openDetailsPage() {
     this.router.navigate(['summary'], { relativeTo: this.route });
   }
 
   joinTheCourse() {
-    this.joinCourseMutation.mutate(this.courseId).then(result => {
+    this.joinCourseMutation.mutate(this.courseId).then((result) => {
       this.joined = true;
-    })
+    });
   }
 
   openChapterDetailsPage(chapterId: string) {
@@ -49,22 +58,29 @@ export class CourseOverviewComponent implements OnInit {
   }
 
   loadCourseInfomation() {
+    this.userCourseService
+      .getSubscribedCourses()
+      .result$.subscribe((fetchedCourses) => {
+        let foundCourse = fetchedCourses.data?.find(
+          (course) => course.courseId === this.courseId
+        );
 
-    this.courseService.getSubscribedCourses().result$.subscribe((fetchedCourses) => {
-      let foundCourse = fetchedCourses.data?.find(course => course.courseId === this.courseId);
+        if (!!foundCourse) {
+          this.joined = true;
+          this.progress = foundCourse.progress ?? 0;
+        }
+      });
 
-      if (!!foundCourse) {
-        this.joined = true;
-        this.progress = foundCourse.progress ?? 0;
-      }
-    })
+    this.courseService
+      .getCourseById(this.courseId)
+      .subscribe((fetchedCourses) => {
+        this.course = fetchedCourses;
+      });
 
-    this.courseService.getCourseById(this.courseId).subscribe((fetchedCourses) => {
-      this.course = fetchedCourses;
-    })
-
-    this.chapterService.getAllStudentChapters(this.courseId).subscribe((fetchedChapters) => {
-      this.chapters = fetchedChapters;
-    })
+    this.chapterService
+      .getAllStudentChapters(this.courseId)
+      .subscribe((fetchedChapters) => {
+        this.chapters = fetchedChapters;
+      });
   }
 }

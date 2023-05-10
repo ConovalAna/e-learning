@@ -11,6 +11,7 @@ import { environment } from 'src/enviorment/enviorment';
 import { CloudStorageService } from './services/firebase';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { AuthInterceptorService } from './interceptors/auth.interceptor';
+import { UserCourseService } from './services/course/user-course.service';
 
 @NgModule({
   declarations: [AvatarImageComponent],
@@ -28,6 +29,7 @@ import { AuthInterceptorService } from './interceptors/auth.interceptor';
   exports: [AvatarImageComponent],
   providers: [
     CourseService,
+    UserCourseService,
     LessonService,
     SlideService,
     CloudStorageService,

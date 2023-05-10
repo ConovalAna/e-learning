@@ -16,11 +16,11 @@
         <app-avatar-image
           [isEditable]="false"
           [shape]="'rounded-circle'"
-          [imageURL]="course?.imageUrl"
+          [imageURL]="course.imageUrl"
         >
         </app-avatar-image>
       </div>
-      <h4 class="text-center">{{ course?.name }}</h4>
+      <h4 class="text-center">{{ course.name }}</h4>
       <button
         mat-raised-button
         (click)="changeCourseEditMode()"
