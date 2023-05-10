@@ -39,12 +39,49 @@ export class LessonsListComponent {
       });
   }
 
+  deleteLesson(lessonId: string) {
+    this.lessonService
+      .deleteLessonForChapter(lessonId, this.chapter?.id ?? '')
+      .subscribe((result) => {
+        new Promise((res) => setTimeout(res, 500)).then(() => {
+          this.lessonService
+            .getAllLessonForChapter(this.chapter?.id ?? '')
+            .subscribe((data) => {
+              this.lessons = data;
+            });
+        });
+      });
+  }
+
   openAddLessonDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
     const dialogRef = this.dialog.open(LessonAddComponent, {
-      data: { chapterId: this.chapter?.id },
+      data: { chapterId: this.chapter?.id, isEditMode: false },
+      width: '300px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      new Promise((res) => setTimeout(res, 500)).then(() => {
+        this.lessonService
+          .getAllLessonForChapter(this.chapter?.id ?? '')
+          .subscribe((data) => {
+            this.lessons = data;
+          });
+      });
+    });
+  }
+
+  EditAddLessonDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string,
+    lesson: ILesson
+  ): void {
+    const dialogRef = this.dialog.open(LessonAddComponent, {
+      data: { chapterId: this.chapter?.id, isEditMode: true, lesson: lesson },
       width: '300px',
       enterAnimationDuration,
       exitAnimationDuration,

@@ -29,10 +29,18 @@
                   mat-menu-item
                   [routerLink]="[this.router.url + '/lessons/' + lesson.id]"
                 >
+                  View
+                </button>
+                <button
+                  mat-menu-item
+                  (click)="EditAddLessonDialog('0ms', '0ms', lesson)"
+                >
                   Edit
                 </button>
                 <button mat-menu-item>Hide</button>
-                <button mat-menu-item>Delete</button>
+                <button mat-menu-item (click)="deleteLesson(lesson.id)">
+                  Delete
+                </button>
               </mat-menu>
             </div>
 

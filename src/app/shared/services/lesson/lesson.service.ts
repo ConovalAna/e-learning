@@ -29,4 +29,17 @@ export class LessonService {
       lesson
     );
   }
+
+  updateLessonForChapter(lesson: ILesson, chapterId: string) {
+    return this.http.put<IdResult<string>>(
+      this.apiUrl + 'for-chapter/' + chapterId,
+      lesson
+    );
+  }
+
+  deleteLessonForChapter(lessonId: string, chapterId: string) {
+    return this.http.delete<IdResult<string>>(
+      this.apiUrl + 'for-chapter/' + chapterId + '/lessons/' + lessonId
+    );
+  }
 }

@@ -4,6 +4,8 @@ import { ILesson, LessonService } from 'src/app/shared/services/lesson';
 
 interface LessonAddProps {
   chapterId: string;
+  lesson: ILesson;
+  isEditMode: boolean;
 }
 
 @Component({
@@ -15,16 +17,28 @@ export class LessonAddComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: LessonAddProps,
     private lessonService: LessonService
-  ) {}
-
+  ) {
+    if (this.data.lesson) {
+      this.lesson = this.data.lesson;
+    }
+    this.isEditMode = this.data.isEditMode;
+  }
+  isEditMode: boolean = false;
   lesson: ILesson = {
     id: '',
     name: '',
     description: '',
   };
+
   addLesson() {
     this.lessonService
       .addLessonForChapter(this.lesson, this.data.chapterId)
+      .subscribe();
+  }
+
+  updateLesson() {
+    this.lessonService
+      .updateLessonForChapter(this.lesson, this.data.chapterId)
       .subscribe();
   }
 }
