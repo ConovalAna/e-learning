@@ -11,14 +11,18 @@ import { CourseService, ICourse } from 'src/app/shared/services/course';
 export class CourseOverviewComponent implements OnInit {
 
   course!: ICourse;
+  progress!: number;
   chapters!: IStudentChapter[];
   courseId: string;
   joined: boolean;
+
+  joinCourseMutation = this.courseService.subscribeToCourse();
 
   constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService, private chapterService: ChapterService) {
 
     this.courseId = '';
     this.joined = false;
+    this.progress = 0;
 
     this.route.paramMap.subscribe((param) => {
       this.courseId = param.get('id') ?? '';
@@ -35,8 +39,9 @@ export class CourseOverviewComponent implements OnInit {
   }
 
   joinTheCourse() {
-    this.joined = true;
-    this.courseService.subscribeToCourse(this.courseId).subscribe();
+    this.joinCourseMutation.mutate(this.courseId).then(result => {
+      this.joined = true;
+    })
   }
 
   openChapterDetailsPage(chapterId: string) {
@@ -44,6 +49,16 @@ export class CourseOverviewComponent implements OnInit {
   }
 
   loadCourseInfomation() {
+
+    this.courseService.getSubscribedCourses().result$.subscribe((fetchedCourses) => {
+      let foundCourse = fetchedCourses.data?.find(course => course.courseId === this.courseId);
+
+      if (!!foundCourse) {
+        this.joined = true;
+        this.progress = foundCourse.progress ?? 0;
+      }
+    })
+
     this.courseService.getCourseById(this.courseId).subscribe((fetchedCourses) => {
       this.course = fetchedCourses;
     })

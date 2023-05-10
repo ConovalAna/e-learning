@@ -15,9 +15,9 @@ export class CourseDropdownComponent {
   filteredCourses = this.courses;
 
   constructor(private router: Router, private courseService: CourseService) {
-    this.courseService.getSubscribedCourses().subscribe((fetchedCourses) => {
-      this.courses = fetchedCourses;
-      this.filteredCourses = fetchedCourses;
+    this.courseService.getSubscribedCourses().result$.subscribe((fetchedCourses) => {
+      this.courses = fetchedCourses.data;
+      this.filteredCourses = fetchedCourses.data;
       console.log(this.filteredCourses);
     })
   }

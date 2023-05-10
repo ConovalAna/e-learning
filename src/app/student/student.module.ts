@@ -36,6 +36,7 @@ import player from 'lottie-web';
 import { SharedModule } from '../shared/shared.module';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule } from '@angular/forms';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 export function playerFactory(): any {
   return import('lottie-web');
@@ -72,7 +73,8 @@ export function playerFactory(): any {
     NgChartsModule,
     LottieModule.forRoot({ player: playerFactory }),
     SharedModule,
-    FormsModule
+    FormsModule,
+    InfiniteScrollModule
   ]
 })
 export class StudentModule { }

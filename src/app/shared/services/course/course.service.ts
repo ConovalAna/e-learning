@@ -7,8 +7,9 @@ import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
 import { tap } from 'rxjs';
 
 const queryKeys = {
-  teacherCourses: 'teacher-courses',
-};
+    teacherCourses: 'teacher-courses',
+    studentSubscribedCourses: 'student-subscribed-courses',
+}
 
 @Injectable({
   providedIn: 'root',
@@ -46,12 +47,36 @@ export class CourseService {
     return this.http.get<ICourse>(this.apiUrl + 'for-teacher/' + id);
   }
 
-  addCourseByTeacher() {
-    return this.useMutation((course: ICourse) => {
-      return this.http.post<IdResult<string>>(this.apiUrl, course).pipe(
-        tap((result) => {
-          // Invalidate to refetch
-          this.queryClient.invalidateQueries([queryKeys.teacherCourses]);
+    getAllPagedFilteredCourses(search: string, offset: number, limit: number) {
+        return this.http.get<ICourse[]>(this.apiUrl + "search?query=" + search + "&offset=" + offset + "&limit=" + limit);
+    }
+
+    getCourseById(id: string) {
+        return this.http.get<ICourse>(this.apiUrl + id);
+    }
+
+
+
+    /// Teacher region
+
+    getAllTeacherCourses() {
+        return this.useQuery([queryKeys.teacherCourses], () => {
+            return this.http.get<ICourse[]>(this.apiUrl);
+        });
+    }
+
+    getTeacherCourseById(id: string) {
+        return this.http.get<ICourse>(this.apiUrl + id);
+    }
+
+    addCourseByTeacher() {
+        return this.useMutation((course: ICourse) => {
+            return this.http.post<IdResult<string>>(this.apiUrl, course).pipe(
+                tap((result) => {
+                    // Invalidate to refetch
+                    this.queryClient.invalidateQueries([queryKeys.teacherCourses]);
+                })
+            )
         })
       );
     });
@@ -78,16 +103,20 @@ export class CourseService {
       );
     });
   }
+    //TODO: extract to another service
+    getSubscribedCourses() {
+        return this.useQuery([queryKeys.studentSubscribedCourses], () => {
+            return this.http.get<ICourseEnrolment[]>(this.userCourseApiUrl);
+        }, { staleTime: Infinity });
+    }
 
-  //TODO: extract to another service
-  getSubscribedCourses() {
-    return this.http.get<ICourseEnrolment[]>(this.userCourseApiUrl);
-  }
-
-  subscribeToCourse(courseId: string) {
-    return this.http.post(
-      this.userCourseApiUrl + '?courseId=' + courseId,
-      null
-    );
-  }
-}
+    subscribeToCourse() {
+        return this.useMutation((courseId: string) => {
+            return this.http.post(this.userCourseApiUrl + '?courseId=' + courseId, null).pipe(
+                tap(() => {
+                    // Invalidate to refetch
+                    this.queryClient.invalidateQueries([queryKeys.studentSubscribedCourses]);
+                })
+            )
+        })
+    }

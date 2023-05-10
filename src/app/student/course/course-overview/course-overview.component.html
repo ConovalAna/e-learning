@@ -15,10 +15,10 @@
             <div class="card shadow-sm p-3">
                 <div class="row">
                     <div class="col-12 col-sm-4  col-md-2 align-self-center text-center">
-                        <circle-progress [percent]="85" [radius]="40" [outerStrokeWidth]="6"
-                            [outerStrokeColor]="'#78C000'" [animation]="true" [showSubtitle]="false"
-                            [titleFontSize]="'12'" [showInnerStroke]="false"
-                            [animationDuration]="300"></circle-progress>
+                        <circle-progress [percent]="progress" [radius]="40" [outerStrokeWidth]="6"
+                            [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="6" [outerStrokeColor]="'#78C000'"
+                            [animation]="true" [showSubtitle]="false" [titleFontSize]="'12'" [showInnerStroke]="false"
+                            [space]="-6" [animationDuration]="300" [showInnerStroke]="true"></circle-progress>
                     </div>
                     <div class="col-12 col-sm-8 col-md-7 ">
                         <p class="text-success lead">Course overview</p>
@@ -75,9 +75,10 @@
                 data-bs-placement="right" title="You pass {{model.pass}}% from this section">
                 <circle-progress [percent]="model.pass" [radius]="30" [outerStrokeWidth]="4"
                     [outerStrokeColor]="'#78C000'" [space]="-5" [animation]="true" [showSubtitle]="false"
-                    [titleFontSize]="'12'" [showInnerStroke]="false" [animationDuration]="300"
+                    [titleFontSize]="'12'" [showInnerStroke]="true" [animationDuration]="300"
                     [imageSrc]="'assets/img/open-book-64.png'" [showImage]="true" [backgroundColor]="'#fff'"
-                    [innerStrokeWidth]="0" [imageHeight]="50" [imageWidth]="50" [backgroundPadding]="0">
+                    [innerStrokeWidth]="4" [imageHeight]="50" [imageWidth]="50" [backgroundPadding]="0"
+                    [innerStrokeColor]="'#e7e8ea'">
                 </circle-progress>
             </div>
 

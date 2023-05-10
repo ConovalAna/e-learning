@@ -10,3 +10,8 @@ export interface ICourse {
     level: number;
     numberOfLessons: number;
 }
+
+export interface IStudentCourse extends ICourse {
+
+    joined: boolean;
+}
