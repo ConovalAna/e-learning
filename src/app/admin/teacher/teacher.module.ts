@@ -36,10 +36,12 @@ import {
   IgxDropDirective,
 } from 'igniteui-angular';
 import { SlideThumbnailComponent } from './slides/slide-thumbnail/slide-thumbnail.component';
+import { CourseAddViewComponent } from './courses/course-add-view/course-add-view.component';
 
 @NgModule({
   declarations: [
     CourseAddComponent,
+    CourseAddViewComponent,
     CourseDetailComponent,
     CoursesListComponent,
     LessonAddComponent,

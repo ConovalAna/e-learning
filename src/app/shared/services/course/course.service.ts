@@ -7,66 +7,87 @@ import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
 import { tap } from 'rxjs';
 
 const queryKeys = {
-    teacherCourses: 'teacher-courses'
-}
+  teacherCourses: 'teacher-courses',
+};
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class CourseService {
+  private useQuery = inject(UseQuery);
+  private useMutation = inject(UseMutation);
+  private queryClient = inject(QueryClientService);
+  constructor(private http: HttpClient) {}
 
-    private useQuery = inject(UseQuery);
-    private useMutation = inject(UseMutation);
-    private queryClient = inject(QueryClientService);
+  apiUrl = 'https://localhost:44302/Courses/';
+  userCourseApiUrl = 'https://localhost:44302/UserCourses';
 
+  getAllCourses() {
+    return this.http.get<ICourse[]>(this.apiUrl);
+  }
 
-    constructor(private http: HttpClient) { }
+  getCourseById(id: string) {
+    return this.http.get<ICourse>(this.apiUrl + id);
+  }
 
-    apiUrl = "https://localhost:44302/Courses/";
-    userCourseApiUrl = "https://localhost:44302/UserCourses";
+  /// Teacher region
 
-    getAllCourses() {
-        return this.http.get<ICourse[]>(this.apiUrl);
-    }
+  getAllTeacherCourses() {
+    return this.useQuery(
+      [queryKeys.teacherCourses],
+      () => {
+        return this.http.get<ICourse[]>(this.apiUrl + 'for-teacher');
+      },
+      { staleTime: Infinity }
+    );
+  }
 
+  getTeacherCourseById(id: string) {
+    return this.http.get<ICourse>(this.apiUrl + 'for-teacher/' + id);
+  }
 
-
-    getCourseById(id: string) {
-        return this.http.get<ICourse>(this.apiUrl + id);
-    }
-
-
-
-    /// Teacher region
-
-    getAllTeacherCourses() {
-        return this.useQuery([queryKeys.teacherCourses], () => {
-            return this.http.get<ICourse[]>(this.apiUrl);
-        }, { staleTime: Infinity });
-    }
-
-    getTeacherCourseById(id: string) {
-        return this.http.get<ICourse>(this.apiUrl + id);
-    }
-
-    addCourseByTeacher() {
-        return this.useMutation((course: ICourse) => {
-            return this.http.post<IdResult<string>>(this.apiUrl, course).pipe(
-                tap((result) => {
-                    // Invalidate to refetch
-                    this.queryClient.invalidateQueries([queryKeys.teacherCourses]);
-                })
-            )
+  addCourseByTeacher() {
+    return this.useMutation((course: ICourse) => {
+      return this.http.post<IdResult<string>>(this.apiUrl, course).pipe(
+        tap((result) => {
+          // Invalidate to refetch
+          this.queryClient.invalidateQueries([queryKeys.teacherCourses]);
         })
-    }
+      );
+    });
+  }
 
-    //TODO: extract to another service
-    getSubscribedCourses() {
-        return this.http.get<ICourseEnrolment[]>(this.userCourseApiUrl);
-    }
+  updateCourseByTeacher() {
+    return this.useMutation((course: ICourse) => {
+      return this.http.put<any>(this.apiUrl, course).pipe(
+        tap((result) => {
+          // Invalidate to refetch
+          this.queryClient.invalidateQueries([queryKeys.teacherCourses]);
+        })
+      );
+    });
+  }
 
-    subscribeToCourse(courseId: string) {
-        return this.http.post(this.userCourseApiUrl + '?courseId=' + courseId, null);
-    }
+  deleteCourseByTeacher() {
+    return this.useMutation((courseId: string) => {
+      return this.http.delete<any>(this.apiUrl + courseId).pipe(
+        tap((result) => {
+          // Invalidate to refetch
+          this.queryClient.invalidateQueries([queryKeys.teacherCourses]);
+        })
+      );
+    });
+  }
 
+  //TODO: extract to another service
+  getSubscribedCourses() {
+    return this.http.get<ICourseEnrolment[]>(this.userCourseApiUrl);
+  }
+
+  subscribeToCourse(courseId: string) {
+    return this.http.post(
+      this.userCourseApiUrl + '?courseId=' + courseId,
+      null
+    );
+  }
 }

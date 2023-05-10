@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { CourseService } from './services/course';
 import { LessonService } from './services/lesson';
 import { SlideService } from './services/slide';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AvatarImageComponent } from './components/avatar-image/avatar-image.component';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/enviorment/enviorment';
 import { CloudStorageService } from './services/firebase';
 import { getStorage, provideStorage } from '@angular/fire/storage';
+import { AuthInterceptorService } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AvatarImageComponent],
@@ -25,6 +26,16 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
     }),
   ],
   exports: [AvatarImageComponent],
-  providers: [CourseService, LessonService, SlideService, CloudStorageService],
+  providers: [
+    CourseService,
+    LessonService,
+    SlideService,
+    CloudStorageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

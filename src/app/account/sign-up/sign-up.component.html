@@ -1,102 +1,157 @@
 <!-- Section: Design Block -->
 <section class="text-center text-lg-start">
-
-    <!-- Jumbotron -->
-    <div class="container py-4" style="    max-width: 1100px;">
-
-
-        <div class="row g-0 align-items-center">
-
-            <div class="col-lg-6 mb-5 mb-lg-0">
-                <div class="card cascading-right" style="
-              background: hsla(0, 0%, 100%, 0.55);
-              backdrop-filter: blur(30px);
-              ">
-                    <div class="card-body p-5 shadow-5 text-center">
-                        <h2 class="fw-bold mb-3">Sign up</h2>
-                        <ul class="nav nav-pills nav-justified  mb-3">
-                            <li class="nav-item">
-                                <button class="nav-link " [ngClass]="{'active':preferredRole===userRole.Student}"
-                                    (click)="changePreferredRole(userRole.Student)">Student</button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link" [ngClass]="{'active':preferredRole===userRole.Profesor}"
-                                    (click)="changePreferredRole(userRole.Profesor)">Profesor</button>
-                            </li>
-
-                        </ul>
-                        <form>
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <div class="form-outline ">
-                                        <input type="text" id="firstName" class="form-control" #firstName required />
-                                        <label class="form-label" for="firstName">First name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <div class="form-outline">
-                                        <input type="text" id="lastname" class="form-control" #lastName required />
-                                        <label class="form-label" for="lastname">Last name</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Email input -->
-                            <div class="form-outline mb-4">
-                                <input type="email" id="userName" class="form-control" #userName required />
-                                <label class="form-label" for="userName">Email address</label>
-                            </div>
-
-                            <!-- Password input -->
-                            <div class="form-outline mb-4">
-                                <input type="password" id="userPassword" class="form-control" #userPassword required />
-                                <label class="form-label" for="userPassword">Password</label>
-                            </div>
-
-                            <!-- Checkbox -->
-                            <div class="form-check d-flex justify-content-center mb-4">
-                                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33"
-                                    checked />
-                                <label class="form-check-label" for="form2Example33">
-                                    Subscribe to our newsletter
-                                </label>
-                            </div>
-
-                            <!-- Submit button -->
-                            <div class="d-grid mb-4">
-                                <button class="btn btn-info" type="button">Sign in</button>
-                            </div>
-                            <!-- Register buttons -->
-                            <div class="text-center">
-                                <p>or sign up with:</p>
-                                <button type="button" class="btn btn-link btn-floating mx-1" disabled>
-                                    <i class="fa fa-facebook-f"></i>
-                                </button>
-
-                                <button type="button" (click)="registerWithGoogle()"
-                                    class="btn btn-link btn-floating mx-1">
-                                    <i class="fa fa-google"></i>
-                                </button>
-
-                                <button type="button" class="btn btn-link btn-floating mx-1 " disabled>
-                                    <i class="fa fa-twitter"></i>
-                                </button>
-
-                                <button type="button" class="btn btn-link btn-floating mx-1" disabled>
-                                    <i class="fa fa-github"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+  <!-- Jumbotron -->
+  <div class="container py-4" style="max-width: 1100px">
+    <div class="row g-0 align-items-center">
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <div
+          class="card cascading-right"
+          style="
+            background: hsla(0, 0%, 100%, 0.55);
+            backdrop-filter: blur(30px);
+          "
+        >
+          <div class="card-body p-5 shadow-5 text-center">
+            <h2 class="fw-bold mb-3">Sign up</h2>
+            <ul class="nav nav-pills nav-justified mb-3">
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  [ngClass]="{ active: preferredRole === userRole.Student }"
+                  (click)="changePreferredRole(userRole.Student)"
+                >
+                  Student
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  [ngClass]="{ active: preferredRole === userRole.Teacher }"
+                  (click)="changePreferredRole(userRole.Teacher)"
+                >
+                  Profesor
+                </button>
+              </li>
+            </ul>
+            <form>
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input
+                      type="text"
+                      id="firstName"
+                      class="form-control"
+                      #firstName
+                      required
+                    />
+                    <label class="form-label" for="firstName">First name</label>
+                  </div>
                 </div>
-            </div>
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input
+                      type="text"
+                      id="lastname"
+                      class="form-control"
+                      #lastName
+                      required
+                    />
+                    <label class="form-label" for="lastname">Last name</label>
+                  </div>
+                </div>
+              </div>
 
-            <div class="col-lg-6 mb-5 mb-lg-0">
-                <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4"
-                    alt="" />
-            </div>
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+                <input
+                  type="email"
+                  id="userName"
+                  class="form-control"
+                  #userName
+                  required
+                />
+                <label class="form-label" for="userName">Email address</label>
+              </div>
+
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                <input
+                  type="password"
+                  id="userPassword"
+                  class="form-control"
+                  #userPassword
+                  required
+                />
+                <label class="form-label" for="userPassword">Password</label>
+              </div>
+
+              <!-- Checkbox -->
+              <div class="form-check d-flex justify-content-center mb-4">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="form2Example33"
+                  checked
+                />
+                <label class="form-check-label" for="form2Example33">
+                  Subscribe to our newsletter
+                </label>
+              </div>
+
+              <!-- Submit button -->
+              <div class="d-grid mb-4">
+                <button class="btn btn-info" type="button">Sign in</button>
+              </div>
+              <!-- Register buttons -->
+              <div class="text-center">
+                <p>or sign up with:</p>
+                <button
+                  type="button"
+                  class="btn btn-link btn-floating mx-1"
+                  disabled
+                >
+                  <i class="fa fa-facebook-f"></i>
+                </button>
+
+                <button
+                  type="button"
+                  (click)="registerWithGoogle()"
+                  class="btn btn-link btn-floating mx-1"
+                >
+                  <i class="fa fa-google"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-link btn-floating mx-1"
+                  disabled
+                >
+                  <i class="fa fa-twitter"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-link btn-floating mx-1"
+                  disabled
+                >
+                  <i class="fa fa-github"></i>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
+
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <img
+          src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg"
+          class="w-100 rounded-4 shadow-4"
+          alt=""
+        />
+      </div>
     </div>
-    <!-- Jumbotron -->
+  </div>
+  <!-- Jumbotron -->
 </section>
 <!-- Section: Design Block -->

@@ -23,15 +23,6 @@
   }
 }
 
-.fin-dark-theme {
-  @include dark-theme($green-palette);
-  background: #333;
-
-  ::-moz-placeholder {
-    opacity: 1;
-  }
-}
-
 .carousel-wrapper {
   width: 80%;
 }
@@ -47,40 +38,6 @@
 }
 
 :host ::ng-deep {
-  .promo-price {
-    position: relative;
-    display: flex;
-    background: rgba(color($palette: $palette, $color: "surface"), 0.54);
-    color: contrast-color($color: "surface");
-    padding: 1rem;
-    border-bottom: transparent 1px solid;
-    backdrop-filter: blur(10px);
-  }
-
-  .description {
-    font-size: 1.2rem;
-    color: black;
-  }
-
-  .titles {
-    display: inline-flex;
-    flex-flow: column;
-    margin-left: 1rem;
-    align-self: center;
-
-    .subTitle {
-      font-size: 1rem;
-      font-weight: 600;
-      color: color($color: "gray", $variant: 600);
-    }
-  }
-
-  .price {
-    padding-left: 0.5rem;
-    font-size: 1.5rem;
-    color: color($color: secondary);
-  }
-
   igx-list {
     justify-content: space-between;
   }
@@ -91,10 +48,11 @@
     transition: all 0.25s $ease-out-quad;
     will-change: filter, opacity;
     border-radius: 0 8px 8px 0;
+    z-index: 0;
 
-    img {
-      margin: 8px;
-      border-radius: 8px;
+    &.dragged {
+      box-shadow: elevation(8);
+      z-index: 1;
     }
 
     &.disabled {

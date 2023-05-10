@@ -1,32 +1,68 @@
 <div class="course-container">
-  <aside class="px-3 pt-2">
-    <h3 class="text-center">Course</h3>
-    <div class="course-image d-flex justify-content-center mb-4">
-      <app-avatar-image
-        [isEditable]="false"
-        [shape]="'rounded-circle'"
-        [imageURL]="course?.imageUrl ?? ''"
+  <aside>
+    <div *ngIf="!isCourseEditMode" class="px-3 pt-2">
+      <div class="d-flex">
+        <button
+          mat-icon-button
+          aria-label="Example icon-button with back-arrow"
+          class="me-3"
+          (click)="goBack()"
+        >
+          <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+        <h3 class="text-center m-0">Course</h3>
+      </div>
+      <div class="course-image d-flex justify-content-center mb-4">
+        <app-avatar-image
+          [isEditable]="false"
+          [shape]="'rounded-circle'"
+          [imageURL]="course?.imageUrl"
+        >
+        </app-avatar-image>
+      </div>
+      <h4 class="text-center">{{ course?.name }}</h4>
+      <button
+        mat-raised-button
+        (click)="changeCourseEditMode()"
+        color="primary"
+        class="w-100"
+        style="height: 2em"
       >
-      </app-avatar-image>
-    </div>
-    <h4 class="text-center">{{ course?.name }}</h4>
-    <h5 class="my-3">Your chapters</h5>
+        <span style="font-size: small">Edit</span>
+      </button>
+      <h5 class="my-3">Your chapters</h5>
 
-    <button
-      mat-raised-button
-      class="w-100 my-3"
-      routerLink="/teacher/courses/{{ course?.id }}/chapters/new"
-      style="height: 4em"
-    >
-      <mat-icon style="transform: scale(1.5)">add</mat-icon>
-      <span style="font-size: larger">Add Chapter</span>
-    </button>
-    <div class="mt-2 mb-3" *ngFor="let chapter of chapters">
-      <app-chapter-card
-        [chapter]="chapter"
-        (onClickEvent)="chapterClickFunction($event)"
-        [isSelected]="chapter.id === selectedChapter?.id"
-      />
+      <button
+        mat-raised-button
+        class="w-100 my-3"
+        (click)="openAddChapterDialog('0ms', '0ms')"
+        style="height: 4em"
+      >
+        <mat-icon style="transform: scale(1.5)">add</mat-icon>
+        <span style="font-size: larger">Add Chapter</span>
+      </button>
+      <div class="mt-2 mb-3" *ngFor="let chapter of chapters">
+        <app-chapter-card
+          [chapter]="chapter"
+          [courseId]="courseId"
+          (onClickEvent)="chapterClickFunction($event)"
+          [isSelected]="chapter.id === selectedChapter?.id"
+        />
+      </div>
+    </div>
+
+    <div *ngIf="isCourseEditMode" class="px-3 pt-2">
+      <app-course-add [course]="course" (onClickBtn)="updateCourse($event)" />
+
+      <button
+        mat-raised-button
+        color="warn"
+        class="w-100"
+        style="height: 2em"
+        (click)="changeCourseEditMode()"
+      >
+        <span style="font-size: small">Cancel </span>
+      </button>
     </div>
   </aside>
   <main>

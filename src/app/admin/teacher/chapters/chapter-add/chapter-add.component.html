@@ -1,33 +1,33 @@
-<div class="course-container">
-  <aside class="px-3 pt-2">
-    <h3 class="text-center">Create Chapter</h3>
-    <div class="pt-3">
-      <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Name</mat-label>
-        <input matInput [(ngModel)]="chapter.name" name="name" />
-      </mat-form-field>
+<div class="p-3">
+  <h3 *ngIf="isEditMode" class="text-center">Update Chapter</h3>
+  <h3 *ngIf="!isEditMode" class="text-center">Create Chapter</h3>
 
-      <mat-form-field class="w-100" appearance="outline">
-        <mat-label> Description</mat-label>
-        <textarea
-          matInput
-          [(ngModel)]="chapter.description"
-          name="description"
-        ></textarea>
-      </mat-form-field>
+  <div class="pt-3">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="chapter.name" name="name" />
+    </mat-form-field>
 
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label> Description</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="chapter.description"
+        name="description"
+      ></textarea>
+    </mat-form-field>
+    <div mat-dialog-actions>
       <button
         mat-raised-button
+        mat-dialog-close
         color="primary"
-        (click)="addChapter()"
+        (click)="isEditMode ? updateChapter() : addChapter()"
         class="w-100 my-3"
         style="height: 4em"
       >
-        <span style="font-size: larger">Create</span>
+        <span *ngIf="!isEditMode" style="font-size: larger">Create</span>
+        <span *ngIf="isEditMode" style="font-size: larger">Update</span>
       </button>
     </div>
-  </aside>
-  <main>
-    <!-- <app-course-detail></app-course-detail> -->
-  </main>
+  </div>
 </div>

@@ -1,20 +1,19 @@
-<div class="card mt-2 mb-3" (click)="onClick()">
+<div class="card mt-2 mb-3">
   <div class="card-body">
     <div class="subject-container">
       <div class="subject-card-header-container d-flex justify-content-between">
-        <h5 class="card-title">{{ course?.name }}</h5>
+        <h5 class="card-title" (click)="onClick()">{{ course?.name }}</h5>
         <button mat-icon-button [matMenuTriggerFor]="coursemenu">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #coursemenu="matMenu">
-          <button mat-menu-item>Update</button>
           <button mat-menu-item>Share</button>
           <button mat-menu-item>Archive</button>
           <button mat-menu-item>Hide</button>
-          <button mat-menu-item>Delete</button>
+          <button mat-menu-item (click)="deleteCourse()">Delete</button>
         </mat-menu>
       </div>
-      <div class="course-view" style="height: 10em"></div>
+      <div class="course-view" style="height: 10em" (click)="onClick()"></div>
     </div>
   </div>
 </div>

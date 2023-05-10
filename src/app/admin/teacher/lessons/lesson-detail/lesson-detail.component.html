@@ -1,4 +1,12 @@
 <mat-toolbar color="" *ngIf="lesson !== undefined">
+  <button
+    mat-icon-button
+    aria-label="Example icon-button with back-arrow"
+    class="me-3"
+    (click)="goBack()"
+  >
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
   <span>{{ lesson.name }}</span>
   <span class="example-spacer"></span>
   <button mat-icon-button aria-label="Example icon-button with heart icon">

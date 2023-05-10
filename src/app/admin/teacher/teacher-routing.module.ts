@@ -10,6 +10,7 @@ import { CourseAddComponent } from './courses/course-add/course-add.component';
 import { CourseDetailComponent } from './courses/course-detail/course-detail.component';
 import { ChapterAddComponent } from './chapters/chapter-add/chapter-add.component';
 import { SlideAddComponent } from './slides/slide-add/slide-add.component';
+import { CourseAddViewComponent } from './courses/course-add-view/course-add-view.component';
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
           },
           {
             path: 'new',
-            component: CourseAddComponent,
+            component: CourseAddViewComponent,
           },
           {
             path: ':courseId',

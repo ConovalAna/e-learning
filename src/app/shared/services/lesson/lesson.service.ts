@@ -15,6 +15,12 @@ export class LessonService {
     return this.http.get<ILesson[]>(this.apiUrl + 'for-chapter/' + chapterId);
   }
 
+  getLessonForChapter(chapterId: string, lessonId: string) {
+    return this.http.get<ILesson>(
+      this.apiUrl + 'for-chapter/' + chapterId + '/lessons/' + lessonId
+    );
+  }
+
   /// Teacher Region
 
   addLessonForChapter(lesson: ILesson, chapterId: string) {

@@ -1,11 +1,23 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
+import {
+  Storage,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from '@angular/fire/storage';
 
 @Component({
   selector: 'app-avatar-image',
   templateUrl: './avatar-image.component.html',
-  styleUrls: ['./avatar-image.component.scss']
+  styleUrls: ['./avatar-image.component.scss'],
 })
 export class AvatarImageComponent implements OnInit {
   @Input() isEditable?: boolean;
@@ -18,27 +30,33 @@ export class AvatarImageComponent implements OnInit {
 
   public storage: Storage = inject(Storage);
 
-
   constructor(public fb: FormBuilder) {
     // Reactive Form
-    this.imageURL = this.imageURL ?? "https://images.unsplash.com/photo-1554080353-a576cf803bda?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGhvdG98ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60";
+    this.imageURL =
+      this.imageURL ??
+      'https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg';
     this.uploadForm = this.fb.group({
       avatar: [null],
-      name: ['']
-    })
-    this.shape = "rounded-circle";
+      name: [''],
+    });
+    this.shape = 'rounded-circle';
   }
 
   ngOnInit(): void {
+    if (!this.imageURL) {
+      this.imageURL =
+        'https://t4.ftcdn.net/jpg/04/99/93/31/360_F_499933117_ZAUBfv3P1HEOsZDrnkbNCt4jc3AodArl.jpg';
+    }
   }
 
   uploadImagess(file: File) {
     if (file) {
       const storageRef = ref(this.storage, file.name);
       uploadBytesResumable(storageRef, file);
-      getDownloadURL(ref(this.storage, file.name)).then((url) => {
-        if (url) this.onChangeUrlEvent.emit(url);
-      })
+      getDownloadURL(ref(this.storage, file.name))
+        .then((url) => {
+          if (url) this.onChangeUrlEvent.emit(url);
+        })
         .catch((error) => {
           // Handle any errors
         });
@@ -46,19 +64,19 @@ export class AvatarImageComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    const inputElement = (event.target as HTMLInputElement);
+    const inputElement = event.target as HTMLInputElement;
     if (!inputElement.files) return;
-    const file = inputElement.files[0]
+    const file = inputElement.files[0];
     this.uploadForm.patchValue({
-      avatar: file
+      avatar: file,
     });
-    this.uploadForm.get('avatar')?.updateValueAndValidity()
+    this.uploadForm.get('avatar')?.updateValueAndValidity();
     // File Preview
     const reader = new FileReader();
     reader.onload = () => {
       this.imageURL = reader.result as string;
-    }
-    reader.readAsDataURL(file)
+    };
+    reader.readAsDataURL(file);
     this.uploadImagess(file);
   }
 }
