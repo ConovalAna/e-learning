@@ -1,0 +1,163 @@
+<div class="container pt-5" style="max-width: 1000px">
+  <div class="row mb-5">
+    <div class="col-auto ms-3 me-5">
+      <div
+        class="rounded-circle overflow-hidden"
+        style="height: 20vh; width: 20vh"
+      >
+        <img
+          style="left: -15vh; position: relative"
+          [src]="
+            'https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=50,format=auto/sources/images/actu/google-images-rechercher.jpg'
+          "
+          alt="mdo"
+          class="h-100"
+        />
+      </div>
+    </div>
+    <div class="col">
+      <h2>{{ chapter?.name }}</h2>
+      <p class="fw-bold">{{ chapter?.description }}</p>
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <i class="bi bi-mortarboard fs-4 me-2"></i> Learn 0/{{
+            lessonsProgress.length
+          }}
+        </div>
+        <div class="col-12 col-md-4">
+          <i class="bi bi-lightning-charge fs-4 me-2"></i> Practice 0/5
+        </div>
+        <div class="col-12 col-md-4">
+          <i class="bi bi-ui-checks fs-4 me-2"></i>Test 0/5
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="fs-4 ps-0 mb-3">
+      <i class="bi bi-mortarboard me-2"></i> Learn
+    </div>
+    <div class="card rounded-3 shadow px-0">
+      <ul class="list-group">
+        <!-- <li class="list-group-item py-3">
+          <div class="d-flex justify-content-between align-items-center fs-5">
+            <div class="ms-2 me-5 fw-normal">Subheading</div>
+            <div
+              class="progress flex-grow-1"
+              role="progressbar"
+              aria-label="Progression "
+              aria-valuenow="25"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              style="height: 10px"
+            >
+              <div class="progress-bar bg-success" style="width: 25%"></div>
+            </div>
+            <button type="button" class="btn btn-success ms-5">Continue</button>
+          </div>
+        </li> -->
+        <li class="list-group-item py-3" *ngFor="let lesson of lessonsProgress">
+          <div class="d-flex justify-content-between align-items-center fs-5">
+            <div class="ms-2 me-5 fw-normal">{{ lesson.name }}</div>
+            <div
+              class="progress flex-grow-1"
+              role="progressbar"
+              aria-label="Progression "
+              aria-valuenow="{lesson.LastSlideNumber/ lesson.CurrentNumberOfSlides * 100}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              style="height: 10px"
+            >
+              <div
+                class="progress-bar bg-success"
+                [style.width.%]="
+                  (lesson.lastSlideNumber / lesson.currentNumberOfSlides) * 100
+                "
+              ></div>
+            </div>
+            <button
+              type="button"
+              class="btn btn-success ms-5"
+              [routerLink]="['./lessons', lesson.lessonId]"
+            >
+              Continue
+            </button>
+          </div>
+        </li>
+        <!-- <li class="list-group-item py-3 list-group-item-dark">
+          <div
+            class="d-flex justify-content-between align-items-start fs-5 text-muted"
+          >
+            <div class="ms-2 me-auto">
+              <div class="fw-normal">Subheading</div>
+            </div>
+            <span class="">0/2</span>
+          </div>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+
+  <div class="row my-5">
+    <div class="fs-4 ps-0 mb-3">
+      <i class="bi bi-lightning-charge me-2"></i> Practice
+    </div>
+    <div class="card rounded-3 shadow px-0">
+      <ul class="list-group">
+        <li class="list-group-item py-3">
+          <div class="d-flex justify-content-between align-items-center fs-5">
+            <div class="ms-2 me-5 fw-normal">Subheading</div>
+            <div
+              class="progress flex-grow-1"
+              role="progressbar"
+              aria-label="Progression "
+              aria-valuenow="25"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              style="height: 10px"
+            >
+              <div class="progress-bar bg-success" style="width: 25%"></div>
+            </div>
+            <button type="button" class="btn btn-success ms-5">Continue</button>
+          </div>
+        </li>
+        <li class="list-group-item py-3 list-group-item-dark">
+          <div
+            class="d-flex justify-content-between align-items-start fs-5 text-muted"
+          >
+            <div class="mx-2 fw-normal">Subheading</div>
+            <span class="">0/2</span>
+          </div>
+        </li>
+        <li class="list-group-item py-3 list-group-item-dark">
+          <div
+            class="d-flex justify-content-between align-items-start fs-5 text-muted"
+          >
+            <div class="ms-2 me-auto">
+              <div class="fw-normal">Subheading</div>
+            </div>
+            <span class="">0/2</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row my-5">
+    <div class="fs-4 ps-0 mb-3"><i class="bi bi-ui-checks me-2"></i> Test</div>
+    <div class="card rounded-3 shadow p-3 my-2">
+      <div class="d-flex justify-content-between align-items-center fs-5">
+        <div class="ms-2 me-5 fw-normal">Subheading</div>
+
+        <button type="button" class="btn btn-success ms-5">Start test</button>
+      </div>
+    </div>
+    <div class="card rounded-3 shadow p-3 my-2">
+      <div class="d-flex justify-content-between align-items-center fs-5">
+        <div class="ms-2 me-5 fw-normal">Subheading</div>
+
+        <button type="button" class="btn btn-success ms-5">Start test</button>
+      </div>
+    </div>
+  </div>
+</div>

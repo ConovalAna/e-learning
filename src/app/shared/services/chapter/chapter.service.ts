@@ -31,12 +31,6 @@ export class ChapterService {
     );
   }
 
-  getAllStudentChapters(courseId: string) {
-    return this.http.get<IStudentChapter[]>(
-      this.apiUrl + courseId + '/chapters'
-    );
-  }
-
   // getCourseById(id: string) {
   //     return this.http.get<IChapter>(this.apiUrl + "GetCourseById/" + id);
   // }

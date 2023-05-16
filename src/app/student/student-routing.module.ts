@@ -6,12 +6,13 @@ import { CourseOverviewComponent } from './course/course-overview/course-overvie
 import { CourseSummaryComponent } from './course/course-summary/course-summary.component';
 import { CourseLessonsComponent } from './course/lesson/course-lessons/course-lessons.component';
 import { CoursesOverviewComponent } from './courses-overview/courses-overview.component';
-import { CoursesSectionComponent } from './courses-section/courses-section.component';
+import { ChapterSectionComponent } from './chapter-section/chapter-section.component';
 import { ProfileComponent } from './student-profile/profile/profile.component';
 
 const routes: Routes = [
   {
-    path: '', component: AuthStudentComponent,
+    path: '',
+    component: AuthStudentComponent,
     children: [
       {
         path: '',
@@ -40,19 +41,20 @@ const routes: Routes = [
           },
           {
             path: ':id/chapter/:chapterId',
-            component: CoursesSectionComponent,
+            component: ChapterSectionComponent,
           },
           {
-            path: ':courseId/lessons',
+            path: ':id/chapter/:chapterId/lessons',
             children: [
               {
-                path: ':id',
-                component: CourseLessonsComponent,
+                path: ':lessonId',
+                pathMatch: 'full',
+                redirectTo: ':lessonId/tutorial',
               },
               {
-                path: ':id/tutorial',
-                component: LessonComponent
-              }
+                path: ':lessonId/tutorial',
+                component: LessonComponent,
+              },
             ],
           },
         ],
@@ -67,6 +69,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class StudentRoutingModule { }
+export class StudentRoutingModule {}

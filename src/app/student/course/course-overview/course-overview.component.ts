@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  ChapterService,
-  IStudentChapter,
-} from 'src/app/shared/services/chapter';
+import { ChapterService, IChapter } from 'src/app/shared/services/chapter';
 import {
   UserCourseService,
   ICourse,
   CourseService,
 } from 'src/app/shared/services/course';
+import { ICourseEnrolmentView } from 'src/app/shared/services/course/course-enrolment.interface';
 
 @Component({
   selector: 'app-course-overview',
@@ -17,8 +15,9 @@ import {
 })
 export class CourseOverviewComponent implements OnInit {
   course!: ICourse;
+  courseProgress!: ICourseEnrolmentView | undefined;
   progress!: number;
-  chapters!: IStudentChapter[];
+  chapters!: IChapter[];
   courseId: string;
   joined: boolean;
 
@@ -48,9 +47,7 @@ export class CourseOverviewComponent implements OnInit {
   }
 
   joinTheCourse() {
-    this.joinCourseMutation.mutate(this.courseId).then((result) => {
-      this.joined = true;
-    });
+    this.joinCourseMutation.mutate(this.courseId);
   }
 
   openChapterDetailsPage(chapterId: string) {
@@ -59,28 +56,22 @@ export class CourseOverviewComponent implements OnInit {
 
   loadCourseInfomation() {
     this.userCourseService
-      .getSubscribedCourses()
-      .result$.subscribe((fetchedCourses) => {
-        let foundCourse = fetchedCourses.data?.find(
-          (course) => course.courseId === this.courseId
-        );
-
-        if (!!foundCourse) {
-          this.joined = true;
-          this.progress = foundCourse.progress ?? 0;
-        }
+      .getCourseSubscriptionProgress(this.courseId)
+      .result$.subscribe((course) => {
+        this.courseProgress = course.data;
+        this.joined = !!course.data;
       });
 
     this.courseService
       .getCourseById(this.courseId)
-      .subscribe((fetchedCourses) => {
-        this.course = fetchedCourses;
+      .subscribe((fetchedCourse) => {
+        this.course = fetchedCourse;
       });
 
     this.chapterService
-      .getAllStudentChapters(this.courseId)
-      .subscribe((fetchedChapters) => {
-        this.chapters = fetchedChapters;
+      .getAllChapters(this.courseId)
+      .result$.subscribe((fetchedChapters) => {
+        this.chapters = fetchedChapters.data ?? [];
       });
   }
 }

@@ -6,7 +6,6 @@ import { StudentComponent } from './student.component';
 
 import { NgCircleProgressModule } from 'ng-circle-progress';
 
-
 // Components
 import { HeaderAuthStudentComponent } from './header-auth-student/header-auth-student.component';
 import { AuthStudentComponent } from './auth-student/auth-student.component';
@@ -18,12 +17,11 @@ import { CourseLessonComponent } from './course/lesson/course-lesson/course-less
 import { CourseLessonsComponent } from './course/lesson/course-lessons/course-lessons.component';
 import { CourseLessonInputAnswerComponent } from './course/lesson/course-lesson-input-answer/course-lesson-input-answer.component';
 
-
 // Common
 import { CourseDropdownComponent } from './common/course-dropdown/course-dropdown.component';
 import { SidebarMenuStudentComponent } from './common/sidebar-menu-student/sidebar-menu-student.component';
 import { CoursesOverviewComponent } from './courses-overview/courses-overview.component';
-import { CoursesSectionComponent } from './courses-section/courses-section.component';
+import { ChapterSectionComponent } from './chapter-section/chapter-section.component';
 import { TutorialModule } from '../tutorial/tutorial.module';
 import { ProfileComponent } from './student-profile/profile/profile.component';
 import { NgChartsModule } from 'ng2-charts';
@@ -57,13 +55,12 @@ export function playerFactory(): any {
     CourseLessonsComponent,
     CourseLessonInputAnswerComponent,
     CoursesOverviewComponent,
-    CoursesSectionComponent,
+    ChapterSectionComponent,
     ProfileComponent,
     AchievementsComponent,
     CoursesComponent,
     WeekChartComponent,
-    FooterComponent
-
+    FooterComponent,
   ],
   imports: [
     CommonModule,
@@ -74,7 +71,7 @@ export function playerFactory(): any {
     LottieModule.forRoot({ player: playerFactory }),
     SharedModule,
     FormsModule,
-    InfiniteScrollModule
-  ]
+    InfiniteScrollModule,
+  ],
 })
-export class StudentModule { }
+export class StudentModule {}

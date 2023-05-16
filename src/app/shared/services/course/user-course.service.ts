@@ -2,7 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ICourse } from './course.interface';
 import { IdResult } from '../../interfaces/id-result.interface';
-import { ICourseEnrolment } from './course-enrolment.interface';
+import {
+  ICourseEnrolmentView,
+  ILessonProgress,
+} from './course-enrolment.interface';
 import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
 import { tap } from 'rxjs';
 
@@ -21,7 +24,7 @@ export class UserCourseService {
   constructor(private http: HttpClient) {}
 
   apiUrl = 'https://localhost:44302/Courses/';
-  userCourseApiUrl = 'https://localhost:44302/UserCourses';
+  userCourseApiUrl = 'https://localhost:44302/UserCourses/';
 
   getAllPagedFilteredCourses(search: string, offset: number, limit: number) {
     return this.http.get<ICourse[]>(
@@ -35,11 +38,25 @@ export class UserCourseService {
     );
   }
 
-  getSubscribedCourses() {
+  getSubscribedCoursesView() {
     return this.useQuery(
       [queryKeys.studentSubscribedCourses],
       () => {
-        return this.http.get<ICourseEnrolment[]>(this.userCourseApiUrl);
+        return this.http.get<ICourseEnrolmentView[]>(
+          this.userCourseApiUrl + 'view'
+        );
+      },
+      { staleTime: Infinity }
+    );
+  }
+
+  getCourseSubscriptionProgress(courseId: string) {
+    return this.useQuery(
+      [queryKeys.studentSubscribedCourses, courseId],
+      () => {
+        return this.http.get<ICourseEnrolmentView>(
+          this.userCourseApiUrl + courseId
+        );
       },
       { staleTime: Infinity }
     );
@@ -54,9 +71,27 @@ export class UserCourseService {
             // Invalidate to refetch
             this.queryClient.invalidateQueries([
               queryKeys.studentSubscribedCourses,
+              courseId,
             ]);
           })
         );
     });
+  }
+
+  updateLessonProgress() {
+    return this.useMutation(
+      ({
+        courseId,
+        lessonProgress,
+      }: {
+        courseId: string;
+        lessonProgress: ILessonProgress;
+      }) => {
+        return this.http.post(
+          this.userCourseApiUrl + courseId + '/lessons',
+          lessonProgress
+        );
+      }
+    );
   }
 }

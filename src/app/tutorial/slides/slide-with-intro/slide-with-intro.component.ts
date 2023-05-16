@@ -1,19 +1,26 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ISlide } from 'src/app/shared/services/slide';
 
 @Component({
   selector: 'app-slide-with-intro',
   templateUrl: './slide-with-intro.component.html',
-  styleUrls: ['./slide-with-intro.component.scss']
+  styleUrls: ['./slide-with-intro.component.scss'],
 })
 export class SlideWithIntroComponent {
-  @Input() callbackFunction: any;
-  @Input() model: any;
-  ngOnInit(): void {
-    this.scroller.scrollToAnchor(String(this.model?.id));
+  @Input() slide: ISlide | undefined;
+  @Input() index: number | undefined;
+  @Input() isLast: boolean | undefined;
 
+  @Output() continueToNext: EventEmitter<number> = new EventEmitter<number>();
+
+  ngOnInit(): void {
+    this.scroller.scrollToAnchor(String(this.slide?.id));
   }
 
-  constructor(private scroller: ViewportScroller) {
+  constructor(private scroller: ViewportScroller) {}
+
+  continueToNextSlide() {
+    this.continueToNext.emit(this.index);
   }
 }

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ICourse } from './course.interface';
 import { IdResult } from '../../interfaces/id-result.interface';
-import { ICourseEnrolment } from './course-enrolment.interface';
 import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
 import { tap } from 'rxjs';
 

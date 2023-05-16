@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserCourseService } from 'src/app/shared/services/course';
-import { ICourseEnrolment } from 'src/app/shared/services/course/course-enrolment.interface';
+import { ICourseEnrolmentView } from 'src/app/shared/services/course/course-enrolment.interface';
 
 @Component({
   selector: 'app-course-dropdown',
@@ -10,7 +10,7 @@ import { ICourseEnrolment } from 'src/app/shared/services/course/course-enrolmen
 })
 export class CourseDropdownComponent {
   searchQuery = '';
-  courses?: ICourseEnrolment[];
+  courses?: ICourseEnrolmentView[];
   filteredCourses = this.courses;
 
   constructor(
@@ -18,7 +18,7 @@ export class CourseDropdownComponent {
     private courseService: UserCourseService
   ) {
     this.courseService
-      .getSubscribedCourses()
+      .getSubscribedCoursesView()
       .result$.subscribe((fetchedCourses) => {
         this.courses = fetchedCourses.data;
         this.filteredCourses = fetchedCourses.data;
@@ -33,7 +33,7 @@ export class CourseDropdownComponent {
   onSearchChange(newValue: any): void {
     this.searchQuery = newValue;
     this.filteredCourses = this.courses?.filter((course) =>
-      course.courseName
+      course.name
         .toLowerCase()
         .trim()
         .includes(this.searchQuery.toLowerCase().trim())
