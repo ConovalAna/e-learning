@@ -1,0 +1,154 @@
+@use "igniteui-angular/theming" as *;
+@forward "igniteui-angular/theming";
+
+$palette: $light-material-palette;
+$schema: $light-material-schema;
+
+$default-palette: $palette;
+
+$green-palette: palette(
+  $primary: #09f,
+  $secondary: #72da67,
+  $surface: #333,
+  $info: #1377d5,
+  $success: #4eb862,
+  $warn: #fbb13c,
+  $error: #ff134a,
+);
+
+$gray-btn-color: color($green-palette, "gray", 800);
+
+@include core();
+@include typography();
+@include theme($palette: $palette, $schema: $schema);
+
+.light-theme {
+  @include light-theme($palette);
+}
+
+.dark-theme {
+  background: #333;
+  color: #fff;
+  @include dark-theme($palette: $green-palette);
+
+  .grid-chart-contextmenu-wrapper {
+    @include fluent-dark-theme($fluent-excel-palette);
+  }
+}
+
+.fin-dark-theme {
+  @include dark-theme($green-palette);
+  background: #333;
+
+  ::-moz-placeholder {
+    opacity: 1;
+  }
+}
+
+.sample-wrapper {
+  width: inherit;
+  position: relative;
+  height: 100%;
+  margin: 0 auto;
+  background: transparent;
+}
+
+.sample-content {
+  display: flex;
+  flex-grow: 1;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  padding: 0;
+  -webkit-animation: fade-in 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  -moz-animation: fade-in 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+.sample-column {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1 0 25%;
+  align-content: flex-start;
+  margin: 16px;
+  min-width: 280px;
+}
+
+.sample-title {
+  color: #0375be;
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+
+.sample-title .light {
+  font-weight: 400;
+}
+
+.sample-description {
+  font-size: 14px;
+  font-weight: normal;
+  color: #717171;
+}
+
+@-webkit-keyframes color-change-2x {
+  0% {
+    background: #fdf8f0;
+  }
+  100% {
+    background: #f6e7ec;
+  }
+}
+
+@keyframes color-change-2x {
+  0% {
+    background: #fdf8f0;
+  }
+  100% {
+    background: #f6e7ec;
+  }
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.headerAlignSyle {
+  text-align: right !important;
+}
+
+:host {
+  display: block;
+  margin: 16px;
+
+  igx-list {
+    max-width: 336px;
+    overflow: visible;
+  }
+
+  igx-list-item {
+    z-index: 0;
+
+    &.dragged {
+      box-shadow: elevation(8);
+      z-index: 1;
+    }
+  }
+
+  igx-icon {
+    cursor: move;
+    user-select: none;
+  }
+}
