@@ -12,13 +12,14 @@
       (dragEnd)="dragEndHandler(dragRef)"
       (enter)="onEnterHandler($event)"
       [ghostClass]="'drag_ghost_class'"
+      style="height: 200px; width: 200px"
     >
       <span
         class="icon_container"
         draggable="false"
         onmousedown="if (event.preventDefault) event.preventDefault()"
       >
-        <img [src]="icon.url" />
+        <img [src]="icon.url" style="height: 200px; width: 200px" />
       </span>
     </div>
   </ng-container>
