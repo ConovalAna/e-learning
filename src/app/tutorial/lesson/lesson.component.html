@@ -13,11 +13,11 @@
       [isLast]="isLast"
       (continueToNext)="continueToNextSlide($event)"
     ></app-slide-with-intro>
-    <app-slide-with-choose
+    <!-- <app-slide-with-choose
       *ngIf="slide.type == 'right-answer'"
       [callbackFunction]="myCallbackFunction"
       [model]="slide"
-    ></app-slide-with-choose>
+    ></app-slide-with-choose> -->
     <!--  <app-slide-with-inputs *ngIf="model.type=='input-answer'" [callbackFunction]="callbackFunction"
              [model]="model"></app-slide-with-inputs> -->
   </div>

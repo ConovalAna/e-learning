@@ -4,9 +4,12 @@ import { ChapterService, IChapter } from 'src/app/shared/services/chapter';
 import { UserCourseService } from 'src/app/shared/services/course';
 import {
   ICourseEnrolmentView,
-  ILessonProgress,
   ILessonProgressView,
 } from 'src/app/shared/services/course/course-enrolment.interface';
+
+interface ILessonViewProcess extends ILessonProgressView {
+  canView: boolean;
+}
 
 @Component({
   selector: 'app-chapter-section',
@@ -17,7 +20,7 @@ export class ChapterSectionComponent {
   chapter!: IChapter | undefined;
   courseId!: string;
   courseProgress!: ICourseEnrolmentView | undefined;
-  lessonsProgress: ILessonProgressView[] = [];
+  lessonsProgress: ILessonViewProcess[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -26,14 +29,17 @@ export class ChapterSectionComponent {
   ) {
     let courseRouteId = this.route.snapshot.paramMap.get('id');
     let chapterRouteId = this.route.snapshot.paramMap.get('chapterId');
+
     this.userCourseService
       .getCourseSubscriptionProgress(courseRouteId ?? '')
       .result$.subscribe((course) => {
         this.courseProgress = course.data;
         this.lessonsProgress =
-          this.courseProgress?.lessonsProgress?.filter(
-            (lp) => lp.chapterId === chapterRouteId
-          ) ?? [];
+          this.courseProgress?.lessonsProgress
+            ?.filter((lp) => lp.chapterId === chapterRouteId)
+            .map((cp) => {
+              return { ...cp, canView: !!cp.progress };
+            }) ?? [];
       });
 
     this.chapterService

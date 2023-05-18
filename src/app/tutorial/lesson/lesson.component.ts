@@ -52,26 +52,19 @@ export class LessonComponent implements OnInit {
       });
   }
 
-  myCallbackFunction: (args: any) => void = (index: number) => {
-    //TODO check for last
-    this.slidesProcess[index + 1].pressedContinue = true;
-    document.getElementById('1')?.scrollIntoView();
-    console.log(document.getElementById('1'));
-  };
-
   continueToNextSlide(currentSlideIndex: number) {
     if (currentSlideIndex !== this.slidesProcess.length - 1) {
       this.slidesProcess[currentSlideIndex + 1].visible = true;
     }
 
-    let currentSlide = this.slidesProcess[currentSlideIndex];
     let lessonProgress: ILessonProgress = {
       id: this.lessonId,
       currentNumberOfSlides: this.slidesProcess.length,
       chapterId: this.chapterId,
-      lastSlideNumber: currentSlideIndex,
+      lastSlideNumber: currentSlideIndex + 1,
       lastLearnedDate: new Date(),
     };
+
     this.updateCourseLessonMutation
       .mutate({
         courseId: this.courseId,

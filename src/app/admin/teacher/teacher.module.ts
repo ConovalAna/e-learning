@@ -34,6 +34,7 @@ import {
   IgxDragDropModule,
   IgxDragDirective,
   IgxDropDirective,
+  IgxIconModule,
 } from 'igniteui-angular';
 import { SlideThumbnailComponent } from './slides/slide-thumbnail/slide-thumbnail.component';
 import { CourseAddViewComponent } from './courses/course-add-view/course-add-view.component';
@@ -70,6 +71,7 @@ import { CourseAddViewComponent } from './courses/course-add-view/course-add-vie
     provideFirestore(() => getFirestore()),
     IgxCarouselModule,
     IgxListModule,
+    IgxIconModule,
     IgxDragDropModule,
   ],
 })

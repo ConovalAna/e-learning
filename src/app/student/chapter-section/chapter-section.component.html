@@ -56,44 +56,57 @@
             <button type="button" class="btn btn-success ms-5">Continue</button>
           </div>
         </li> -->
-        <li class="list-group-item py-3" *ngFor="let lesson of lessonsProgress">
-          <div class="d-flex justify-content-between align-items-center fs-5">
-            <div class="ms-2 me-5 fw-normal">{{ lesson.name }}</div>
-            <div
-              class="progress flex-grow-1"
-              role="progressbar"
-              aria-label="Progression "
-              aria-valuenow="{lesson.LastSlideNumber/ lesson.CurrentNumberOfSlides * 100}"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              style="height: 10px"
-            >
+        <ng-container *ngFor="let lesson of lessonsProgress">
+          <li class="list-group-item py-3" *ngIf="lesson.canView">
+            <div class="d-flex justify-content-between align-items-center fs-5">
+              <div class="ms-2 me-5 fw-normal">{{ lesson.name }}</div>
               <div
-                class="progress-bar bg-success"
-                [style.width.%]="
-                  (lesson.lastSlideNumber / lesson.currentNumberOfSlides) * 100
-                "
-              ></div>
+                class="progress flex-grow-1"
+                role="progressbar"
+                aria-label="Progression "
+                aria-valuenow="{lesson.progress}"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style="height: 10px"
+              >
+                <div
+                  class="progress-bar bg-success"
+                  [style.width.%]="lesson.progress"
+                ></div>
+              </div>
+              <button
+                type="button"
+                class="btn btn-success ms-5"
+                [routerLink]="['./lessons', lesson.lessonId]"
+              >
+                Continue
+                <span class=""
+                  >{{ lesson.lastSlideNumber }}/{{
+                    lesson.currentNumberOfSlides
+                  }}</span
+                >
+              </button>
             </div>
-            <button
-              type="button"
-              class="btn btn-success ms-5"
-              [routerLink]="['./lessons', lesson.lessonId]"
-            >
-              Continue
-            </button>
-          </div>
-        </li>
-        <!-- <li class="list-group-item py-3 list-group-item-dark">
-          <div
-            class="d-flex justify-content-between align-items-start fs-5 text-muted"
+          </li>
+
+          <li
+            class="list-group-item py-3 list-group-item-dark"
+            *ngIf="!lesson.canView"
           >
-            <div class="ms-2 me-auto">
-              <div class="fw-normal">Subheading</div>
+            <div
+              class="d-flex justify-content-between align-items-start fs-5 text-muted"
+            >
+              <div class="ms-2 me-auto">
+                <div class="fw-normal">{{ lesson.name }}</div>
+              </div>
+              <span class=""
+                >{{ lesson.lastSlideNumber }}/{{
+                  lesson.currentNumberOfSlides
+                }}</span
+              >
             </div>
-            <span class="">0/2</span>
-          </div>
-        </li> -->
+          </li>
+        </ng-container>
       </ul>
     </div>
   </div>

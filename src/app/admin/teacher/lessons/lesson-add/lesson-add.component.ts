@@ -28,6 +28,7 @@ export class LessonAddComponent {
     id: '',
     name: '',
     description: '',
+    order: 0,
   };
 
   addLesson() {
