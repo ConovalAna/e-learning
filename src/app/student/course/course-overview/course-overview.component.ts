@@ -31,7 +31,7 @@ export class CourseOverviewComponent implements OnInit {
     private chapterService: ChapterService
   ) {
     this.courseId = '';
-    this.joined = false;
+    this.joined = true;
     this.progress = 0;
 
     this.route.paramMap.subscribe((param) => {
@@ -40,7 +40,9 @@ export class CourseOverviewComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.joined = true;
+  }
 
   openDetailsPage() {
     this.router.navigate(['summary'], { relativeTo: this.route });

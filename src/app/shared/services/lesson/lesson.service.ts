@@ -19,7 +19,7 @@ export class LessonService {
   getAllLessonForChapter(chapterId: string) {
     return this.http
       .get<ILesson[]>(this.apiUrl + 'for-chapter/' + chapterId)
-      .pipe(tap((result) => result.sort(this.orderLessonFunction)));
+      .pipe(tap((result) => result?.sort(this.orderLessonFunction)));
   }
 
   orderLessonFunction(a: ILesson, b: ILesson): number {

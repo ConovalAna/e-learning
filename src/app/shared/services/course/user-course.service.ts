@@ -70,7 +70,7 @@ export class UserCourseService {
           .get<ICourseEnrolmentView>(this.userCourseApiUrl + courseId)
           .pipe(
             tap((result) =>
-              result.lessonsProgress.sort(this.orderLessonFunction)
+              result?.lessonsProgress?.sort(this.orderLessonFunction)
             )
           );
       },
@@ -87,7 +87,6 @@ export class UserCourseService {
             // Invalidate to refetch
             this.queryClient.invalidateQueries([
               queryKeys.studentSubscribedCourses,
-              courseId,
             ]);
           })
         );

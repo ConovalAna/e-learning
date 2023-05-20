@@ -1,4 +1,4 @@
-<div class="container mt-5 mb-5" style="max-width: 1000px">
+<div class="container mt-5 mb-5" style="max-width: 1000px" *ngIf="!!course">
   <div class="row d-flex">
     <div class="col-12 col-sm-4 d-flex justify-content-center">
       <div
@@ -47,7 +47,7 @@
               <b>Requirements: </b>{{ course.requirements }}
             </p>
             <div class="row pb-2 pb-lg-0">
-              <div class="col-6">
+              <div class="col-6" *ngIf="!!course">
                 Level:
                 <i
                   class="bi bi-star-fill"
@@ -145,8 +145,8 @@
           <div class="container">
             <div class="row justify-content-between">
               <div class="col">
-                <h5 class="card-title">{{ model.name }}</h5>
-                <p class="card-text">{{ model.description }}</p>
+                <h5 class="card-title">{{ model?.name }}</h5>
+                <p class="card-text">{{ model?.description }}</p>
               </div>
               <div class="col-auto align-self-center">
                 <button
