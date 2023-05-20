@@ -21,15 +21,9 @@ import { AppStateModule } from './state/state.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AdminModule } from './admin/admin.module';
 import { LottieModule } from 'ngx-lottie';
-import player from 'lottie-web';
 import { SmartbyteMaterialModule } from './smartbyte-material.module';
-import { provideFirebaseApp, initializeApp, getApp } from '@angular/fire/app';
-import { getStorage, provideStorage } from '@angular/fire/storage';
-import { FirebaseApp } from '@angular/fire/compat';
-
-
 import { FormsModule } from '@angular/forms';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 export function playerFactory(): any {
   return import('lottie-web');
@@ -48,14 +42,15 @@ export function playerFactory(): any {
     AppRoutingModule,
     BrowserAnimationsModule,
     AppStateModule,
-    ToastrModule.forRoot({ positionClass: "toast-bottom-right" }),
+    ToastrModule.forRoot({ positionClass: 'toast-bottom-right' }),
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     AdminModule,
     SmartbyteMaterialModule,
     LottieModule.forRoot({ player: playerFactory }),
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule,
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideStorage(() => {
     //   const storage = getStorage(getApp());
@@ -66,8 +61,6 @@ export function playerFactory(): any {
     // ),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-
-}
+export class AppModule {}
