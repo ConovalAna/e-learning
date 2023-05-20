@@ -29,7 +29,7 @@
       >
         <div
           class="card mt-2 mb-3 icon_container"
-          draggable="false"
+          draggable="true"
           onmousedown="if (event.preventDefault) event.preventDefault()"
         >
           <div class="card-body">
@@ -37,7 +37,10 @@
               <div
                 class="subject-card-header-container d-flex justify-content-between"
               >
-                <h5 class="card-title">{{ lesson.name }}</h5>
+                <h5 class="card-title" igxDragHandle igxListAction>
+                  {{ lesson.name }}
+                </h5>
+
                 <button mat-icon-button [matMenuTriggerFor]="slidemenu">
                   <mat-icon>more_vert</mat-icon>
                 </button>

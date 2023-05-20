@@ -5,6 +5,7 @@ import { IdResult } from '../../interfaces/id-result.interface';
 import {
   ICourseEnrolmentView,
   ILessonProgress,
+  ILessonProgressView,
 } from './course-enrolment.interface';
 import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
 import { tap } from 'rxjs';
@@ -50,13 +51,28 @@ export class UserCourseService {
     );
   }
 
+  orderLessonFunction(a: ILessonProgressView, b: ILessonProgressView): number {
+    if (a.order < b.order) {
+      return -1;
+    }
+    if (a.order > b.order) {
+      return 1;
+    }
+    // a must be equal to b
+    return 0;
+  }
+
   getCourseSubscriptionProgress(courseId: string) {
     return this.useQuery(
       [queryKeys.studentSubscribedCourses, courseId],
       () => {
-        return this.http.get<ICourseEnrolmentView>(
-          this.userCourseApiUrl + courseId
-        );
+        return this.http
+          .get<ICourseEnrolmentView>(this.userCourseApiUrl + courseId)
+          .pipe(
+            tap((result) =>
+              result.lessonsProgress.sort(this.orderLessonFunction)
+            )
+          );
       },
       { staleTime: Infinity }
     );

@@ -59,7 +59,11 @@ export class LessonsListComponent {
     exitAnimationDuration: string
   ): void {
     const dialogRef = this.dialog.open(LessonAddComponent, {
-      data: { chapterId: this.chapter?.id, isEditMode: false },
+      data: {
+        chapterId: this.chapter?.id,
+        isEditMode: false,
+        order: this.lessons.length,
+      },
       width: '300px',
       enterAnimationDuration,
       exitAnimationDuration,

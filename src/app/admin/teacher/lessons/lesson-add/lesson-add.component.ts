@@ -6,6 +6,7 @@ interface LessonAddProps {
   chapterId: string;
   lesson: ILesson;
   isEditMode: boolean;
+  order: number;
 }
 
 @Component({
@@ -20,6 +21,8 @@ export class LessonAddComponent {
   ) {
     if (this.data.lesson) {
       this.lesson = this.data.lesson;
+    } else {
+      this.lesson.order = this.data.order;
     }
     this.isEditMode = this.data.isEditMode;
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserCourseService } from 'src/app/shared/services/course';
 import { ILessonProgress } from 'src/app/shared/services/course/course-enrolment.interface';
 import { ILesson } from 'src/app/shared/services/lesson';
@@ -28,7 +28,8 @@ export class LessonComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private slideService: SlideService,
-    private userCourseService: UserCourseService
+    private userCourseService: UserCourseService,
+    private router: Router
   ) {
     this.courseId = this.route.snapshot.paramMap.get('id') ?? '';
     this.chapterId = this.route.snapshot.paramMap.get('chapterId') ?? '';
@@ -70,7 +71,13 @@ export class LessonComponent implements OnInit {
         courseId: this.courseId,
         lessonProgress: lessonProgress,
       })
-      .then((result) => {});
+      .then((result) => {
+        if (currentSlideIndex === this.slidesProcess.length - 1) {
+          this.router.navigate([
+            `/student/courses/${this.courseId}/chapter/${this.chapterId}`,
+          ]);
+        }
+      });
   }
 
   ngOnInit(): void {}

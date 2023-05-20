@@ -17,6 +17,7 @@ export interface ILessonProgressView {
   currentNumberOfSlides: number;
   lastLearnedDate: Date;
   progress: number;
+  order: number;
 }
 
 export interface IChapterProgress {

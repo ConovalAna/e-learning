@@ -12,6 +12,7 @@ import { CloudStorageService } from './services/firebase';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { AuthInterceptorService } from './interceptors/auth.interceptor';
 import { UserCourseService } from './services/course/user-course.service';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 @NgModule({
   declarations: [AvatarImageComponent],
@@ -36,6 +37,11 @@ import { UserCourseService } from './services/course/user-course.service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
       multi: true,
     },
   ],

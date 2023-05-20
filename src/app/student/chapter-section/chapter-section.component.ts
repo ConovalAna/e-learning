@@ -21,6 +21,7 @@ export class ChapterSectionComponent {
   courseId!: string;
   courseProgress!: ICourseEnrolmentView | undefined;
   lessonsProgress: ILessonViewProcess[] = [];
+  lessonCompleted = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,10 +37,23 @@ export class ChapterSectionComponent {
         this.courseProgress = course.data;
         this.lessonsProgress =
           this.courseProgress?.lessonsProgress
-            ?.filter((lp) => lp.chapterId === chapterRouteId)
-            .map((cp) => {
-              return { ...cp, canView: !!cp.progress };
+            ?.filter(
+              (lp) =>
+                lp.chapterId === chapterRouteId && lp.currentNumberOfSlides > 0
+            )
+            .map((cp, index, array) => {
+              let canView = false;
+              if (index === 0) {
+                canView = true;
+              } else if (array[index - 1]?.progress === 100) {
+                canView = true;
+              }
+              return { ...cp, canView: canView };
             }) ?? [];
+
+        this.lessonCompleted = this.lessonsProgress.filter(
+          (x) => x.progress === 100
+        ).length;
       });
 
     this.chapterService
