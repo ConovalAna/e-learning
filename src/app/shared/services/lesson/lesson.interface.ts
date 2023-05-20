@@ -6,3 +6,8 @@ export interface ILesson {
   description: string;
   order: number;
 }
+
+export interface ILessonUpdateOrder {
+  id: string;
+  order: number;
+}

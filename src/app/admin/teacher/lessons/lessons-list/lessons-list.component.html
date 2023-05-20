@@ -13,44 +13,59 @@
     </div>
   </div>
   <div class="row gx-4 gy-1">
-    <div class="col-4" *ngFor="let lesson of lessons">
-      <div class="card mt-2 mb-3">
-        <div class="card-body">
-          <div class="subject-container">
-            <div
-              class="subject-card-header-container d-flex justify-content-between"
-            >
-              <h5 class="card-title">{{ lesson.name }}</h5>
-              <button mat-icon-button [matMenuTriggerFor]="slidemenu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #slidemenu="matMenu">
-                <button
-                  mat-menu-item
-                  [routerLink]="[this.router.url + '/lessons/' + lesson.id]"
-                >
-                  View
+    <ng-container *ngFor="let lesson of lessons">
+      <div
+        class="drag_container col-4"
+        igxDrag
+        igxDrop
+        #dragRef
+        id="{{ lesson.id }}"
+        (dropped)="onIconDropped($event)"
+        (dragStart)="dragStartHandler(lesson.id)"
+        (ghostCreate)="ghostCreateHandler(dragRef)"
+        (dragEnd)="dragEndHandler(dragRef)"
+        (enter)="onEnterHandler($event)"
+        [ghostClass]="'drag_ghost_class'"
+      >
+        <div
+          class="card mt-2 mb-3 icon_container"
+          draggable="false"
+          onmousedown="if (event.preventDefault) event.preventDefault()"
+        >
+          <div class="card-body">
+            <div class="subject-container">
+              <div
+                class="subject-card-header-container d-flex justify-content-between"
+              >
+                <h5 class="card-title">{{ lesson.name }}</h5>
+                <button mat-icon-button [matMenuTriggerFor]="slidemenu">
+                  <mat-icon>more_vert</mat-icon>
                 </button>
-                <button
-                  mat-menu-item
-                  (click)="EditAddLessonDialog('0ms', '0ms', lesson)"
-                >
-                  Edit
-                </button>
-                <button mat-menu-item>Hide</button>
-                <button mat-menu-item (click)="deleteLesson(lesson.id)">
-                  Delete
-                </button>
-              </mat-menu>
-            </div>
+                <mat-menu #slidemenu="matMenu">
+                  <button
+                    mat-menu-item
+                    [routerLink]="[this.router.url + '/lessons/' + lesson.id]"
+                  >
+                    View
+                  </button>
+                  <button
+                    mat-menu-item
+                    (click)="EditAddLessonDialog('0ms', '0ms', lesson)"
+                  >
+                    Edit
+                  </button>
+                  <button mat-menu-item>Hide</button>
+                  <button mat-menu-item (click)="deleteLesson(lesson.id)">
+                    Delete
+                  </button>
+                </mat-menu>
+              </div>
 
-            <div style="height: 5em"></div>
+              <div style="height: 5em"></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row gx-4 gy-1">
-    <app-drag-list></app-drag-list>
+    </ng-container>
   </div>
 </div>

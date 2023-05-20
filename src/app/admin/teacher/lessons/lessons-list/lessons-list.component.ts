@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 })
 export class LessonsListComponent {
   private _chapter: IChapter | undefined;
+  public dragIconId!: string;
+  public dropTileId!: string;
   @Input()
   get chapter(): IChapter | undefined {
     return this._chapter;
@@ -31,7 +33,10 @@ export class LessonsListComponent {
     private lessonService: LessonService,
     public router: Router
   ) {
-    console.log(this.chapter);
+    this.updateLessons();
+  }
+
+  updateLessons() {
     this.lessonService
       .getAllLessonForChapter(this.chapter?.id ?? '')
       .subscribe((data) => {
@@ -44,11 +49,7 @@ export class LessonsListComponent {
       .deleteLessonForChapter(lessonId, this.chapter?.id ?? '')
       .subscribe((result) => {
         new Promise((res) => setTimeout(res, 500)).then(() => {
-          this.lessonService
-            .getAllLessonForChapter(this.chapter?.id ?? '')
-            .subscribe((data) => {
-              this.lessons = data;
-            });
+          this.updateLessons();
         });
       });
   }
@@ -66,11 +67,7 @@ export class LessonsListComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       new Promise((res) => setTimeout(res, 500)).then(() => {
-        this.lessonService
-          .getAllLessonForChapter(this.chapter?.id ?? '')
-          .subscribe((data) => {
-            this.lessons = data;
-          });
+        this.updateLessons();
       });
     });
   }
@@ -89,12 +86,57 @@ export class LessonsListComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       new Promise((res) => setTimeout(res, 500)).then(() => {
-        this.lessonService
-          .getAllLessonForChapter(this.chapter?.id ?? '')
-          .subscribe((data) => {
-            this.lessons = data;
-          });
+        this.updateLessons();
       });
     });
+  }
+
+  public onIconDropped(ev: any) {
+    ev.drag.dropFinished();
+  }
+
+  public onEnterHandler(ev: any): void {
+    this.dropTileId = ev.owner.element.nativeElement.id;
+    // the event gets raised immediately, but we want to swap only when we drag over another icon
+    if (this.dragIconId === this.dropTileId) {
+      return;
+    }
+    const dragIndex = this.lessons.findIndex(
+      (iconObj) => iconObj.id === this.dragIconId
+    );
+    const dropIndex = this.lessons.findIndex(
+      (iconObj) => iconObj.id === this.dropTileId
+    );
+    this.swapIcons(dragIndex, dropIndex);
+  }
+
+  public dragStartHandler(id: string): void {
+    this.dragIconId = id;
+  }
+
+  public dragEndHandler(dragRef: HTMLElement) {
+    dragRef.style.visibility = 'visible';
+    new Promise((res) => setTimeout(res, 500)).then(() => {
+      this.lessonService
+        .updateLessonsOrder({
+          chapterId: this.chapter?.id ?? '',
+          lessons: this.lessons.map((lesson, index) => {
+            return { id: lesson.id, order: index };
+          }),
+        })
+        .subscribe(() => {
+          this.updateLessons();
+        });
+    });
+  }
+
+  public ghostCreateHandler(dragRef: HTMLElement) {
+    dragRef.style.visibility = 'hidden';
+  }
+
+  private swapIcons(dragIndex: number, dropIndex: number) {
+    const tempObj = this.lessons[dragIndex];
+    this.lessons.splice(dragIndex, 1);
+    this.lessons.splice(dropIndex, 0, tempObj);
   }
 }
