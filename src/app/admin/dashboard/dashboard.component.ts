@@ -24,7 +24,7 @@ export class DashboardComponent {
       title: 'statistics',
     },
   ];
-  constructor(private userService: UserFacade) {}
+  constructor(private userService: UserFacade) { }
 
   logout() {
     this.userService.logout();

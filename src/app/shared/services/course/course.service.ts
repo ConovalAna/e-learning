@@ -17,7 +17,7 @@ export class CourseService {
   private useQuery = inject(UseQuery);
   private useMutation = inject(UseMutation);
   private queryClient = inject(QueryClientService);
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   apiUrl = 'https://localhost:44302/Courses/';
   userCourseApiUrl = 'https://localhost:44302/UserCourses';
@@ -33,12 +33,12 @@ export class CourseService {
   getAllPagedFilteredCourses(search: string, offset: number, limit: number) {
     return this.http.get<ICourse[]>(
       this.apiUrl +
-        'search?query=' +
-        search +
-        '&offset=' +
-        offset +
-        '&limit=' +
-        limit
+      'search?query=' +
+      search +
+      '&offset=' +
+      offset +
+      '&limit=' +
+      limit
     );
   }
 

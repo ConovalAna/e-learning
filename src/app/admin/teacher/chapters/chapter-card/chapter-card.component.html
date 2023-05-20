@@ -1,21 +1,23 @@
-<div
-  *ngIf="chapter !== undefined"
-  class="card"
-  [ngClass]="{ selected: isSelected }"
->
+<div *ngIf="chapter !== undefined" class="card" [ngClass]="{ selected: isSelected }">
   <div class="card-body" (click)="onClick()">
     <div class="subject-container">
       <div class="subject-card-header-container">
         <p class="subject-title">{{ chapter.name }}</p>
+        <mat-chip-listbox aria-label="Fish selection" class="align-content-end">
+          <mat-chip-option [disabled]="true" *ngIf="chapter?.visible">
+            <i class="bi bi-eye-fill" style="font-size: 24px" *ngIf="chapter?.visible"></i>
+          </mat-chip-option>
+          <mat-chip-option [disabled]="true" *ngIf="!chapter?.visible">
+            <i class="bi bi-eye-slash-fill" style="font-size: 24px"></i>
+          </mat-chip-option>
+        </mat-chip-listbox>
         <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="openUpdateChapterDialog('0ms', '0ms')">
-            Edit
-          </button>
-          <button mat-menu-item>Share</button>
-          <button mat-menu-item>Archive</button>
+          <button mat-menu-item (click)="openUpdateChapterDialog('0ms', '0ms')"> Edit </button>
+          <button mat-menu-item (click)="shareChapter()">Share</button>
+          <button mat-menu-item (click)="hideChapter()">{{ chapter?.visible ? 'Hide' : 'Show' }}</button>
           <button mat-menu-item (click)="deleteChapter()">Delete</button>
         </mat-menu>
       </div>

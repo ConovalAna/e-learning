@@ -20,6 +20,7 @@ export class ChapterAddComponent {
     id: '',
     name: '',
     description: '',
+    visible: false,
   };
   isEditMode: boolean = false;
   addChapterMutation = this.chapterService.addChapter();
@@ -38,12 +39,12 @@ export class ChapterAddComponent {
   addChapter() {
     this.addChapterMutation
       .mutate({ courseId: this.data.courseId, chapter: this.chapter })
-      .then((result) => {});
+      .then((result) => { });
   }
 
   updateChapter() {
     this.updateChapterMutation
       .mutate({ courseId: this.data.courseId, chapter: this.chapter })
-      .then((result) => {});
+      .then((result) => { });
   }
 }

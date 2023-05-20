@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CourseService, ICourse } from 'src/app/shared/services/course';
+import { ICourse } from 'src/app/shared/services/course';
 
 @Component({
   selector: 'app-course-add',
@@ -9,6 +8,7 @@ import { CourseService, ICourse } from 'src/app/shared/services/course';
 })
 export class CourseAddComponent {
   @Input() course!: ICourse;
+  @Input() isNew!: boolean;
   @Input() btnText!: string;
   @Output() onClickBtn: EventEmitter<ICourse> = new EventEmitter<ICourse>();
 
@@ -19,5 +19,20 @@ export class CourseAddComponent {
 
   onClick() {
     this.onClickBtn.emit(this.course);
+  }
+
+  restrictNegativeNumber(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const value = parseFloat(inputElement.value);
+
+    if (value < 0) {
+      inputElement.value = '0';
+      this.course.duration = 0;
+    }
+
+    if (value > 100) {
+      inputElement.value = '100';
+      this.course.duration = 100;
+    }
   }
 }

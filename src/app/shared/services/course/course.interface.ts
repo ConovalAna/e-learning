@@ -9,6 +9,8 @@ export interface ICourse {
     achievements: string;
     level: number;
     numberOfLessons: number;
+    visible: boolean,
+    archived: boolean
 }
 
 export interface IStudentCourse extends ICourse {

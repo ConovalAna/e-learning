@@ -27,6 +27,7 @@ export class ChapterCardComponent {
   }
 
   deleteChapterMutation = this.chapterService.deleteChapter();
+  updateChapterMutation = this.chapterService.updateChapter();
 
   deleteChapter() {
     this.deleteChapterMutation
@@ -34,7 +35,24 @@ export class ChapterCardComponent {
         courseId: this.courseId ?? '',
         chapterId: this.chapter?.id ?? '',
       })
-      .then((result) => {});
+      .then((result) => { });
+  }
+
+  hideChapter() {
+
+    if (this.chapter != null) {
+      this.chapter.visible = !this.chapter.visible;
+      this.updateChapterMutation
+        .mutate({
+          courseId: this.courseId ?? '',
+          chapter: this.chapter
+        })
+        .then((result) => { });
+    }
+  }
+
+  shareChapter() {
+    //to do
   }
 
   openUpdateChapterDialog(
@@ -52,7 +70,7 @@ export class ChapterCardComponent {
       exitAnimationDuration,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      new Promise((res) => setTimeout(res, 500)).then(() => {});
+      new Promise((res) => setTimeout(res, 500)).then(() => { });
     });
   }
 }

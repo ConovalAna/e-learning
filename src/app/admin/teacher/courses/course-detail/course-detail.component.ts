@@ -26,6 +26,8 @@ export class CourseDetailComponent {
     achievements: '',
     level: 0,
     numberOfLessons: 0,
+    visible: true,
+    archived: false,
   };
   isCourseEditMode: boolean = false;
   updateCourseMutation = this.courseService.updateCourseByTeacher();
@@ -108,7 +110,7 @@ export class CourseDetailComponent {
       exitAnimationDuration,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      new Promise((res) => setTimeout(res, 500)).then(() => {});
+      new Promise((res) => setTimeout(res, 500)).then(() => { });
     });
   }
 }

@@ -22,13 +22,19 @@ export class CourseAddViewComponent {
     achievements: '',
     level: 0,
     numberOfLessons: 0,
+    visible: true,
+    archived: false,
   };
 
-  constructor(private courseService: CourseService, private router: Router) {}
+  constructor(private courseService: CourseService, private router: Router) { }
 
   addCourse(course: ICourse) {
     this.addCourseMutation.mutate(course).then((result) => {
       this.router.navigate([`/teacher/courses`, result.id]);
     });
+  }
+
+  goBack() {
+    this.router.navigate(['/teacher/courses']);
   }
 }
