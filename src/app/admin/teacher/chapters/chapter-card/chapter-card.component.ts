@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChapterService, IChapter } from 'src/app/shared/services/chapter';
 import { ChapterAddComponent } from '../chapter-add/chapter-add.component';
+import { ShareComponent } from '../share/share.component';
 
 @Component({
   selector: 'app-chapter-card',
@@ -51,10 +52,6 @@ export class ChapterCardComponent {
     }
   }
 
-  shareChapter() {
-    //to do
-  }
-
   openUpdateChapterDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
@@ -72,5 +69,7 @@ export class ChapterCardComponent {
     dialogRef.afterClosed().subscribe((result) => {
       new Promise((res) => setTimeout(res, 500)).then(() => { });
     });
+
   }
+
 }

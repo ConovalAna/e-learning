@@ -38,6 +38,8 @@ import {
 } from 'igniteui-angular';
 import { SlideThumbnailComponent } from './slides/slide-thumbnail/slide-thumbnail.component';
 import { CourseAddViewComponent } from './courses/course-add-view/course-add-view.component';
+import { ShareModule } from 'ngx-sharebuttons';
+import { ShareComponent } from './chapters/share/share.component';
 import { TestsListComponent } from './tests/tests-list/tests-list.component';
 import { TestAddComponent } from './tests/test-add/test-add.component';
 
@@ -63,6 +65,7 @@ import { TestAddComponent } from './tests/test-add/test-add.component';
     SlideThumbnailComponent,
     TestsListComponent,
     TestAddComponent,
+    ShareComponent
   ],
   imports: [
     FormsModule,
@@ -77,6 +80,7 @@ import { TestAddComponent } from './tests/test-add/test-add.component';
     IgxListModule,
     IgxIconModule,
     IgxDragDropModule,
+    ShareModule
   ],
 })
-export class TeacherModule {}
+export class TeacherModule { }

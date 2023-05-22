@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { CourseService, ICourse } from 'src/app/shared/services/course';
+import { ShareComponent } from '../../chapters/share/share.component';
 
 @Component({
   selector: 'app-courses-card',
@@ -17,7 +19,7 @@ export class CourseCardComponent {
     this.onClickEvent.emit(this.course?.id);
   }
 
-  constructor(private courseService: CourseService) { }
+  constructor(private courseService: CourseService, public dialog: MatDialog) { }
 
   deleteCourseMutation = this.courseService.deleteCourseByTeacher();
   updateCourseMutation = this.courseService.updateCourseByTeacher();
@@ -26,10 +28,18 @@ export class CourseCardComponent {
   deleteCourse() {
     this.deleteCourseMutation.mutate(this.course?.id).then();
   }
-  shareCourse() {
 
-    //this.deleteCourseMutation.mutate(this.course?.id).then();
+  shareCourse() {
+    const dialogRef = this.dialog.open(ShareComponent, {
+      //to do todo update link
+      data: 'http://localhost:4200/student/courses/' + this.course?.id,
+      width: '550px'
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      new Promise((res) => setTimeout(res, 500)).then(() => { });
+    });
   }
+
   hideCourse() {
 
     if (this.course != null) {

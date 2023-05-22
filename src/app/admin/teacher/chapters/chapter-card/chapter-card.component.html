@@ -16,7 +16,6 @@
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="openUpdateChapterDialog('0ms', '0ms')"> Edit </button>
-          <button mat-menu-item (click)="shareChapter()">Share</button>
           <button mat-menu-item (click)="hideChapter()">{{ chapter?.visible ? 'Hide' : 'Show' }}</button>
           <button mat-menu-item (click)="deleteChapter()">Delete</button>
         </mat-menu>
