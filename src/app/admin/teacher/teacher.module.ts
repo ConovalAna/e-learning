@@ -38,6 +38,8 @@ import {
 } from 'igniteui-angular';
 import { SlideThumbnailComponent } from './slides/slide-thumbnail/slide-thumbnail.component';
 import { CourseAddViewComponent } from './courses/course-add-view/course-add-view.component';
+import { TestsListComponent } from './tests/tests-list/tests-list.component';
+import { TestAddComponent } from './tests/test-add/test-add.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { CourseAddViewComponent } from './courses/course-add-view/course-add-vie
     ChapterDetailsComponent,
     ChapterCardComponent,
     SlideThumbnailComponent,
+    TestsListComponent,
+    TestAddComponent,
   ],
   imports: [
     FormsModule,
