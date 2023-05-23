@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IChapter } from 'src/app/shared/services/chapter';
 import { ILesson, LessonService } from 'src/app/shared/services/lesson';
 import { LessonAddComponent } from '../lesson-add/lesson-add.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-lessons-list',
@@ -31,7 +31,8 @@ export class LessonsListComponent {
   constructor(
     public dialog: MatDialog,
     private lessonService: LessonService,
-    public router: Router
+    public router: Router,
+    private route: ActivatedRoute
   ) {
     this.updateLessons();
   }
@@ -45,8 +46,9 @@ export class LessonsListComponent {
   }
 
   deleteLesson(lessonId: string) {
+    let courseRouteId = this.route.snapshot.paramMap.get('courseId');
     this.lessonService
-      .deleteLessonForChapter(lessonId, this.chapter?.id ?? '')
+      .deleteLessonForChapter(lessonId, this.chapter?.id ?? '', courseRouteId ?? '')
       .subscribe((result) => {
         new Promise((res) => setTimeout(res, 500)).then(() => {
           this.updateLessons();
@@ -58,11 +60,13 @@ export class LessonsListComponent {
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
+    let courseRouteId = this.route.snapshot.paramMap.get('courseId');
     const dialogRef = this.dialog.open(LessonAddComponent, {
       data: {
         chapterId: this.chapter?.id,
         isEditMode: false,
         order: this.lessons.length,
+        courseId: courseRouteId
       },
       width: '300px',
       enterAnimationDuration,
@@ -81,8 +85,9 @@ export class LessonsListComponent {
     exitAnimationDuration: string,
     lesson: ILesson
   ): void {
+
     const dialogRef = this.dialog.open(LessonAddComponent, {
-      data: { chapterId: this.chapter?.id, isEditMode: true, lesson: lesson },
+      data: { chapterId: this.chapter?.id, isEditMode: true, lesson: lesson, courseId: '' },
       width: '300px',
       enterAnimationDuration,
       exitAnimationDuration,

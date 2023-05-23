@@ -21,18 +21,33 @@ export class CourseAddComponent {
     this.onClickBtn.emit(this.course);
   }
 
-  restrictNegativeNumber(event: Event): void {
+  restricDuration(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+
+    this.restrictNumber(event, 0, 100);
+    const value = parseFloat(inputElement.value);
+    this.course.duration = value;
+  }
+
+  restricLevel(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+
+    this.restrictNumber(event, 1, 3);
+    const value = parseFloat(inputElement.value);
+    this.course.level = value;
+  }
+
+  restrictNumber(event: Event, min: number, max: number): void {
     const inputElement = event.target as HTMLInputElement;
     const value = parseFloat(inputElement.value);
 
-    if (value < 0) {
-      inputElement.value = '0';
-      this.course.duration = 0;
+    if (value < min) {
+      inputElement.value = min.toString();
     }
 
-    if (value > 100) {
-      inputElement.value = '100';
-      this.course.duration = 100;
+    if (value > max) {
+      inputElement.value = max.toString();
     }
+
   }
 }

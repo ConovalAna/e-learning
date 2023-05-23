@@ -7,6 +7,7 @@ interface LessonAddProps {
   lesson: ILesson;
   isEditMode: boolean;
   order: number;
+  courseId: string;
 }
 
 @Component({
@@ -29,12 +30,14 @@ export class LessonAddComponent {
   isEditMode: boolean = false;
   lesson: ILesson = {
     id: '',
+    courseId: '',
     name: '',
     description: '',
     order: 0,
   };
 
   addLesson() {
+    this.lesson.courseId = this.data.courseId;
     this.lessonService
       .addLessonForChapter(this.lesson, this.data.chapterId)
       .subscribe();

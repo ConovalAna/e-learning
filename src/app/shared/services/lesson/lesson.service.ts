@@ -12,7 +12,7 @@ const queryKeys = {
   providedIn: 'root',
 })
 export class LessonService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   apiUrl = 'https://localhost:44302/lessons/';
 
@@ -55,9 +55,9 @@ export class LessonService {
     );
   }
 
-  deleteLessonForChapter(lessonId: string, chapterId: string) {
+  deleteLessonForChapter(lessonId: string, chapterId: string, courseId: string) {
     return this.http.delete<IdResult<string>>(
-      this.apiUrl + 'for-chapter/' + chapterId + '/lessons/' + lessonId
+      this.apiUrl + 'course/' + courseId + '/for-chapter/' + chapterId + '/lessons/' + lessonId
     );
   }
 
@@ -71,11 +71,11 @@ export class LessonService {
     let obs = lessons.map((lesson) =>
       this.http.put(
         this.apiUrl +
-          lesson.id +
-          '/order/' +
-          lesson.order +
-          '/for-chapter/' +
-          chapterId,
+        lesson.id +
+        '/order/' +
+        lesson.order +
+        '/for-chapter/' +
+        chapterId,
         null
       )
     );
