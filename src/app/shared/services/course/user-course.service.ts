@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { ICourse } from './course.interface';
 import { IdResult } from '../../interfaces/id-result.interface';
 import {
+  IChapterProgress,
   ICourseEnrolmentView,
   ILessonProgress,
   ILessonProgressView,
@@ -22,7 +23,7 @@ export class UserCourseService {
   private useQuery = inject(UseQuery);
   private useMutation = inject(UseMutation);
   private queryClient = inject(QueryClientService);
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   apiUrl = 'https://localhost:44302/Courses/';
   userCourseApiUrl = 'https://localhost:44302/UserCourses/';
@@ -30,12 +31,12 @@ export class UserCourseService {
   getAllPagedFilteredCourses(search: string, offset: number, limit: number) {
     return this.http.get<ICourse[]>(
       this.apiUrl +
-        'search?query=' +
-        search +
-        '&offset=' +
-        offset +
-        '&limit=' +
-        limit
+      'search?query=' +
+      search +
+      '&offset=' +
+      offset +
+      '&limit=' +
+      limit
     );
   }
 
@@ -68,6 +69,22 @@ export class UserCourseService {
       () => {
         return this.http
           .get<ICourseEnrolmentView>(this.userCourseApiUrl + courseId)
+          .pipe(
+            tap((result) =>
+              result?.lessonsProgress?.sort(this.orderLessonFunction)
+            )
+          );
+      },
+      { staleTime: Infinity }
+    );
+  }
+
+  getChapterSubscriptionProgress(courseId: string, chapterId: string) {
+    return this.useQuery(
+      [queryKeys.studentSubscribedCourses, courseId],
+      () => {
+        return this.http
+          .get<IChapterProgress>(this.userCourseApiUrl + courseId + '/chapters/' + chapterId)
           .pipe(
             tap((result) =>
               result?.lessonsProgress?.sort(this.orderLessonFunction)

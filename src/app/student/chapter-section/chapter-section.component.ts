@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChapterService, IChapter } from 'src/app/shared/services/chapter';
 import { UserCourseService } from 'src/app/shared/services/course';
 import {
+  IChapterProgress,
   ICourseEnrolmentView,
   ILessonProgressView,
 } from 'src/app/shared/services/course/course-enrolment.interface';
@@ -19,7 +20,7 @@ interface ILessonViewProcess extends ILessonProgressView {
 export class ChapterSectionComponent {
   chapter!: IChapter | undefined;
   courseId!: string;
-  courseProgress!: ICourseEnrolmentView | undefined;
+  chapterProgress!: IChapterProgress | undefined;
   lessonsProgress: ILessonViewProcess[] = [];
   lessonCompleted = 0;
 
@@ -32,11 +33,11 @@ export class ChapterSectionComponent {
     let chapterRouteId = this.route.snapshot.paramMap.get('chapterId');
 
     this.userCourseService
-      .getCourseSubscriptionProgress(courseRouteId ?? '')
+      .getChapterSubscriptionProgress(courseRouteId ?? '', chapterRouteId ?? '')
       .result$.subscribe((course) => {
-        this.courseProgress = course.data;
+        this.chapterProgress = course.data;
         this.lessonsProgress =
-          this.courseProgress?.lessonsProgress
+          this.chapterProgress?.lessonsProgress
             ?.filter(
               (lp) =>
                 lp.chapterId === chapterRouteId && lp.currentNumberOfSlides > 0

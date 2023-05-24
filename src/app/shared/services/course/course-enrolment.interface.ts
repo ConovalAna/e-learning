@@ -26,6 +26,8 @@ export interface IChapterProgress {
   description: string;
   numberOfLessons: number;
   fullProgressedLessons: number;
+  lessonsProgress: ILessonProgressView[];
+  progress: number;
 }
 
 export interface ILessonProgress {

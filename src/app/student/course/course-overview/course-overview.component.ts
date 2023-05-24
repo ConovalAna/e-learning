@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { combineLatest, concat } from 'rxjs';
 import { ChapterService, IChapter } from 'src/app/shared/services/chapter';
 import {
   UserCourseService,
@@ -8,6 +9,10 @@ import {
 } from 'src/app/shared/services/course';
 import { ICourseEnrolmentView } from 'src/app/shared/services/course/course-enrolment.interface';
 
+interface IChapterProgress {
+  chapter: IChapter;
+  progress: number;
+}
 @Component({
   selector: 'app-course-overview',
   templateUrl: './course-overview.component.html',
@@ -18,6 +23,7 @@ export class CourseOverviewComponent implements OnInit {
   courseProgress!: ICourseEnrolmentView | undefined;
   progress!: number;
   chapters!: IChapter[];
+  chapterProgress: IChapterProgress[] = [];
   courseId: string;
   joined: boolean;
 
@@ -52,7 +58,7 @@ export class CourseOverviewComponent implements OnInit {
     this.joinCourseMutation.mutate(this.courseId);
   }
 
-  openChapterDetailsPage(chapterId: string) {
+  openChapterDetailsPage(chapterId: string | undefined) {
     this.router.navigate(['chapter', chapterId], { relativeTo: this.route });
   }
 
@@ -60,8 +66,7 @@ export class CourseOverviewComponent implements OnInit {
     this.userCourseService
       .getCourseSubscriptionProgress(this.courseId)
       .result$.subscribe((course) => {
-        this.courseProgress = course.data;
-        this.joined = !!course.data;
+
       });
 
     this.courseService
@@ -74,6 +79,28 @@ export class CourseOverviewComponent implements OnInit {
       .getAllChapters(this.courseId)
       .result$.subscribe((fetchedChapters) => {
         this.chapters = fetchedChapters.data ?? [];
+
+        // if(this.chapters)
+        // this.chapters
       });
+
+    combineLatest([this.userCourseService
+      .getCourseSubscriptionProgress(this.courseId)
+      .result$, this.chapterService
+        .getAllChapters(this.courseId)
+      .result$]).subscribe(values => {
+        this.courseProgress = values[0].data;
+        this.joined = !!values[0].data;
+        this.chapters = values[1].data ?? [];
+        this.chapters?.forEach(chapter => {
+          let chProg = this.courseProgress?.chapterProgress.find(cp => cp.chapterId === chapter.id);
+          this.chapterProgress.push({
+            chapter: chapter,
+            progress: chProg?.progress ?? 0,
+          })
+
+        })
+      })
+
   }
 }
