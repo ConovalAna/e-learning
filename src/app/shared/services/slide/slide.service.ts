@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { ISlide } from './slide.interface';
+import { ISlide, ITestSlide } from './slide.interface';
 import { IdResult } from '../../interfaces/id-result.interface';
 import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
 import { tap } from 'rxjs';
 
 const queryKeys = {
   slides: 'slides',
+  testSlides: 'testslides',
 };
 
 @Injectable({
@@ -20,6 +21,7 @@ export class SlideService {
   constructor(private http: HttpClient) {}
 
   apiUrl = 'https://localhost:44302/lessons/';
+  testApiUrl = 'https://localhost:44302/tests/';
 
   addSlideForLesson() {
     return this.useMutation(
@@ -101,6 +103,92 @@ export class SlideService {
       }) => {
         return this.http.put(
           this.apiUrl + lessonId + '/slides/' + slideId + '/order/' + order,
+          null
+        );
+      }
+    );
+  }
+
+  /// Test slides
+
+  addSlideForTest() {
+    return this.useMutation(
+      ({ slide, testId }: { slide: ITestSlide; testId: string }) => {
+        return this.http
+          .post<IdResult<string>>(this.testApiUrl + testId + '/slides', slide)
+          .pipe(
+            tap((result) => {
+              // Invalidate to refetch
+              this.queryClient.invalidateQueries([
+                queryKeys.testSlides,
+                testId,
+              ]);
+            })
+          );
+      }
+    );
+  }
+
+  updateSlideForTest() {
+    return this.useMutation(
+      ({ slide, testId }: { slide: ITestSlide; testId: string }) => {
+        return this.http
+          .put(this.testApiUrl + testId + '/slides/' + slide.id, slide)
+          .pipe(
+            tap((result) => {
+              // Invalidate to refetch
+              this.queryClient.invalidateQueries([
+                queryKeys.testSlides,
+                testId,
+              ]);
+            })
+          );
+      }
+    );
+  }
+
+  deleteSlideForTest() {
+    return this.useMutation(
+      ({ slide, testId }: { slide: ITestSlide; testId: string }) => {
+        return this.http
+          .delete(this.testApiUrl + testId + '/slides/' + slide.id)
+          .pipe(
+            tap((result) => {
+              // Invalidate to refetch
+              this.queryClient.invalidateQueries([
+                queryKeys.testSlides,
+                testId,
+              ]);
+            })
+          );
+      }
+    );
+  }
+
+  fetchSlidesForTest(testId: string) {
+    return this.useQuery(
+      [queryKeys.slides, testId],
+      () =>
+        this.http
+          .get<ITestSlide[]>(this.testApiUrl + testId + '/slides')
+          .pipe(tap((result) => result?.sort(this.orderSlideFunction))),
+      { staleTime: Infinity }
+    );
+  }
+
+  changeSlideOrderForTest() {
+    return this.useMutation(
+      ({
+        slideId,
+        testId,
+        order,
+      }: {
+        slideId: string;
+        testId: string;
+        order: number;
+      }) => {
+        return this.http.put(
+          this.testApiUrl + testId + '/slides/' + slideId + '/order/' + order,
           null
         );
       }

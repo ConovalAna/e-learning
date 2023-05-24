@@ -42,6 +42,10 @@ import { ShareModule } from 'ngx-sharebuttons';
 import { ShareComponent } from './chapters/share/share.component';
 import { TestsListComponent } from './tests/tests-list/tests-list.component';
 import { TestAddComponent } from './tests/test-add/test-add.component';
+import { TestSlideAddComponent } from './test-slides/test-slide-add/test-slide-add.component';
+import { TestSlideThumbnailComponent } from './test-slides/test-slide-thumbnail/test-slide-thumbnail.component';
+import { TestSlidesCarouselComponent } from './test-slides/test-slides-carousel/test-slides-carousel.component';
+import { TestDetailComponent } from './tests/test-detail/test-detail.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +69,11 @@ import { TestAddComponent } from './tests/test-add/test-add.component';
     SlideThumbnailComponent,
     TestsListComponent,
     TestAddComponent,
-    ShareComponent
+    ShareComponent,
+    TestDetailComponent,
+    TestSlideAddComponent,
+    TestSlideThumbnailComponent,
+    TestSlidesCarouselComponent,
   ],
   imports: [
     FormsModule,
@@ -80,7 +88,7 @@ import { TestAddComponent } from './tests/test-add/test-add.component';
     IgxListModule,
     IgxIconModule,
     IgxDragDropModule,
-    ShareModule
+    ShareModule,
   ],
 })
-export class TeacherModule { }
+export class TeacherModule {}

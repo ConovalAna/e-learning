@@ -1,0 +1,68 @@
+@use "igniteui-angular/theming" as *;
+@use "../../../variables" as *;
+
+@include core();
+@include typography();
+@include theme($palette: $palette, $schema: $schema);
+
+:root {
+  @include palette($palette);
+}
+
+.light-theme {
+  @include light-theme($palette);
+}
+
+.dark-theme {
+  background: #333;
+  color: #fff;
+  @include dark-theme($palette: $green-palette);
+
+  .grid-chart-contextmenu-wrapper {
+    @include fluent-dark-theme($fluent-excel-palette);
+  }
+}
+
+.carousel-wrapper {
+  width: 80%;
+}
+
+.list-wrapper {
+  height: 90vh;
+  overflow: auto;
+}
+
+.carousel-animation-wrapper {
+  margin: 20px auto;
+  display: flex;
+}
+
+:host ::ng-deep {
+  igx-list {
+    justify-content: space-between;
+  }
+
+  igx-list-item {
+    padding: 0 16px;
+    cursor: pointer;
+    transition: all 0.25s $ease-out-quad;
+    will-change: filter, opacity;
+    border-radius: 0 8px 8px 0;
+    z-index: 0;
+
+    &.dragged {
+      box-shadow: elevation(8);
+      z-index: 1;
+    }
+
+    &.disabled {
+      filter: blur(2px);
+      opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+        filter: none;
+      }
+    }
+  }
+}

@@ -11,6 +11,8 @@ import { CourseDetailComponent } from './courses/course-detail/course-detail.com
 import { ChapterAddComponent } from './chapters/chapter-add/chapter-add.component';
 import { SlideAddComponent } from './slides/slide-add/slide-add.component';
 import { CourseAddViewComponent } from './courses/course-add-view/course-add-view.component';
+import { TestDetailComponent } from './tests/test-detail/test-detail.component';
+import { TestSlideAddComponent } from './test-slides/test-slide-add/test-slide-add.component';
 
 const routes: Routes = [
   {
@@ -61,6 +63,19 @@ const routes: Routes = [
                   {
                     path: 'slides/:slideId',
                     component: SlideAddComponent,
+                  },
+                ],
+              },
+              {
+                path: ':chapterId/tests/:testId',
+                children: [
+                  {
+                    path: '',
+                    component: TestDetailComponent,
+                  },
+                  {
+                    path: 'slides/:slideId',
+                    component: TestSlideAddComponent,
                   },
                 ],
               },
