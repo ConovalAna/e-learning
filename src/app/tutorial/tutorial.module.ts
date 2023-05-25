@@ -6,6 +6,7 @@ import { SlideWithInputsComponent } from './slides/slide-with-inputs/slide-with-
 import { SlideWithVideoComponent } from './slides/slide-with-video/slide-with-video.component';
 import { SlideWithIntroComponent } from './slides/slide-with-intro/slide-with-intro.component';
 import { QuillReadOnlyConentComponent } from './quill-readonly-content/quill-readonly-content';
+import { LottieModule } from 'ngx-lottie';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { QuillReadOnlyConentComponent } from './quill-readonly-content/quill-rea
     QuillReadOnlyConentComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    LottieModule,
   ],
   bootstrap: [LessonComponent]
 

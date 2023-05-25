@@ -6,9 +6,11 @@ import { SignUpComponent } from './account/sign-up/sign-up.component';
 import { VerifyEmailComponent } from './account/verify-email/verify-email.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { SignGuard } from './shared/guard/sign.guard';
+import { AboutUsComponent } from './student/about-us/about-us.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
+  { path: 'about', pathMatch: 'full', component: AboutUsComponent, },
   { path: 'sign-in', component: SignInComponent, canActivate: [SignGuard] },
   { path: 'sign-up', component: SignUpComponent, canActivate: [SignGuard] },
   { path: 'register-user', component: SignUpComponent },
@@ -32,4 +34,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

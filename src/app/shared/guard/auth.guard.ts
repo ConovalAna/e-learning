@@ -12,7 +12,7 @@ import { UserFacade } from 'src/app/state/users';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private userService: UserFacade, public router: Router) {}
+  constructor(private userService: UserFacade, public router: Router) { }
 
   onAuthStateChanged$ = this.userService.onAuthStateChanged$;
 

@@ -1,25 +1,22 @@
 <div class="px-4 py-5 my-5" style="min-height: 100vh">
   <div class="col-lg-6 mx-auto">
-    <app-quill-readonly-content
-      [delta]="slide?.delta"
-    ></app-quill-readonly-content>
+    <app-quill-readonly-content [delta]="slide?.delta"></app-quill-readonly-content>
+
+    <div *ngIf="isLastLottie" clas="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <div class="lottie-animation" *ngIf="isLastLottie">
+        <ng-lottie [options]="options">
+        </ng-lottie>
+      </div>
+    </div>
 
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-      <button
-        *ngIf="!isLast"
-        type="button"
-        class="btn btn-primary btn-lg px-4 gap-3"
-        (click)="continueToNextSlide()"
-      >
+      <button *ngIf="!isLastLottie" type="button" class="btn btn-primary btn-lg px-4 gap-3"
+        (click)="continueToNextSlide()">
         Continue
       </button>
 
-      <button
-        *ngIf="isLast"
-        type="button"
-        class="btn btn-primary btn-lg px-4 gap-3"
-        (click)="continueToNextSlide()"
-      >
+      <button *ngIf="isLastLottie" type="button" class="btn btn-primary btn-lg px-4 gap-3"
+        (click)="continueToNextSlide()">
         Finish
       </button>
     </div>

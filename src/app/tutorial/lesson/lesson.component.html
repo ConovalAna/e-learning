@@ -1,24 +1,10 @@
-<div
-  *ngFor="
+<div *ngFor="
     let slide of slidesProcess;
     let indexOfelement = index;
     last as isLast
-  "
->
+  ">
   <div style="min-height: 100vh" [id]="slide.id" *ngIf="slide.visible">
-    <app-slide-with-intro
-      *ngIf="slide.type == 'info'"
-      [slide]="slide"
-      [index]="indexOfelement"
-      [isLast]="isLast"
-      (continueToNext)="continueToNextSlide($event)"
-    ></app-slide-with-intro>
-    <!-- <app-slide-with-choose
-      *ngIf="slide.type == 'right-answer'"
-      [callbackFunction]="myCallbackFunction"
-      [model]="slide"
-    ></app-slide-with-choose> -->
-    <!--  <app-slide-with-inputs *ngIf="model.type=='input-answer'" [callbackFunction]="callbackFunction"
-             [model]="model"></app-slide-with-inputs> -->
+    <app-slide-with-intro *ngIf="slide.type == 'info'" [slide]="slide" [index]="indexOfelement" [isLast]="isLast"
+      (continueToNext)="continueToNextSlide($event)"></app-slide-with-intro>
   </div>
 </div>
