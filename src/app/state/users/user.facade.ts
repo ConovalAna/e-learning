@@ -14,11 +14,20 @@ import {
 } from 'rxjs';
 import { AppState } from '../state';
 import { UserActions } from './user.actions';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Auth, UserRole, UserState } from './user.model';
 import * as auth from 'firebase/auth';
 import { fromUser } from './user.selector';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import {
+  LoginWithEmailModel,
+  RegisterWithEmailModel,
+  User,
+} from 'src/app/shared/services/user';
 
 @Injectable()
 export class UserFacade implements OnInitEffects {
@@ -26,6 +35,9 @@ export class UserFacade implements OnInitEffects {
   // Observable Queries available for consumption by views
   // ************************************************
 
+  /**
+   *
+   */
   user$ = this.store.select(fromUser.selectUserState);
   onAuthStateChanged$ = this.afAuth.onAuthStateChanged;
 
@@ -35,23 +47,28 @@ export class UserFacade implements OnInitEffects {
     })
   );
 
+  userProfile$ = (uid: string) =>
+    this.afs.doc<User>(`users/${uid}`).snapshotChanges();
+
   // ************************************************
   // Effects to be registered at the Module level
   // ************************************************
 
   getUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(UserActions.getUser),
+      ofType(UserActions.getuser),
       mergeMap(() =>
         this.afAuth.authState.pipe(
-          map((authData: any) => {
+          map((authData: firebase.default.User | null) => {
             if (authData) {
               /// User logged in
+              this.setUserData(authData).then();
+
               const auth = new Auth(authData.uid, authData.displayName ?? '');
               return UserActions.authenticated({ payload: auth });
             } else {
               /// User not logged in
-              return UserActions.notAuthenticated({});
+              return UserActions.notauthenticated({});
             }
           }),
           catchError((error) => of(UserActions.error({})))
@@ -66,10 +83,36 @@ export class UserFacade implements OnInitEffects {
 
   login$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(UserActions.googleLogin),
+      ofType(UserActions.googlelogin),
       exhaustMap((actions) =>
         this.googleLogin()
-          .then(() => UserActions.getUser({}))
+          .then(() => UserActions.getuser({}))
+          .catch((err) => UserActions.error({ payload: err.message }))
+      )
+    )
+  );
+
+  /**
+   * Login with Google OAuth
+   */
+
+  loginWithEmail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.emaillogin),
+      exhaustMap((actions) =>
+        this.emailLogin(actions.payload?.email, actions.payload?.password)
+          .then(() => UserActions.getuser({}))
+          .catch((err) => UserActions.error({ payload: err.message }))
+      )
+    )
+  );
+
+  registerWithEmail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.registerwithemailandpassword),
+      exhaustMap(({ payload }) =>
+        this.registerWithEmail(payload)
+          .then(() => UserActions.getuser({}))
           .catch((err) => UserActions.error({ payload: err.message }))
       )
     )
@@ -81,7 +124,7 @@ export class UserFacade implements OnInitEffects {
       switchMap((action) =>
         this.afAuth
           .signOut()
-          .then(() => UserActions.notAuthenticated({}))
+          .then(() => UserActions.notauthenticated({}))
           .catch((err) => UserActions.error({ payload: err.message }))
       )
     )
@@ -91,11 +134,12 @@ export class UserFacade implements OnInitEffects {
     private store: Store<AppState>,
     private actions$: Actions,
     public afs: AngularFirestore, // Inject Firestore service
-    public afAuth: AngularFireAuth // Inject Firebase auth service
+    public afAuth: AngularFireAuth, // Inject Firebase auth service
+    public authSerive: AuthService
   ) {}
 
   ngrxOnInitEffects(): Action {
-    return UserActions.getUser({});
+    return UserActions.getuser({});
   }
 
   /**
@@ -103,7 +147,25 @@ export class UserFacade implements OnInitEffects {
    */
   loginWithGoogle(preferredRole: UserRole): Observable<UserState> {
     this.store.dispatch(
-      UserActions.googleLogin({ payload: { preferredRole } })
+      UserActions.googlelogin({ payload: { preferredRole } })
+    );
+    return this.user$;
+  }
+
+  /**
+   *
+   */
+  loginWithEmail(model: LoginWithEmailModel): Observable<UserState> {
+    this.store.dispatch(UserActions.emaillogin({ payload: model }));
+    return this.user$;
+  }
+
+  /**
+   *
+   */
+  signUpWithEmailAndPassword(registerModel: RegisterWithEmailModel) {
+    this.store.dispatch(
+      UserActions.registerwithemailandpassword({ payload: registerModel })
     );
     return this.user$;
   }
@@ -128,5 +190,53 @@ export class UserFacade implements OnInitEffects {
   protected googleLogin(): Promise<any> {
     const provider = new auth.GoogleAuthProvider();
     return this.afAuth.signInWithPopup(provider);
+  }
+
+  protected emailLogin(email?: string, password?: string): Promise<any> {
+    if (email && password)
+      return this.afAuth.signInWithEmailAndPassword(email, password);
+    throw Error('Empty email/pasword');
+  }
+
+  // Sign up with email/password
+  protected registerWithEmail(
+    registerModel: RegisterWithEmailModel | undefined
+  ) {
+    if (!registerModel) throw Error('Not registered');
+    return this.afAuth
+      .createUserWithEmailAndPassword(
+        registerModel.email,
+        registerModel.password
+      )
+      .then((result) => {
+        /* Call the SendVerificaitonMail() function when new user sign 
+          up and returns promise */
+        // this.SendVerificationMail();
+      })
+      .catch((error) => {
+        window.alert(error.message);
+      });
+  }
+
+  async setUserData(user: any) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `users/${user.uid}`
+    );
+
+    await userRef.get().subscribe((value) => {
+      const userData: User = {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        emailVerified: user.emailVerified,
+      };
+      if (!value.exists || !value.get('role')) {
+        userData.role = 'student';
+      }
+      userRef.set(userData, {
+        merge: true,
+      });
+    });
   }
 }

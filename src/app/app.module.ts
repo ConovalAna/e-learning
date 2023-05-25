@@ -1,4 +1,9 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, inject, isDevMode } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  NgModule,
+  inject,
+  isDevMode,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,8 +27,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AdminModule } from './admin/admin.module';
 import { LottieModule } from 'ngx-lottie';
 import { SmartbyteMaterialModule } from './smartbyte-material.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { NoRoleComponent } from './no-role/no-role.component';
 
 export function playerFactory(): any {
   return import('lottie-web');
@@ -34,12 +41,15 @@ export function playerFactory(): any {
     AppComponent,
     SignInComponent,
     SignUpComponent,
+    NotFoundComponent,
+    NoRoleComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     AppStateModule,
     ToastrModule.forRoot({ positionClass: 'toast-bottom-right' }),
@@ -63,4 +73,4 @@ export function playerFactory(): any {
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

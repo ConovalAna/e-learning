@@ -11,7 +11,7 @@ import { UserFacade } from 'src/app/state/users';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class TeacherGuard implements CanActivate {
   constructor(private userService: UserFacade, public router: Router) {}
 
   onAuthStateChanged$ = this.userService.onAuthStateChanged$;
@@ -30,10 +30,9 @@ export class AuthGuard implements CanActivate {
           this.userProfile$(user.uid).subscribe((docUserProfile) => {
             if (docUserProfile?.payload?.exists) {
               let role = docUserProfile.payload.get('role');
-              if (role === 'student') {
-                // this.router.navigate(['student']);
-              } else if (role === 'teacher') {
-                //this.router.navigate(['admin']);
+              if (role !== 'teacher') {
+                if (role === 'student') this.router.navigate(['student']);
+                else this.router.navigate(['no-role']);
               }
             }
           });

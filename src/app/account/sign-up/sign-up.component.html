@@ -13,7 +13,7 @@
         >
           <div class="card-body p-5 shadow-5 text-center">
             <h2 class="fw-bold mb-3">Sign up</h2>
-            <ul class="nav nav-pills nav-justified mb-3">
+            <!-- <ul class="nav nav-pills nav-justified mb-3">
               <li class="nav-item">
                 <button
                   class="nav-link"
@@ -32,8 +32,8 @@
                   Profesor
                 </button>
               </li>
-            </ul>
-            <form>
+            </ul> -->
+            <form (ngSubmit)="registerWithEmail()" [formGroup]="registerForm">
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
@@ -41,7 +41,7 @@
                       type="text"
                       id="firstName"
                       class="form-control"
-                      #firstName
+                      formControlName="firstName"
                       required
                     />
                     <label class="form-label" for="firstName">First name</label>
@@ -51,9 +51,9 @@
                   <div class="form-outline">
                     <input
                       type="text"
-                      id="lastname"
+                      id="lastName"
                       class="form-control"
-                      #lastName
+                      formControlName="lastName"
                       required
                     />
                     <label class="form-label" for="lastname">Last name</label>
@@ -67,7 +67,7 @@
                   type="email"
                   id="userName"
                   class="form-control"
-                  #userName
+                  formControlName="email"
                   required
                 />
                 <label class="form-label" for="userName">Email address</label>
@@ -79,7 +79,7 @@
                   type="password"
                   id="userPassword"
                   class="form-control"
-                  #userPassword
+                  formControlName="password"
                   required
                 />
                 <label class="form-label" for="userPassword">Password</label>
@@ -101,7 +101,9 @@
 
               <!-- Submit button -->
               <div class="d-grid mb-4">
-                <button class="btn btn-info" type="button">Sign in</button>
+                <button class="btn btn-info" type="button" type="submit">
+                  Sign up
+                </button>
               </div>
               <!-- Register buttons -->
               <div class="text-center">
@@ -137,6 +139,10 @@
                 >
                   <i class="fa fa-github"></i>
                 </button>
+              </div>
+              <div class="form-outline mt-4">
+                <a href="about" class="text-reset me-4">About Us</a>
+                <a href="sign-in" class="text-reset">Sign in</a>
               </div>
             </form>
           </div>

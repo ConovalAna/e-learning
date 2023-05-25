@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AuthGuard } from '../shared/guard/auth.guard';
+import { TeacherGuard } from '../shared/guard/teacher.guard';
 
 const routes: Routes = [
   {
@@ -19,7 +19,7 @@ const routes: Routes = [
         path: 'teacher',
         loadChildren: () =>
           import('./teacher/teacher.module').then((m) => m.TeacherModule),
-        canActivate: [AuthGuard],
+        canActivate: [TeacherGuard],
       },
       {
         path: '**',

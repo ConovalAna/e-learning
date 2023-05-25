@@ -1,46 +1,44 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { FormBuilder } from '@angular/forms';
+import { RegisterWithEmailModel } from 'src/app/shared/services/user';
 import { UserFacade, UserRole } from 'src/app/state/users';
-
-interface RegisterWithEmailModel {
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string;
-}
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit {
-
   constructor(
-    private userService: UserFacade,
-  ) { }
-  ngOnInit(): void {
-  }
+    private userFacade: UserFacade,
+    private formBuilder: FormBuilder
+  ) {}
+  ngOnInit(): void {}
 
-  user$ = this.userService.user$;
+  user$ = this.userFacade.user$;
   preferredRole = UserRole.Student;
-  registerModel: RegisterWithEmailModel = {
-    firstName: "",
-    email: "",
-    lastName: "",
-    password: ""
-  }
+
+  registerForm = this.formBuilder.group<RegisterWithEmailModel>({
+    firstName: '',
+    email: '',
+    lastName: '',
+    password: '',
+  });
 
   changePreferredRole(type: UserRole) {
     this.preferredRole = type;
   }
 
-
-  registerWithGoogle() { this.userService.loginWithGoogle(this.preferredRole) }
-  registerWithEmail(firstName: string,) { }
+  registerWithGoogle() {
+    this.userFacade.loginWithGoogle(this.preferredRole);
+  }
+  registerWithEmail() {
+    this.userFacade.signUpWithEmailAndPassword(
+      this.registerForm.value as RegisterWithEmailModel
+    );
+  }
 
   public get userRole(): typeof UserRole {
     return UserRole;
   }
-
 }

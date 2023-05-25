@@ -1,15 +1,20 @@
 import { createActionGroup, props } from '@ngrx/store';
 import { Auth, UserRole } from './user.model';
-
+import {
+  LoginWithEmailModel,
+  RegisterWithEmailModel,
+} from 'src/app/shared/services/user';
 
 export const UserActions = createActionGroup({
-    source: 'User',
-    events: {
-        'Get user': props<{ payload?: any }>(),
-        'Authenticated': props<{ payload: Auth }>(),
-        'Not Authenticated': props<{ payload?: any }>(),
-        'Error': props<{ payload?: any }>(),
-        'Google login': props<{ payload?: { preferredRole: UserRole } }>(),
-        'Logout': props<{ payload?: any }>(),
-    },
+  source: 'User',
+  events: {
+    GetUser: props<{ payload?: any }>(),
+    Authenticated: props<{ payload: Auth }>(),
+    NotAuthenticated: props<{ payload?: any }>(),
+    Error: props<{ payload?: any }>(),
+    GoogleLogin: props<{ payload?: { preferredRole: UserRole } }>(),
+    EmailLogin: props<{ payload?: LoginWithEmailModel }>(),
+    Logout: props<{ payload?: any }>(),
+    RegisterWithEmailAndPassword: props<{ payload?: RegisterWithEmailModel }>(),
+  },
 });

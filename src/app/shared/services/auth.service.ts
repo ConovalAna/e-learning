@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { User } from '../services/user';
+import { RegisterWithEmailModel, User } from '../services/user';
 import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root',
-
 })
 export class AuthService {
   userData: any; // Save logged in user data
@@ -51,13 +50,16 @@ export class AuthService {
       });
   }
   // Sign up with email/password
-  SignUp(email: string, password: string) {
+  SignUp(registerModel: RegisterWithEmailModel) {
     return this.afAuth
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(
+        registerModel.email,
+        registerModel.password
+      )
       .then((result) => {
         /* Call the SendVerificaitonMail() function when new user sign 
         up and returns promise */
-        this.SendVerificationMail();
+        // this.SendVerificationMail();
         this.SetUserData(result.user);
       })
       .catch((error) => {
@@ -109,7 +111,7 @@ export class AuthService {
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user: any) {
+  SetUserData(user: any, registerModel?: RegisterWithEmailModel) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
@@ -119,6 +121,7 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
+      role: 'student',
     };
     return userRef.set(userData, {
       merge: true,
