@@ -68,7 +68,10 @@
               (change)="onChangeRadioValue($event)"
             >
               <div class="col-4" *ngFor="let answer of answers; let i = index">
-                <mat-radio-button value="{{ answer.value }}">
+                <mat-radio-button
+                  value="{{ answer.value }}"
+                  [checked]="selectedSingleAnswer === answer.value"
+                >
                   {{ answer.value }}
                 </mat-radio-button>
               </div>

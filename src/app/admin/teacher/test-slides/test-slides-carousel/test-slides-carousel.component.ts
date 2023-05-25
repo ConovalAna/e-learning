@@ -80,16 +80,19 @@ export class TestSlidesCarouselComponent implements OnInit {
       order: 0,
       type: '',
       delta: `{"ops":[{"insert":"Title hero ${this.slides$?.length}"},{"attributes":{"align":"center","header":1},"insert":"\\n"},{"insert":"Example of subtext"},{"attributes":{"align":"center"},"insert":"\\n\\n\\n"},{"insert":"\\n"}]}`,
-      answers: [],
+      answers: ['Apple'],
       answerType: 0,
-      correctAnswers: [],
+      correctAnswers: ['Apple'],
     };
     this.addSlideMutation.mutate({ slide: slide, testId: this.testId });
   }
 
   onChangeSlide(slide: ITestSlide) {
-    this.updateSlideMutation.mutate({ testId: this.testId, slide: slide });
-    window.location.reload();
+    this.updateSlideMutation
+      .mutate({ testId: this.testId, slide: slide })
+      .finally(() => {
+        window.location.reload();
+      });
   }
 
   public getDragDirectiveRef(id: number): IgxDragDirective | undefined {

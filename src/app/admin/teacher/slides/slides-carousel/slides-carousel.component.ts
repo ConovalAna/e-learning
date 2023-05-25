@@ -88,8 +88,11 @@ export class SlidesCarouselComponent implements OnInit {
   }
 
   onChangeSlide(slide: ISlide) {
-    this.updateSlideMutation.mutate({ lessonId: this.lessonId, slide: slide });
-    window.location.reload();
+    this.updateSlideMutation
+      .mutate({ lessonId: this.lessonId, slide: slide })
+      .finally(() => {
+        window.location.reload();
+      });
   }
 
   public getDragDirectiveRef(id: number): IgxDragDirective | undefined {
