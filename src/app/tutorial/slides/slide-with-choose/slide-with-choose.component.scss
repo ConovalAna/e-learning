@@ -1,27 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
-.options {
-    position: relative;
+// .options {
+//     position: relative;
+//     display: flex;
+//     margin-top: 20px;
+//     padding: 8px 7px;
+//     cursor: pointer;
+//     border: 1px solid #ddd;
+//     background-color: white;
+// }
+
+// .options p {
+//     margin: 0px;
+// }
+
+// .options input {
+//     opacity: 0;
+// }
+
+// .options:hover {
+//     background-color: rgb(215, 236, 245);
+// }
+
+// .options:has(:checked) {
+//     background-color: rgb(16, 180, 250);
+// }
+
+.example-radio-group {
     display: flex;
-    margin-top: 20px;
-    padding: 8px 7px;
-    cursor: pointer;
-    border: 1px solid #ddd;
-    background-color: white;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
 }
 
-.options p {
-    margin: 0px;
+.example-radio-button {
+    margin: 5px;
 }
 
-.options input {
-    opacity: 0;
+.example-section {
+    margin: 12px 0;
 }
 
-.options:hover {
-    background-color: rgb(215, 236, 245);
-}
+// .lottie-animation {
+//     margin-left: auto;
+//     right: 30;
+//     bottom: 30;
+//     // position: fixed;
+//     // width: 75%;
+//     // height: 75%;
+//     // display: flex;
+//     align-self: center;
+//     justify-content: center;
 
-.options:has(:checked) {
-    background-color: rgb(16, 180, 250);
+//     transform: translate(-50%, -50%);
+// }
+.lottie-animation {
+    // position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
 }

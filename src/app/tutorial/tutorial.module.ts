@@ -7,6 +7,10 @@ import { SlideWithVideoComponent } from './slides/slide-with-video/slide-with-vi
 import { SlideWithIntroComponent } from './slides/slide-with-intro/slide-with-intro.component';
 import { QuillReadOnlyConentComponent } from './quill-readonly-content/quill-readonly-content';
 import { LottieModule } from 'ngx-lottie';
+import { TestsComponent } from './test/tests/tests.component';
+import { SmartbyteMaterialModule } from '../smartbyte-material.module';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -15,11 +19,15 @@ import { LottieModule } from 'ngx-lottie';
     SlideWithInputsComponent,
     SlideWithVideoComponent,
     SlideWithIntroComponent,
-    QuillReadOnlyConentComponent
+    QuillReadOnlyConentComponent,
+    TestsComponent
   ],
   imports: [
     CommonModule,
     LottieModule,
+    SmartbyteMaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   bootstrap: [LessonComponent]
 

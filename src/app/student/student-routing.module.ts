@@ -9,6 +9,7 @@ import { CoursesOverviewComponent } from './courses-overview/courses-overview.co
 import { ChapterSectionComponent } from './chapter-section/chapter-section.component';
 import { ProfileComponent } from './student-profile/profile/profile.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { TestsComponent } from '../tutorial/test/tests/tests.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,16 @@ const routes: Routes = [
               {
                 path: ':lessonId/tutorial',
                 component: LessonComponent,
+              }
+            ],
+          },
+          {
+            path: ':id/chapter/:chapterId/tests',
+            children: [
+              {
+                path: ':testId',
+                pathMatch: 'full',
+                component: TestsComponent,
               },
             ],
           },
