@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   Component,
   EventEmitter,
   Input,
@@ -25,7 +26,7 @@ interface ResponseType {
   templateUrl: './test-slide-add.component.html',
   styleUrls: ['./test-slide-add.component.scss'],
 })
-export class TestSlideAddComponent implements OnInit {
+export class TestSlideAddComponent {
   @Input() slide?: ITestSlide;
   @Input() testId: string = '';
 
@@ -41,6 +42,7 @@ export class TestSlideAddComponent implements OnInit {
     { value: 'Pear', completed: false },
   ];
   hasAnswers = true;
+  modelIsSetted = false;
 
   answerTypeOptions: ResponseType[] = [
     { value: AnswerType.One, viewValue: 'Single response', completed: false },
@@ -53,26 +55,25 @@ export class TestSlideAddComponent implements OnInit {
 
   deleteSlideMutation = this.slideService.deleteSlideForTest();
 
-  ngOnInit(): void {
-    if (this.slide) {
-      this.selectedAnswerType = this.slide.answerType;
-      this.selectedSingleAnswer = this.slide.answers[0];
-      this.answers = this.slide.answers.map((value) => {
-        return {
-          value: value,
-          completed: !!this.slide?.correctAnswers.find(
-            (cAns) => cAns === value
-          ),
-        };
-      });
-    }
-  }
-
   constructor(private slideService: SlideService) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['slide']) {
       this.quillChild?.setContents(changes['slide']?.currentValue.delta);
+      this.selectedAnswerType = changes['slide']?.currentValue.answerType;
+      this.selectedSingleAnswer =
+        changes['slide']?.currentValue.correctAnswers[0];
+      this.answers = changes['slide']?.currentValue.answers.map(
+        (value: any) => {
+          return {
+            value: value,
+            completed: !!this.slide?.correctAnswers.find(
+              (cAns) => cAns === value
+            ),
+          };
+        }
+      );
+      this.modelIsSetted = true;
     }
   }
 
