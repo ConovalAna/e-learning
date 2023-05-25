@@ -30,7 +30,7 @@ export class SignUpComponent implements OnInit {
   }
 
   registerWithGoogle() {
-    this.userFacade.loginWithGoogle(this.preferredRole);
+    this.userFacade.loginWithProvider('google');
   }
   registerWithEmail() {
     this.userFacade.signUpWithEmailAndPassword(

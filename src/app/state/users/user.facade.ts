@@ -4,6 +4,7 @@ import { Action, Store } from '@ngrx/store';
 import {
   catchError,
   defer,
+  EMPTY,
   exhaustMap,
   map,
   mergeMap,
@@ -83,12 +84,18 @@ export class UserFacade implements OnInitEffects {
 
   login$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(UserActions.googlelogin),
-      exhaustMap((actions) =>
-        this.googleLogin()
-          .then(() => UserActions.getuser({}))
-          .catch((err) => UserActions.error({ payload: err.message }))
-      )
+      ofType(UserActions.providerlogin),
+      exhaustMap((actions) => {
+        if (actions.payload?.provider == 'google')
+          return this.googleLogin()
+            .then(() => UserActions.getuser({}))
+            .catch((err) => UserActions.error({ payload: err.message }));
+        else if (actions.payload?.provider == 'github')
+          return this.githubLogin()
+            .then(() => UserActions.getuser({}))
+            .catch((err) => UserActions.error({ payload: err.message }));
+        else return EMPTY;
+      })
     )
   );
 
@@ -145,9 +152,9 @@ export class UserFacade implements OnInitEffects {
   /**
    *
    */
-  loginWithGoogle(preferredRole: UserRole): Observable<UserState> {
+  loginWithProvider(provider: string): Observable<UserState> {
     this.store.dispatch(
-      UserActions.googlelogin({ payload: { preferredRole } })
+      UserActions.providerlogin({ payload: { provider: provider } })
     );
     return this.user$;
   }
@@ -189,6 +196,16 @@ export class UserFacade implements OnInitEffects {
 
   protected googleLogin(): Promise<any> {
     const provider = new auth.GoogleAuthProvider();
+    return this.afAuth.signInWithPopup(provider);
+  }
+
+  protected facebookLogin(): Promise<any> {
+    const provider = new auth.FacebookAuthProvider();
+    return this.afAuth.signInWithPopup(provider);
+  }
+
+  protected githubLogin(): Promise<any> {
+    const provider = new auth.GithubAuthProvider();
     return this.afAuth.signInWithPopup(provider);
   }
 

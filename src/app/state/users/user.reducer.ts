@@ -15,7 +15,7 @@ export const userReducer = createReducer(
   on(UserActions.notauthenticated, (_state) => {
     return { ..._state, ...initialState, loading: false };
   }),
-  on(UserActions.googlelogin, (_state, { payload }) => {
+  on(UserActions.providerlogin, (_state, { payload }) => {
     return { ..._state, ...payload, loading: true };
   }),
   on(UserActions.error, (_state, { payload }) => {

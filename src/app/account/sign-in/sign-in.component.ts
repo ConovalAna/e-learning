@@ -26,8 +26,12 @@ export class SignInComponent implements OnInit {
     this.preferredRole = type;
   }
 
-  login() {
-    this.userService.loginWithGoogle(this.preferredRole);
+  loginWithGoogle() {
+    this.userService.loginWithProvider('google');
+  }
+
+  loginWithGithub() {
+    this.userService.loginWithProvider('github');
   }
   logout() {
     this.userService.logout();

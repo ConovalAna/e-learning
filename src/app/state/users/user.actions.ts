@@ -12,7 +12,7 @@ export const UserActions = createActionGroup({
     Authenticated: props<{ payload: Auth }>(),
     NotAuthenticated: props<{ payload?: any }>(),
     Error: props<{ payload?: any }>(),
-    GoogleLogin: props<{ payload?: { preferredRole: UserRole } }>(),
+    ProviderLogin: props<{ payload?: { provider: string } }>(),
     EmailLogin: props<{ payload?: LoginWithEmailModel }>(),
     Logout: props<{ payload?: any }>(),
     RegisterWithEmailAndPassword: props<{ payload?: RegisterWithEmailModel }>(),
