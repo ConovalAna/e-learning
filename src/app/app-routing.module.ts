@@ -32,19 +32,10 @@ const routes: Routes = [
       import('./admin/admin.module').then((m) => m.AdminModule),
     canActivate: [TeacherGuard],
   },
-  {
-    path: 'teacher',
-    loadChildren: () =>
-      import('./admin/admin.module').then((m) => m.AdminModule),
-    canActivate: [TeacherGuard],
-  },
+
   {
     path: 'no-role',
     component: NoRoleComponent,
-  },
-  {
-    path: '**',
-    component: NotFoundComponent,
   },
 ];
 
