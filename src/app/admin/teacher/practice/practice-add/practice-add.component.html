@@ -1,0 +1,32 @@
+<div class="p-3">
+  <h3 *ngIf="isEditMode" class="text-center">Update Practice</h3>
+  <h3 *ngIf="!isEditMode" class="text-center">Create Practice</h3>
+  <div class="pt-3">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="practice.name" name="name" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="practice.description"
+        name="description"
+      ></textarea>
+    </mat-form-field>
+    <div mat-dialog-actions>
+      <button
+        mat-raised-button
+        mat-dialog-close
+        color="primary"
+        (click)="isEditMode ? updatePractice() : addPractice()"
+        class="w-100 my-3"
+        style="height: 4em"
+      >
+        <span *ngIf="isEditMode" style="font-size: larger">Update</span>
+        <span *ngIf="!isEditMode" style="font-size: larger">Create</span>
+      </button>
+    </div>
+  </div>
+</div>

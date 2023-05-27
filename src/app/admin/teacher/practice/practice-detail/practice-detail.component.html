@@ -1,0 +1,52 @@
+<mat-toolbar color="" *ngIf="practice !== undefined">
+  <button
+    mat-icon-button
+    aria-label="Example icon-button with back-arrow"
+    class="me-3"
+    (click)="goBack()"
+  >
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
+  <span>{{ practice.name }}</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button aria-label="Example icon-button with heart icon">
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button aria-label="Example icon-button with share icon">
+    <mat-icon>share</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-tab-group animationDuration="1000ms">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="me-2">description</mat-icon>
+      <div matBadge="4" matBadgeOverlap="false" class="demo-section">
+        Slides
+      </div>
+    </ng-template>
+    <app-practice-slides-carousel
+      [practiceId]="practiceId"
+    ></app-practice-slides-carousel>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="me-2">insert_drive_file</mat-icon>
+      Documents
+    </ng-template>
+    Documents
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="me-2">note_add</mat-icon>
+      Notes
+    </ng-template>
+    Notes
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="me-2">people</mat-icon>
+      Collaborations
+    </ng-template>
+    Collaborations
+  </mat-tab>
+</mat-tab-group>

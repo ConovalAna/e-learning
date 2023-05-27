@@ -46,6 +46,12 @@ import { TestSlideAddComponent } from './test-slides/test-slide-add/test-slide-a
 import { TestSlideThumbnailComponent } from './test-slides/test-slide-thumbnail/test-slide-thumbnail.component';
 import { TestSlidesCarouselComponent } from './test-slides/test-slides-carousel/test-slides-carousel.component';
 import { TestDetailComponent } from './tests/test-detail/test-detail.component';
+import { PracticeListComponent } from './practice/practice-list/practice-list.component';
+import { PracticeAddComponent } from './practice/practice-add/practice-add.component';
+import { PracticeDetailComponent } from './practice/practice-detail/practice-detail.component';
+import { PracticeSlideAddComponent } from './practice-slides/practice-slide-add/practice-slide-add.component';
+import { PracticeSlideThumbnailComponent } from './practice-slides/practice-slide-thumbnail/practice-slide-thumbnail.component';
+import { PracticeSlidesCarouselComponent } from './practice-slides/practice-slides-carousel/practice-slides-carousel.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +80,12 @@ import { TestDetailComponent } from './tests/test-detail/test-detail.component';
     TestSlideAddComponent,
     TestSlideThumbnailComponent,
     TestSlidesCarouselComponent,
+    PracticeListComponent,
+    PracticeAddComponent,
+    PracticeDetailComponent,
+    PracticeSlideAddComponent,
+    PracticeSlideThumbnailComponent,
+    PracticeSlidesCarouselComponent,
   ],
   imports: [
     FormsModule,

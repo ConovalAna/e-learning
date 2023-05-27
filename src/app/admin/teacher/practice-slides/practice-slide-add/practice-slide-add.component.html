@@ -1,0 +1,114 @@
+<div class="p-4">
+  <div id="slide-editor" class="pb-5">
+    <app-quill-editor></app-quill-editor>
+
+    <div>
+      <div class="row mt-3">
+        <mat-card class="row mt-5">
+          <h3>Add answers</h3>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-6" *ngFor="let answer of answers; let i = index">
+                <mat-form-field
+                  class="example-form-field"
+                  appearance="outline"
+                  class="w-100"
+                >
+                  <input
+                    matInput
+                    type="text"
+                    id="'answer'+i"
+                    name="'answer'+i"
+                    [(ngModel)]="answer.value"
+                  />
+                  <button
+                    matSuffix
+                    mat-icon-button
+                    aria-label="Clear"
+                    (click)="removeAnswer(i)"
+                  >
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+
+              <div class="col">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="addNewAnswer()"
+                  style="height: 4em"
+                >
+                  Add new answer
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="row mt-5">
+          <mat-card-content>
+            <h3>Choose correct answer</h3>
+            <mat-form-field appearance="outline">
+              <mat-select
+                [(ngModel)]="selectedAnswerType"
+                name="answerTypeOption"
+              >
+                <mat-option
+                  *ngFor="let answerTypeOption of answerTypeOptions"
+                  [value]="answerTypeOption.value"
+                >
+                  {{ answerTypeOption.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-radio-group
+              aria-label="Select an option"
+              class="row mt-3"
+              *ngIf="selectedAnswerType === 0"
+              (change)="onChangeRadioValue($event)"
+            >
+              <div class="col-4" *ngFor="let answer of answers; let i = index">
+                <mat-radio-button
+                  value="{{ answer.value }}"
+                  [checked]="selectedSingleAnswer === answer.value"
+                >
+                  {{ answer.value }}
+                </mat-radio-button>
+              </div>
+            </mat-radio-group>
+            <div class="row mt-3" *ngIf="selectedAnswerType === 1">
+              <mat-checkbox
+                *ngFor="let answer of answers; let i = index"
+                [(ngModel)]="answer.completed"
+                class="col-4"
+              >
+                {{ answer.value }}
+              </mat-checkbox>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <mat-error *ngIf="!hasAnswers"
+    ><h3>*Answers are required for practice</h3></mat-error
+  >
+
+  <div
+    id="slide-header"
+    class="d-flex justify-content-between text-center mt-5"
+  >
+    <div id="slide-details ">
+      <button mat-raised-button color="warn" (click)="deleteSlide()">
+        Delete
+      </button>
+    </div>
+
+    <div id="action-buttons">
+      <button mat-raised-button color="primary" class="me-5" (click)="onSave()">
+        Save changes
+      </button>
+      <button mat-raised-button color="warn">Cancel</button>
+    </div>
+  </div>
+</div>

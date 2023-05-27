@@ -13,6 +13,8 @@ import { SlideAddComponent } from './slides/slide-add/slide-add.component';
 import { CourseAddViewComponent } from './courses/course-add-view/course-add-view.component';
 import { TestDetailComponent } from './tests/test-detail/test-detail.component';
 import { TestSlideAddComponent } from './test-slides/test-slide-add/test-slide-add.component';
+import { PracticeDetailComponent } from './practice/practice-detail/practice-detail.component';
+import { PracticeSlideAddComponent } from './practice-slides/practice-slide-add/practice-slide-add.component';
 
 const routes: Routes = [
   {
@@ -76,6 +78,19 @@ const routes: Routes = [
                   {
                     path: 'slides/:slideId',
                     component: TestSlideAddComponent,
+                  },
+                ],
+              },
+              {
+                path: ':chapterId/practice/:practiceId',
+                children: [
+                  {
+                    path: '',
+                    component: PracticeDetailComponent,
+                  },
+                  {
+                    path: 'slides/:slideId',
+                    component: PracticeSlideAddComponent,
                   },
                 ],
               },
