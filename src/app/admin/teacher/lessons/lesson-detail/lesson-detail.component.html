@@ -1,10 +1,5 @@
 <mat-toolbar color="" *ngIf="lesson !== undefined">
-  <button
-    mat-icon-button
-    aria-label="Example icon-button with back-arrow"
-    class="me-3"
-    (click)="goBack()"
-  >
+  <button mat-icon-button aria-label="Example icon-button with back-arrow" class="me-3" (click)="goBack()">
     <mat-icon>keyboard_backspace</mat-icon>
   </button>
   <span>{{ lesson.name }}</span>
@@ -24,7 +19,7 @@
         Slides
       </div>
     </ng-template>
-    <app-slides-carousel [lessonId]="lessonId"></app-slides-carousel>
+    <app-slides-carousel [lessonId]="lessonId" [chapterId]="chapterId"></app-slides-carousel>
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>

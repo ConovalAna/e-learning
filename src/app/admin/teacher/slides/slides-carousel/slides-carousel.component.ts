@@ -27,6 +27,7 @@ import { ISlide, SlideService } from 'src/app/shared/services/slide';
 })
 export class SlidesCarouselComponent implements OnInit {
   @Input() public lessonId: string;
+  @Input() public chapterId: string;
 
   @ViewChild(IgxListComponent, { static: true })
   public list?: IgxListComponent;
@@ -51,6 +52,7 @@ export class SlidesCarouselComponent implements OnInit {
 
   constructor(private slideService: SlideService) {
     this.lessonId = '';
+    this.chapterId = '';
   }
 
   setCurrentSlide() {
@@ -84,7 +86,7 @@ export class SlidesCarouselComponent implements OnInit {
       type: '',
       delta: `{"ops":[{"insert":"Title hero ${this.slides$?.length}"},{"attributes":{"align":"center","header":1},"insert":"\\n"},{"insert":"Example of subtext"},{"attributes":{"align":"center"},"insert":"\\n\\n\\n"},{"insert":"\\n"}]}`,
     };
-    this.addSlideMutation.mutate({ slide: slide, lessonId: this.lessonId });
+    this.addSlideMutation.mutate({ slide: slide, lessonId: this.lessonId, chapterId: this.chapterId });
   }
 
   onChangeSlide(slide: ISlide) {
@@ -157,8 +159,8 @@ export class SlidesCarouselComponent implements OnInit {
       newIndex < 0
         ? 0
         : newIndex >= this.slides$.length
-        ? this.slides$.length - 1
-        : newIndex;
+          ? this.slides$.length - 1
+          : newIndex;
     if (newIndex === this.newIndex) {
       // If the current new index is unchanged do nothing.
       return;

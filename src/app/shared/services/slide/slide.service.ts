@@ -18,16 +18,16 @@ export class SlideService {
   private useMutation = inject(UseMutation);
   private queryClient = inject(QueryClientService);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   apiUrl = 'https://localhost:44302/lessons/';
   testApiUrl = 'https://localhost:44302/tests/';
 
   addSlideForLesson() {
     return this.useMutation(
-      ({ slide, lessonId }: { slide: ISlide; lessonId: string }) => {
+      ({ slide, lessonId, chapterId }: { slide: ISlide; lessonId: string; chapterId: string; }) => {
         return this.http
-          .post<IdResult<string>>(this.apiUrl + lessonId + '/slides', slide)
+          .post<IdResult<string>>(this.apiUrl + lessonId + '/slides' + '/chapter/' + chapterId, slide)
           .pipe(
             tap((result) => {
               // Invalidate to refetch
@@ -55,9 +55,9 @@ export class SlideService {
 
   deleteSlideForLesson() {
     return this.useMutation(
-      ({ slide, lessonId }: { slide: ISlide; lessonId: string }) => {
+      ({ slide, lessonId, chapterId }: { slide: ISlide; lessonId: string; chapterId: string; }) => {
         return this.http
-          .delete(this.apiUrl + lessonId + '/slides/' + slide.id)
+          .delete(this.apiUrl + lessonId + '/slides/' + slide.id + '/chapter/' + chapterId)
           .pipe(
             tap((result) => {
               // Invalidate to refetch

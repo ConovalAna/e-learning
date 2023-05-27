@@ -18,15 +18,16 @@ import { ISlide, SlideService } from 'src/app/shared/services/slide';
 export class SlideAddComponent implements OnInit {
   @Input() slide?: ISlide;
   @Input() lessonId: string = '';
+  @Input() chapterId: string = '';
 
   @Output() slideChange: EventEmitter<ISlide> = new EventEmitter<ISlide>();
   @ViewChild(QuillEditorComponent) quillChild?: QuillEditorComponent;
 
   deleteSlideMutation = this.slideService.deleteSlideForLesson();
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  constructor(private slideService: SlideService) {}
+  constructor(private slideService: SlideService) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['slide']) {
@@ -46,13 +47,14 @@ export class SlideAddComponent implements OnInit {
     this.slideChange?.emit(this.slide);
   }
 
-  cancelChanges() {}
+  cancelChanges() { }
 
   deleteSlide() {
     if (this.slide)
       this.deleteSlideMutation.mutate({
         slide: this.slide,
         lessonId: this.lessonId,
+        chapterId: this.chapterId
       });
   }
 }
