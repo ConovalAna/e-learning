@@ -12,8 +12,10 @@ export class SlideWithChooseComponent implements OnInit {
   @Input() slide: ITestSlide | undefined;
   @Input() index: number | undefined;
   @Input() isLast: boolean | undefined;
+  @Input() totalPassTests: number | undefined;
+  @Input() totalTests: number | undefined;
 
-  @Output() continueToNext: EventEmitter<number> = new EventEmitter<number>();
+  @Output() continueToNext: EventEmitter<{ index: number, pass: boolean }> = new EventEmitter<{ index: number, pass: boolean }>();
 
   optionsCorrect: AnimationOptions = {
     path: '/assets/lottie/done.json',
@@ -26,11 +28,18 @@ export class SlideWithChooseComponent implements OnInit {
     loop: true,
   };
 
+  optionsTestOverview = {
+    path: '/assets/lottie/finish.json',
+    autoplay: true,
+    loop: true
+  };
+
   isLastLottie: boolean = false;
   answered: boolean = false;
   correctAnswer: boolean = false;
   radioAnswer: string = '';
   checkAnswers: { value: string; completed: boolean }[] = [];
+  lastLotie = '/assets/lottie/finish2.json';
 
   constructor(private scroller: ViewportScroller) {
 
@@ -38,20 +47,6 @@ export class SlideWithChooseComponent implements OnInit {
 
   ngOnInit(): void {
     this.scroller.scrollToAnchor(String(this.slide?.id));
-    let random = Math.floor(Math.random() * 3) + 1;
-    // if (random == 2) {
-    //   this.options = {
-    //     path: '/assets/lottie/finish2.json',
-    //     autoplay: true,
-    //     loop: true
-    //   };
-    // } else if (random == 3) {
-    //   this.options = {
-    //     path: '/assets/lottie/finish3.json',
-    //     autoplay: true,
-    //     loop: true
-    //   };
-    // }
   }
 
   checkCorrectAnswer() {
@@ -75,14 +70,34 @@ export class SlideWithChooseComponent implements OnInit {
 
   continueToNextSlide() {
     if (this.isLastLottie) {
-      this.continueToNext.emit(this.index);
+      this.continueToNext.emit({ index: this.index ?? 0, pass: this.correctAnswer });
+      return;
     }
 
     if (this.isLast) {
       this.isLastLottie = true;
-      return;
+      let point = this.correctAnswer ? 1 : 0;
+      if ((this?.totalPassTests ?? 0) + point > (this?.totalTests ?? 0) * 0.7) //good
+      {
+        debugger;
+        this.lastLotie = '/assets/lottie/finish3.json';
+      } else if ((this?.totalPassTests ?? 0) + point > (this?.totalTests ?? 0) * 0.4) //can do better
+      {
+        this.lastLotie = '/assets/lottie/learn-more.json';
+      }
+      else // bad
+      {
+        this.lastLotie = '/assets/lottie/fail1.json';
+      }
+
+      this.optionsTestOverview = {
+        path: this.lastLotie ?? '/assets/lottie/finish3.json',
+        autoplay: true,
+        loop: true
+      };
+    } else {
+      this.continueToNext.emit({ index: this.index ?? 0, pass: this.correctAnswer });
     }
-    this.continueToNext.emit(this.index);
   }
 
   ngOnChanges(changes: SimpleChanges) {

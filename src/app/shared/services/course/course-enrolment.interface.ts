@@ -27,6 +27,7 @@ export interface IChapterProgress {
   numberOfLessons: number;
   fullProgressedLessons: number;
   lessonsProgress: ILessonProgressView[];
+  testsProgress: ITestProgressView[];
   progress: number;
 }
 
@@ -36,4 +37,23 @@ export interface ILessonProgress {
   lastSlideNumber: number;
   currentNumberOfSlides: number;
   lastLearnedDate: Date;
+}
+
+export interface ITestProgress {
+  id: string;
+  chapterId: string;
+  totalPoints: number;
+  pass: boolean;
+  lastLearnedDate: Date;
+}
+
+export interface ITestProgressView {
+  id: string;
+  chapterId: string;
+  totalPoints: number;
+  pass: boolean;
+  lastLearnedDate: Date;
+  name: string;
+  description: string;
+  order: number;
 }

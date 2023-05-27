@@ -4,11 +4,15 @@ import { ChapterService, IChapter } from 'src/app/shared/services/chapter';
 import { UserCourseService } from 'src/app/shared/services/course';
 import {
   IChapterProgress,
-  ICourseEnrolmentView,
   ILessonProgressView,
+  ITestProgressView,
 } from 'src/app/shared/services/course/course-enrolment.interface';
 
 interface ILessonViewProcess extends ILessonProgressView {
+  canView: boolean;
+}
+
+interface ITestViewProcess extends ITestProgressView {
   canView: boolean;
 }
 
@@ -22,7 +26,9 @@ export class ChapterSectionComponent {
   courseId!: string;
   chapterProgress!: IChapterProgress | undefined;
   lessonsProgress: ILessonViewProcess[] = [];
+  testsProgress: ITestViewProcess[] = [];
   lessonCompleted = 0;
+  testCompleted = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -64,5 +70,25 @@ export class ChapterSectionComponent {
           (chapter) => chapter.id === chapterRouteId
         );
       });
+
+    this.userCourseService
+      .getChapterTestsProgress(courseRouteId ?? '', chapterRouteId ?? '')
+      .result$.subscribe((tests) => {
+        this.testsProgress = tests?.data
+          ?.filter((lp) => lp.chapterId === chapterRouteId)
+          .map((cp, index, array) => {
+            debugger;
+            let canView = false;
+            if (index === 0) {
+              canView = true;
+            } else if (array[index - 1]?.pass === true) {
+              canView = true;
+            }
+            return { ...cp, canView: canView };
+          }) ?? [];
+
+        this.testCompleted = this.testsProgress.filter((x) => x.pass).length;
+      });
+
   }
 }

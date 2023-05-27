@@ -6,17 +6,6 @@
             <div class="row">
                 <div class="col-12">
 
-                    <!-- nice options -->
-                    <!-- <div id="options">
-                        <label class=" options rounded-5 shadow"
-                            *ngFor=" let answer of slide?.answers; let indexOfelement = index;">
-                            <input type="radio" name="radio">
-                            <div>
-                                {{answer}}
-                            </div>
-                        </label>
-                    </div> -->
-
                     <div *ngIf="slide?.answerType===0"> <!-- single response-->
                         <label id="example-radio-group-label">
                             <h4>Pick the corect answer</h4>
@@ -62,6 +51,14 @@
                                 </span>
                             </div>
                         </section>
+                    </div>
+
+                    <div *ngIf="isLastLottie" clas="d-grid gap-2 " class="ng-star-inserted"
+                        style="display: flex; justify-content: center; ">
+                        <div class="last-lottie-animation" *ngIf="isLastLottie">
+                            <ng-lottie [options]="optionsTestOverview">
+                            </ng-lottie>
+                        </div>
                     </div>
 
                 </div>

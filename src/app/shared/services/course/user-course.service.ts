@@ -7,6 +7,8 @@ import {
   ICourseEnrolmentView,
   ILessonProgress,
   ILessonProgressView,
+  ITestProgress,
+  ITestProgressView,
 } from './course-enrolment.interface';
 import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
 import { tap } from 'rxjs';
@@ -14,6 +16,7 @@ import { tap } from 'rxjs';
 const queryKeys = {
   teacherCourses: 'teacher-courses',
   studentSubscribedCourses: 'student-subscribed-courses',
+  studentTestProgres: 'student-test-courses',
 };
 
 @Injectable({
@@ -63,6 +66,17 @@ export class UserCourseService {
     return 0;
   }
 
+  orderTestsFunction(a: ITestProgressView, b: ITestProgressView): number {
+    if (a.order < b.order) {
+      return -1;
+    }
+    if (a.order > b.order) {
+      return 1;
+    }
+    // a must be equal to b
+    return 0;
+  }
+
   getCourseSubscriptionProgress(courseId: string) {
     return this.useQuery(
       [queryKeys.studentSubscribedCourses, courseId],
@@ -95,6 +109,19 @@ export class UserCourseService {
     );
   }
 
+  getChapterTestsProgress(courseId: string, chapterId: string) {
+    return this.useQuery(
+      [queryKeys.studentTestProgres, courseId],
+      () => {
+        return this.http
+          .get<ITestProgressView[]>(this.userCourseApiUrl + courseId + '/chapters/' + chapterId + '/tests')
+          .pipe(tap((result) => result?.sort(this.orderTestsFunction)));
+      },
+      { staleTime: Infinity }
+    );
+  }
+
+
   subscribeToCourse() {
     return this.useMutation((courseId: string) => {
       return this.http
@@ -122,6 +149,23 @@ export class UserCourseService {
         return this.http.post(
           this.userCourseApiUrl + courseId + '/lessons',
           lessonProgress
+        );
+      }
+    );
+  }
+
+  updateTestProgress() {
+    return this.useMutation(
+      ({
+        courseId,
+        testProgress,
+      }: {
+        courseId: string;
+        testProgress: ITestProgress;
+      }) => {
+        return this.http.post(
+          this.userCourseApiUrl + courseId + '/tests',
+          testProgress
         );
       }
     );
