@@ -12,8 +12,8 @@ export class SignUpComponent implements OnInit {
   constructor(
     private userFacade: UserFacade,
     private formBuilder: FormBuilder
-  ) {}
-  ngOnInit(): void {}
+  ) { }
+  ngOnInit(): void { }
 
   user$ = this.userFacade.user$;
   preferredRole = UserRole.Student;
@@ -32,6 +32,15 @@ export class SignUpComponent implements OnInit {
   registerWithGoogle() {
     this.userFacade.loginWithProvider('google');
   }
+
+  registerWithFacebook() {
+    this.userFacade.loginWithProvider('facebook');
+  }
+
+  registerWithGithub() {
+    this.userFacade.loginWithProvider('github');
+  }
+
   registerWithEmail() {
     this.userFacade.signUpWithEmailAndPassword(
       this.registerForm.value as RegisterWithEmailModel

@@ -31,6 +31,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NoRoleComponent } from './no-role/no-role.component';
+import { StudentModule } from "./student/student.module";
+import { SharedModule } from './shared/shared.module';
 
 export function playerFactory(): any {
   return import('lottie-web');
@@ -46,6 +48,8 @@ export function playerFactory(): any {
     ForgotPasswordComponent,
     VerifyEmailComponent,
   ],
+  providers: [],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -61,16 +65,8 @@ export function playerFactory(): any {
     LottieModule.forRoot({ player: playerFactory }),
     FormsModule,
     NgxSpinnerModule,
-    // provideFirebaseApp(() => initializeApp(environment.firebase)),
-    // provideStorage(() => {
-    //   const storage = getStorage(getApp());
-    //   console.log(storage);
-
-    //   return storage;
-    // }
-    // ),
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
+    StudentModule,
+    SharedModule
+  ]
 })
-export class AppModule {}
+export class AppModule { }

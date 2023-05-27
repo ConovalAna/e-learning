@@ -32,7 +32,6 @@ import { WeekChartComponent } from './student-profile/week-chart/week-chart.comp
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { SharedModule } from '../shared/shared.module';
-import { FooterComponent } from './footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AboutUsComponent } from './about-us/about-us.component';
@@ -61,7 +60,6 @@ export function playerFactory(): any {
     AchievementsComponent,
     CoursesComponent,
     WeekChartComponent,
-    FooterComponent,
     AboutUsComponent
   ],
   imports: [

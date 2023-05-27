@@ -12,7 +12,7 @@ export class SignInComponent implements OnInit {
   constructor(
     private userService: UserFacade, // Injects the default storage instance
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   loginForm = this.formBuilder.group<LoginWithEmailModel>({
     email: '',
@@ -33,6 +33,11 @@ export class SignInComponent implements OnInit {
   loginWithGithub() {
     this.userService.loginWithProvider('github');
   }
+
+  loginWithFacebook() {
+    this.userService.loginWithProvider('facebook');
+  }
+
   logout() {
     this.userService.logout();
   }
@@ -46,5 +51,5 @@ export class SignInComponent implements OnInit {
     return UserRole;
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

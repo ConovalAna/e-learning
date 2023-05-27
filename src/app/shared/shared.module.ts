@@ -14,9 +14,10 @@ import { AuthInterceptorService } from './interceptors/auth.interceptor';
 import { UserCourseService } from './services/course/user-course.service';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { TestService } from './services/test';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-  declarations: [AvatarImageComponent],
+  declarations: [AvatarImageComponent, FooterComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -28,7 +29,7 @@ import { TestService } from './services/test';
       return storage;
     }),
   ],
-  exports: [AvatarImageComponent],
+  exports: [AvatarImageComponent, FooterComponent],
   providers: [
     CourseService,
     UserCourseService,
@@ -48,4 +49,4 @@ import { TestService } from './services/test';
     },
   ],
 })
-export class SharedModule {}
+export class SharedModule { }
