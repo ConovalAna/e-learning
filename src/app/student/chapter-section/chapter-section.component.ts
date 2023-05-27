@@ -74,21 +74,20 @@ export class ChapterSectionComponent {
     this.userCourseService
       .getChapterTestsProgress(courseRouteId ?? '', chapterRouteId ?? '')
       .result$.subscribe((tests) => {
-        this.testsProgress = tests?.data
-          ?.filter((lp) => lp.chapterId === chapterRouteId)
-          .map((cp, index, array) => {
-            debugger;
-            let canView = false;
-            if (index === 0) {
-              canView = true;
-            } else if (array[index - 1]?.pass === true) {
-              canView = true;
-            }
-            return { ...cp, canView: canView };
-          }) ?? [];
+        this.testsProgress =
+          tests?.data
+            ?.filter((lp) => lp.chapterId === chapterRouteId)
+            .map((cp, index, array) => {
+              let canView = false;
+              if (index === 0) {
+                canView = true;
+              } else if (array[index - 1]?.pass === true) {
+                canView = true;
+              }
+              return { ...cp, canView: canView };
+            }) ?? [];
 
         this.testCompleted = this.testsProgress.filter((x) => x.pass).length;
       });
-
   }
 }

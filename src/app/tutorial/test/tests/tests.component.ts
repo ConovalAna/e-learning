@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserCourseService } from 'src/app/shared/services/course';
-import { ILessonProgress, ITestProgress } from 'src/app/shared/services/course/course-enrolment.interface';
+import {
+  ILessonProgress,
+  ITestProgress,
+} from 'src/app/shared/services/course/course-enrolment.interface';
 import { ITestSlide, SlideService } from 'src/app/shared/services/slide';
 import { ITest } from 'src/app/shared/services/test/test.interface';
 
@@ -13,7 +16,7 @@ interface ISlideProcess extends ITestSlide {
 @Component({
   selector: 'app-tests',
   templateUrl: './tests.component.html',
-  styleUrls: ['./tests.component.scss']
+  styleUrls: ['./tests.component.scss'],
 })
 export class TestsComponent implements OnInit {
   slidesProcess: ISlideProcess[] = [];
@@ -63,9 +66,8 @@ export class TestsComponent implements OnInit {
     }
     if (index !== this.slidesProcess.length - 1) {
       this.slidesProcess[index + 1].visible = true;
-    } else //test pass 
-    {
-      debugger;
+    } //test pass
+    else {
       let testProgress: ITestProgress = {
         id: this.testId,
         chapterId: this.chapterId,
@@ -89,5 +91,5 @@ export class TestsComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

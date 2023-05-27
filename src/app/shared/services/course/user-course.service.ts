@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ICourse } from './course.interface';
 import { IdResult } from '../../interfaces/id-result.interface';
@@ -12,6 +12,7 @@ import {
 } from './course-enrolment.interface';
 import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
 import { tap } from 'rxjs';
+import { LOADER } from '../../interceptors/loader.interceptor';
 
 const queryKeys = {
   teacherCourses: 'teacher-courses',
@@ -26,6 +27,7 @@ export class UserCourseService {
   private useQuery = inject(UseQuery);
   private useMutation = inject(UseMutation);
   private queryClient = inject(QueryClientService);
+
   constructor(private http: HttpClient) {}
 
   apiUrl = 'https://localhost:44302/Courses/';
@@ -155,7 +157,8 @@ export class UserCourseService {
       }) => {
         return this.http.post(
           this.userCourseApiUrl + courseId + '/lessons',
-          lessonProgress
+          lessonProgress,
+          { context: new HttpContext().set(LOADER, false) }
         );
       }
     );

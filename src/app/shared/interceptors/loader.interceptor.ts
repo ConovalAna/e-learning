@@ -1,4 +1,5 @@
 import {
+  HttpContextToken,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
@@ -9,6 +10,8 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { LoaderService } from '../services/loader.service';
 
+export const LOADER = new HttpContextToken(() => true);
+
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
   private count = 0;
@@ -18,9 +21,10 @@ export class LoaderInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (this.count === 0) {
-      this.loaderService.setHttpProgressStatus(true);
-    }
+    if (req.context.get(LOADER) === true)
+      if (this.count === 0) {
+        this.loaderService.setHttpProgressStatus(true);
+      }
     this.count++;
     return next.handle(req).pipe(
       finalize(() => {

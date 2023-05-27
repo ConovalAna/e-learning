@@ -1,12 +1,19 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { AnimationOptions } from 'ngx-lottie';
 import { ITestSlide } from 'src/app/shared/services/slide';
 
 @Component({
   selector: 'app-slide-with-choose',
   templateUrl: './slide-with-choose.component.html',
-  styleUrls: ['./slide-with-choose.component.scss']
+  styleUrls: ['./slide-with-choose.component.scss'],
 })
 export class SlideWithChooseComponent implements OnInit {
   @Input() slide: ITestSlide | undefined;
@@ -15,7 +22,8 @@ export class SlideWithChooseComponent implements OnInit {
   @Input() totalPassTests: number | undefined;
   @Input() totalTests: number | undefined;
 
-  @Output() continueToNext: EventEmitter<{ index: number, pass: boolean }> = new EventEmitter<{ index: number, pass: boolean }>();
+  @Output() continueToNext: EventEmitter<{ index: number; pass: boolean }> =
+    new EventEmitter<{ index: number; pass: boolean }>();
 
   optionsCorrect: AnimationOptions = {
     path: '/assets/lottie/done.json',
@@ -31,7 +39,7 @@ export class SlideWithChooseComponent implements OnInit {
   optionsTestOverview = {
     path: '/assets/lottie/finish.json',
     autoplay: true,
-    loop: true
+    loop: true,
   };
 
   isLastLottie: boolean = false;
@@ -41,9 +49,7 @@ export class SlideWithChooseComponent implements OnInit {
   checkAnswers: { value: string; completed: boolean }[] = [];
   lastLotie = '/assets/lottie/finish2.json';
 
-  constructor(private scroller: ViewportScroller) {
-
-  }
+  constructor(private scroller: ViewportScroller) {}
 
   ngOnInit(): void {
     this.scroller.scrollToAnchor(String(this.slide?.id));
@@ -52,17 +58,16 @@ export class SlideWithChooseComponent implements OnInit {
   checkCorrectAnswer() {
     this.answered = true;
 
-    if (this.slide?.answerType === 0)//radio
-    {
-      debugger;
+    if (this.slide?.answerType === 0) {
+      //radio
       this.correctAnswer = this.slide?.correctAnswers[0] === this.radioAnswer;
-    }
-    else if (this.slide?.answerType === 1) {
-      debugger;
-
-      let correctAnswerStr = this.checkAnswers?.filter(i => i.completed).map(i => i.value).toString();
-      this.correctAnswer = this.slide?.correctAnswers?.toString() == correctAnswerStr;
-
+    } else if (this.slide?.answerType === 1) {
+      let correctAnswerStr = this.checkAnswers
+        ?.filter((i) => i.completed)
+        .map((i) => i.value)
+        .toString();
+      this.correctAnswer =
+        this.slide?.correctAnswers?.toString() == correctAnswerStr;
     } else {
       this.correctAnswer = true;
     }
@@ -70,33 +75,40 @@ export class SlideWithChooseComponent implements OnInit {
 
   continueToNextSlide() {
     if (this.isLastLottie) {
-      this.continueToNext.emit({ index: this.index ?? 0, pass: this.correctAnswer });
+      this.continueToNext.emit({
+        index: this.index ?? 0,
+        pass: this.correctAnswer,
+      });
       return;
     }
 
     if (this.isLast) {
       this.isLastLottie = true;
       let point = this.correctAnswer ? 1 : 0;
-      if ((this?.totalPassTests ?? 0) + point > (this?.totalTests ?? 0) * 0.7) //good
-      {
-        debugger;
+      if ((this?.totalPassTests ?? 0) + point > (this?.totalTests ?? 0) * 0.7) {
+        //good
         this.lastLotie = '/assets/lottie/finish3.json';
-      } else if ((this?.totalPassTests ?? 0) + point > (this?.totalTests ?? 0) * 0.4) //can do better
-      {
+      } else if (
+        (this?.totalPassTests ?? 0) + point >
+        (this?.totalTests ?? 0) * 0.4
+      ) {
+        //can do better
         this.lastLotie = '/assets/lottie/learn-more.json';
-      }
-      else // bad
-      {
+      } // bad
+      else {
         this.lastLotie = '/assets/lottie/fail1.json';
       }
 
       this.optionsTestOverview = {
         path: this.lastLotie ?? '/assets/lottie/finish3.json',
         autoplay: true,
-        loop: true
+        loop: true,
       };
     } else {
-      this.continueToNext.emit({ index: this.index ?? 0, pass: this.correctAnswer });
+      this.continueToNext.emit({
+        index: this.index ?? 0,
+        pass: this.correctAnswer,
+      });
     }
   }
 
@@ -114,7 +126,6 @@ export class SlideWithChooseComponent implements OnInit {
   }
 
   hasIncompleteAnswers() {
-    return !this.radioAnswer && !this.checkAnswers.some(i => i.completed);
+    return !this.radioAnswer && !this.checkAnswers.some((i) => i.completed);
   }
-
 }
