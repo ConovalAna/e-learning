@@ -5,7 +5,7 @@ import { IdResult } from '../../interfaces/id-result.interface';
 import { forkJoin, merge, tap } from 'rxjs';
 
 const queryKeys = {
-  lessons: 'tests',
+  tests: 'tests',
 };
 
 @Injectable({

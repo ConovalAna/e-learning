@@ -27,7 +27,7 @@ export class ChapterService {
       () => {
         return this.http.get<IChapter[]>(this.apiUrl + courseId + '/chapters');
       },
-      { staleTime: Infinity }
+      { staleTime: Infinity, retry: 1 }
     );
   }
 

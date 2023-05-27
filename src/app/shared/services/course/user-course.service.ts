@@ -26,7 +26,7 @@ export class UserCourseService {
   private useQuery = inject(UseQuery);
   private useMutation = inject(UseMutation);
   private queryClient = inject(QueryClientService);
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   apiUrl = 'https://localhost:44302/Courses/';
   userCourseApiUrl = 'https://localhost:44302/UserCourses/';
@@ -34,12 +34,12 @@ export class UserCourseService {
   getAllPagedFilteredCourses(search: string, offset: number, limit: number) {
     return this.http.get<ICourse[]>(
       this.apiUrl +
-      'search?query=' +
-      search +
-      '&offset=' +
-      offset +
-      '&limit=' +
-      limit
+        'search?query=' +
+        search +
+        '&offset=' +
+        offset +
+        '&limit=' +
+        limit
     );
   }
 
@@ -51,7 +51,7 @@ export class UserCourseService {
           this.userCourseApiUrl + 'view'
         );
       },
-      { staleTime: Infinity }
+      { staleTime: Infinity, retry: 3 }
     );
   }
 
@@ -89,7 +89,7 @@ export class UserCourseService {
             )
           );
       },
-      { staleTime: Infinity }
+      { staleTime: Infinity, retry: 3 }
     );
   }
 
@@ -98,14 +98,16 @@ export class UserCourseService {
       [queryKeys.studentSubscribedCourses, courseId],
       () => {
         return this.http
-          .get<IChapterProgress>(this.userCourseApiUrl + courseId + '/chapters/' + chapterId)
+          .get<IChapterProgress>(
+            this.userCourseApiUrl + courseId + '/chapters/' + chapterId
+          )
           .pipe(
             tap((result) =>
               result?.lessonsProgress?.sort(this.orderLessonFunction)
             )
           );
       },
-      { staleTime: Infinity }
+      { staleTime: Infinity, retry: 3 }
     );
   }
 
@@ -114,13 +116,18 @@ export class UserCourseService {
       [queryKeys.studentTestProgres, courseId],
       () => {
         return this.http
-          .get<ITestProgressView[]>(this.userCourseApiUrl + courseId + '/chapters/' + chapterId + '/tests')
+          .get<ITestProgressView[]>(
+            this.userCourseApiUrl +
+              courseId +
+              '/chapters/' +
+              chapterId +
+              '/tests'
+          )
           .pipe(tap((result) => result?.sort(this.orderTestsFunction)));
       },
-      { staleTime: Infinity }
+      { staleTime: Infinity, retry: 3 }
     );
   }
-
 
   subscribeToCourse() {
     return this.useMutation((courseId: string) => {

@@ -86,7 +86,7 @@ export class SlideService {
         this.http
           .get<ISlide[]>(this.apiUrl + lessonId + '/slides')
           .pipe(tap((result) => result?.sort(this.orderSlideFunction))),
-      { staleTime: Infinity }
+      { staleTime: Infinity, retry: 3 }
     );
   }
 
@@ -172,7 +172,7 @@ export class SlideService {
         this.http
           .get<ITestSlide[]>(this.testApiUrl + testId + '/slides')
           .pipe(tap((result) => result?.sort(this.orderSlideFunction))),
-      { staleTime: Infinity }
+      { staleTime: Infinity, retry: 3 }
     );
   }
 
