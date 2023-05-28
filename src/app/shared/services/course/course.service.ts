@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { ICourse, ICourseCollaborations } from './course.interface';
+import { ICourse, ICourseCollaborations, dbCourseToICourse } from './course.interface';
 import { IdResult } from '../../interfaces/id-result.interface';
 import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
-import { combineLatest, filter, merge, tap, zip } from 'rxjs';
+import { combineLatest, filter, map, merge, switchMap, tap, zip } from 'rxjs';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { User } from '../user';
 
@@ -90,24 +90,6 @@ export class CourseService {
     });
   }
 
-
-  // async addCollaborator(courseId: string, collaboratorEmail: string) {
-  //   {
-  //     const course$ = this.afs.doc<ICourse>(
-  //       `CourseModel/${courseId}`
-  //     ).valueChanges();
-
-  //     const users$ = this.afs.collection<User>('users', ref => ref.where('email', '==', collaboratorEmail)).valueChanges();
-
-  //     zip([course$, users$]).pipe(filter(values => !!values)).subscribe(values => {
-  //       const [course, users] = values;
-  //       if (users.length) {
-  //         this.updateCourseCollaborators(courseId, users[0]).then();
-  //       }
-  //     })
-  //   }
-  // }
-
   addCollaborator(courseId: string, user: User) {
 
     const courseCollaboratorsRef = this.afs.doc<ICourse>(
@@ -140,17 +122,52 @@ export class CourseService {
       const collection = this.afs.collection<User>(`CourseModel/${courseId}/collaborators`).valueChanges();
       return collection;
     }
+  }
 
-    //   const collectionRef: AngularFirestoreCollection<User> = this.afs.collection<User>(`CourseModel/${courseId}/collaborators`);
-    // return collectionRef.snapshotChanges().pipe(
-    //   map(actions => {
-    //     return actions.map(a => {
-    //       const data = a.payload.doc.data() as User;
-    //       const id = a.payload.doc.id;
-    //       return { id, ...data };
-    //     });
-    //   })
-    // );
+  async deleteCollaborator(courseId: string, userId: string) {
 
+    await this.afs.doc<ICourse>(
+      `CourseModel/${courseId}`
+    ).collection("collaborators").doc(userId).delete();
+
+    await this.afs.doc<ICourseCollaborations>(
+      `CollaborationCourseModel/${userId}`
+    ).collection("CoursesCollaborattions").doc(courseId).delete();
+  }
+
+  getCollaborativeCourses(userId: string) {
+    {
+      debugger
+      const collection = this.afs.collection<ICourseCollaborations>(`CollaborationCourseModel/${userId}/CoursesCollaborattions`)
+        .valueChanges().pipe(
+          switchMap((courseCollaboration) => {
+            let courses$ = courseCollaboration.map(element =>
+              this.afs.doc<any>(
+                `CourseModel/${element.id}`
+              ).valueChanges().pipe(map(course => dbCourseToICourse(course)))
+            );
+            return zip(courses$);
+          }
+          )
+        );
+      return collection;
+    }
   }
 }
+
+  // async addCollaborator(courseId: string, collaboratorEmail: string) {
+  //   {
+  //     const course$ = this.afs.doc<ICourse>(
+  //       `CourseModel/${courseId}`
+  //     ).valueChanges();
+
+  //     const users$ = this.afs.collection<User>('users', ref => ref.where('email', '==', collaboratorEmail)).valueChanges();
+
+  //     zip([course$, users$]).pipe(filter(values => !!values)).subscribe(values => {
+  //       const [course, users] = values;
+  //       if (users.length) {
+  //         this.updateCourseCollaborators(courseId, users[0]).then();
+  //       }
+  //     })
+  //   }
+  // }

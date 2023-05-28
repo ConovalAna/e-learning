@@ -10,6 +10,8 @@ import { ShareComponent } from '../../chapters/share/share.component';
 })
 export class CourseCardComponent {
   @Input() course?: ICourse;
+  @Input() disableSpecialOp?: boolean;
+
   @Output() onClickEvent: EventEmitter<string> = new EventEmitter<string>();
 
   hideOptionText: string = 'Hide';

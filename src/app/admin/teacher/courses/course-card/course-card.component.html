@@ -11,7 +11,7 @@
           <mat-chip-option [disabled]="true" [selected]="true" *ngIf="course?.archived">Archived</mat-chip-option>
         </mat-chip-listbox>
 
-        <button mat-icon-button [matMenuTriggerFor]="coursemenu" class="ml-auto">
+        <button mat-icon-button [matMenuTriggerFor]="coursemenu" class="ml-auto" *ngIf="!disableSpecialOp">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #coursemenu="matMenu">

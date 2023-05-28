@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { AddCollaborationComponent } from '../add-collaboration/add-collaboration.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseService } from 'src/app/shared/services/course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/shared/services/user';
+import { AddCollaborationComponent } from '../add-collaboration/add-collaboration.component';
 
 @Component({
   selector: 'app-collaboration',
@@ -29,16 +29,15 @@ export class CollaborationComponent {
     });
   }
 
-  // deleteLesson(lessonId: string) {
-  //   let courseRouteId = this.route.snapshot.paramMap.get('courseId');
-  //   this.lessonService
-  //     .deleteLessonForChapter(lessonId, this.chapter?.id ?? '', courseRouteId ?? '')
-  //     .subscribe((result) => {
-  //       new Promise((res) => setTimeout(res, 500)).then(() => {
-  //         this.updateLessons();
-  //       });
-  //     });
-  // }
+  deleteCollaborator(userId: string) {
+    this.courseService
+      .deleteCollaborator(this.courseId ?? '', userId).then(() => {
+        this.collaborators = this.collaborators.filter(function (value, index, arr) {
+          return value.uid != userId;
+        });
+      }
+      );
+  }
 
   openAddCollaborationDialog(
     enterAnimationDuration: string,
@@ -67,25 +66,5 @@ export class CollaborationComponent {
   public onIconDropped(ev: any) {
     ev.drag.dropFinished();
   }
-
-  // public onEnterHandler(ev: any): void {
-  //   this.dropTileId = ev.owner.element.nativeElement.id;
-  //   // the event gets raised immediately, but we want to swap only when we drag over another icon
-  //   if (this.dragIconId === this.dropTileId) {
-  //     return;
-  //   }
-  //   const dragIndex = this.lessons.findIndex(
-  //     (iconObj) => iconObj.id === this.dragIconId
-  //   );
-  //   const dropIndex = this.lessons.findIndex(
-  //     (iconObj) => iconObj.id === this.dropTileId
-  //   );
-  //   this.swapIcons(dragIndex, dropIndex);
-  // }
-
-  // public dragStartHandler(id: string): void {
-  //   this.dragIconId = id;
-  // }
-
 }
 

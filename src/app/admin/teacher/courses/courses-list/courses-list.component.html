@@ -9,8 +9,16 @@
       </div>
     </div>
     <div class="row gx-4 gy-1">
+      <p class="fs-3 "><b>My Curses:</b></p>
       <div class="col-4 col-xl-3" *ngFor="let course of courses">
-      <app-courses-card [course]="course" (onClickEvent)="courseClickFunction($event)"/>
+        <app-courses-card [course]="course" [disableSpecialOp]="false" (onClickEvent)="courseClickFunction($event)" />
+      </div>
+    </div>
+
+    <div class="row gx-4 gy-1">
+      <p class="fs-3 pt-5 "><b>Collaborative Curses:</b></p>
+      <div class="col-4 col-xl-3" *ngFor="let courseC of collaborativeCourses">
+        <app-courses-card [course]="courseC" [disableSpecialOp]="true" (onClickEvent)="courseClickFunction($event)" />
       </div>
     </div>
   </div>

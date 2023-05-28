@@ -13,6 +13,24 @@ export interface ICourse {
     archived: boolean
 }
 
+
+export function dbCourseToICourse(dbcourse: any): ICourse {
+    return {
+        id: dbcourse.Id,
+        name: dbcourse.Name,
+        imageUrl: dbcourse.ImageUrl,
+        shortDescription: dbcourse.ShortDescription,
+        longDescription: dbcourse.LongDescription,
+        duration: dbcourse.Duration,
+        requirements: dbcourse.Requirements,
+        achievements: dbcourse.Achievements,
+        level: dbcourse.Level,
+        numberOfLessons: dbcourse.NumberOfLessons,
+        visible: dbcourse.Visible,
+        archived: dbcourse.Archived
+    }
+}
+
 export interface IStudentCourse extends ICourse {
 
     joined: boolean;
