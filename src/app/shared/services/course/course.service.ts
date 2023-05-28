@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { ICourse } from './course.interface';
+import { ICourse, ICourseCollaborations } from './course.interface';
 import { IdResult } from '../../interfaces/id-result.interface';
 import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
-import { tap } from 'rxjs';
+import { combineLatest, filter, merge, tap, zip } from 'rxjs';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { User } from '../user';
 
 const queryKeys = {
   teacherCourses: 'teacher-courses',
@@ -17,7 +19,8 @@ export class CourseService {
   private useQuery = inject(UseQuery);
   private useMutation = inject(UseMutation);
   private queryClient = inject(QueryClientService);
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    public afs: AngularFirestore) { }
 
   apiUrl = 'https://localhost:44302/Courses/';
   userCourseApiUrl = 'https://localhost:44302/UserCourses';
@@ -33,12 +36,12 @@ export class CourseService {
   getAllPagedFilteredCourses(search: string, offset: number, limit: number) {
     return this.http.get<ICourse[]>(
       this.apiUrl +
-        'search?query=' +
-        search +
-        '&offset=' +
-        offset +
-        '&limit=' +
-        limit
+      'search?query=' +
+      search +
+      '&offset=' +
+      offset +
+      '&limit=' +
+      limit
     );
   }
 
@@ -85,5 +88,69 @@ export class CourseService {
         })
       );
     });
+  }
+
+
+  // async addCollaborator(courseId: string, collaboratorEmail: string) {
+  //   {
+  //     const course$ = this.afs.doc<ICourse>(
+  //       `CourseModel/${courseId}`
+  //     ).valueChanges();
+
+  //     const users$ = this.afs.collection<User>('users', ref => ref.where('email', '==', collaboratorEmail)).valueChanges();
+
+  //     zip([course$, users$]).pipe(filter(values => !!values)).subscribe(values => {
+  //       const [course, users] = values;
+  //       if (users.length) {
+  //         this.updateCourseCollaborators(courseId, users[0]).then();
+  //       }
+  //     })
+  //   }
+  // }
+
+  addCollaborator(courseId: string, user: User) {
+
+    const courseCollaboratorsRef = this.afs.doc<ICourse>(
+      `CourseModel/${courseId}`
+    ).collection("collaborators").doc(user.uid);
+
+    const userCourseCollaboratorsRef = this.afs.doc<ICourseCollaborations>(
+      `CollaborationCourseModel/${user.uid}`
+    ).collection("CoursesCollaborattions").doc(courseId);
+
+    userCourseCollaboratorsRef.set({ id: courseId }, {
+      merge: true,
+    })
+
+    return courseCollaboratorsRef.set(user, {
+      merge: true,
+    });
+  }
+
+  getCollaboratorByEmail(collaboratorEmail: string) {
+    {
+      const users$ = this.afs.collection<User>('users', ref => ref.where('email', '==', collaboratorEmail)).valueChanges();
+      return users$;
+    }
+  }
+
+  getCourseCollaborators(courseId: string) {
+    {
+      debugger;
+      const collection = this.afs.collection<User>(`CourseModel/${courseId}/collaborators`).valueChanges();
+      return collection;
+    }
+
+    //   const collectionRef: AngularFirestoreCollection<User> = this.afs.collection<User>(`CourseModel/${courseId}/collaborators`);
+    // return collectionRef.snapshotChanges().pipe(
+    //   map(actions => {
+    //     return actions.map(a => {
+    //       const data = a.payload.doc.data() as User;
+    //       const id = a.payload.doc.id;
+    //       return { id, ...data };
+    //     });
+    //   })
+    // );
+
   }
 }

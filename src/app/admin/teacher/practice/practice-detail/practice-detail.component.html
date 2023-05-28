@@ -1,10 +1,5 @@
 <mat-toolbar color="" *ngIf="practice !== undefined">
-  <button
-    mat-icon-button
-    aria-label="Example icon-button with back-arrow"
-    class="me-3"
-    (click)="goBack()"
-  >
+  <button mat-icon-button aria-label="Example icon-button with back-arrow" class="me-3" (click)="goBack()">
     <mat-icon>keyboard_backspace</mat-icon>
   </button>
   <span>{{ practice.name }}</span>
@@ -24,9 +19,7 @@
         Slides
       </div>
     </ng-template>
-    <app-practice-slides-carousel
-      [practiceId]="practiceId"
-    ></app-practice-slides-carousel>
+    <app-practice-slides-carousel [practiceId]="practiceId"></app-practice-slides-carousel>
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
@@ -41,12 +34,5 @@
       Notes
     </ng-template>
     Notes
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon class="me-2">people</mat-icon>
-      Collaborations
-    </ng-template>
-    Collaborations
   </mat-tab>
 </mat-tab-group>

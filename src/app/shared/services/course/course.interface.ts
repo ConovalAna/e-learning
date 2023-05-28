@@ -17,3 +17,11 @@ export interface IStudentCourse extends ICourse {
 
     joined: boolean;
 }
+
+export interface ICourseCollaborations {
+    id: string;//userId
+}
+
+export interface IUserCourseCollaborations {
+    id: string;//courseId
+}

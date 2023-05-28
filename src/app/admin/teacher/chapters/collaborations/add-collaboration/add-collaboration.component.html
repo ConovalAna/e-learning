@@ -1,0 +1,21 @@
+<div class="p-3">
+    <h3 class="text-center">Add collaborator</h3>
+    <div class="pt-3">
+        <form #loginForm="ngForm">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput [(ngModel)]="email" name="email" type="email" [email]="true" required />
+            </mat-form-field>
+            <p>Please make sure that this email is registered in our system like a teacher.</p>
+            <p *ngIf="unknownEmail" class="text-danger warn">
+                Teacher with this email is not registered in our system.
+            </p>
+            <div mat-dialog-actions>
+                <button mat-raised-button color="primary" (click)="addCollaborator()" class="w-100 my-3"
+                    style="height: 4em" [disabled]="loginForm.invalid">
+                    <span style="font-size: larger">Add</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

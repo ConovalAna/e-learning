@@ -236,6 +236,7 @@ export class UserFacade implements OnInitEffects {
         /* Call the SendVerificaitonMail() function when new user sign 
           up and returns promise */
         // this.SendVerificationMail();
+
       })
       .catch((error) => {
         window.alert(error.message);

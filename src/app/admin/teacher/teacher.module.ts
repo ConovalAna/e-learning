@@ -52,6 +52,8 @@ import { PracticeDetailComponent } from './practice/practice-detail/practice-det
 import { PracticeSlideAddComponent } from './practice-slides/practice-slide-add/practice-slide-add.component';
 import { PracticeSlideThumbnailComponent } from './practice-slides/practice-slide-thumbnail/practice-slide-thumbnail.component';
 import { PracticeSlidesCarouselComponent } from './practice-slides/practice-slides-carousel/practice-slides-carousel.component';
+import { CollaborationComponent } from './chapters/collaborations/collaboration/collaboration.component';
+import { AddCollaborationComponent } from './chapters/collaborations/add-collaboration/add-collaboration.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +88,8 @@ import { PracticeSlidesCarouselComponent } from './practice-slides/practice-slid
     PracticeSlideAddComponent,
     PracticeSlideThumbnailComponent,
     PracticeSlidesCarouselComponent,
+    CollaborationComponent,
+    AddCollaborationComponent,
   ],
   imports: [
     FormsModule,
@@ -103,4 +107,4 @@ import { PracticeSlidesCarouselComponent } from './practice-slides/practice-slid
     ShareModule,
   ],
 })
-export class TeacherModule {}
+export class TeacherModule { }
