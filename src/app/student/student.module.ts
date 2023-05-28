@@ -60,7 +60,7 @@ export function playerFactory(): any {
     AchievementsComponent,
     CoursesComponent,
     WeekChartComponent,
-    AboutUsComponent
+    AboutUsComponent,
   ],
   imports: [
     CommonModule,
@@ -74,4 +74,4 @@ export function playerFactory(): any {
     InfiniteScrollModule,
   ],
 })
-export class StudentModule { }
+export class StudentModule {}

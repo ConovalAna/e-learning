@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { AnimationOptions } from 'ngx-lottie';
-import { ITestSlide } from 'src/app/shared/services/slide';
+import { IPracticeSlide, ITestSlide } from 'src/app/shared/services/slide';
 
 @Component({
   selector: 'app-slide-with-choose',
@@ -16,7 +16,7 @@ import { ITestSlide } from 'src/app/shared/services/slide';
   styleUrls: ['./slide-with-choose.component.scss'],
 })
 export class SlideWithChooseComponent implements OnInit {
-  @Input() slide: ITestSlide | undefined;
+  @Input() slide: ITestSlide | IPracticeSlide | undefined;
   @Input() index: number | undefined;
   @Input() isLast: boolean | undefined;
   @Input() totalPassTests: number | undefined;

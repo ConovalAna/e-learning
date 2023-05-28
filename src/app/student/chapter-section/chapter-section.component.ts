@@ -7,6 +7,7 @@ import {
   ILessonProgressView,
   ITestProgressView,
 } from 'src/app/shared/services/course/course-enrolment.interface';
+import { IPractice, PracticeService } from 'src/app/shared/services/practice';
 
 interface ILessonViewProcess extends ILessonProgressView {
   canView: boolean;
@@ -27,13 +28,15 @@ export class ChapterSectionComponent {
   chapterProgress!: IChapterProgress | undefined;
   lessonsProgress: ILessonViewProcess[] = [];
   testsProgress: ITestViewProcess[] = [];
+  practices: IPractice[] = [];
   lessonCompleted = 0;
   testCompleted = 0;
 
   constructor(
     private route: ActivatedRoute,
     private chapterService: ChapterService,
-    private userCourseService: UserCourseService
+    private userCourseService: UserCourseService,
+    private practiceService: PracticeService
   ) {
     let courseRouteId = this.route.snapshot.paramMap.get('id');
     let chapterRouteId = this.route.snapshot.paramMap.get('chapterId');
@@ -88,6 +91,12 @@ export class ChapterSectionComponent {
             }) ?? [];
 
         this.testCompleted = this.testsProgress.filter((x) => x.pass).length;
+      });
+
+    this.practiceService
+      .getAllPracticeForChapter(chapterRouteId ?? '')
+      .subscribe((practices) => {
+        this.practices = practices;
       });
   }
 }

@@ -10,7 +10,7 @@ import { LottieModule } from 'ngx-lottie';
 import { TestsComponent } from './test/tests/tests.component';
 import { SmartbyteMaterialModule } from '../smartbyte-material.module';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { PracticeComponent } from './practice/practice.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,8 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
     SlideWithVideoComponent,
     SlideWithIntroComponent,
     QuillReadOnlyConentComponent,
-    TestsComponent
+    TestsComponent,
+    PracticeComponent,
   ],
   imports: [
     CommonModule,
@@ -29,7 +30,6 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
   ],
-  bootstrap: [LessonComponent]
-
+  bootstrap: [LessonComponent],
 })
-export class TutorialModule { }
+export class TutorialModule {}

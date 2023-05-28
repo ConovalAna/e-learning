@@ -10,6 +10,7 @@ import { ChapterSectionComponent } from './chapter-section/chapter-section.compo
 import { ProfileComponent } from './student-profile/profile/profile.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { TestsComponent } from '../tutorial/test/tests/tests.component';
+import { PracticeComponent } from '../tutorial/practice/practice.component';
 
 const routes: Routes = [
   {
@@ -61,7 +62,7 @@ const routes: Routes = [
               {
                 path: ':lessonId/tutorial',
                 component: LessonComponent,
-              }
+              },
             ],
           },
           {
@@ -71,6 +72,16 @@ const routes: Routes = [
                 path: ':testId',
                 pathMatch: 'full',
                 component: TestsComponent,
+              },
+            ],
+          },
+          {
+            path: ':id/chapter/:chapterId/practice',
+            children: [
+              {
+                path: ':practiceId',
+                pathMatch: 'full',
+                component: PracticeComponent,
               },
             ],
           },
@@ -88,4 +99,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class StudentRoutingModule { }
+export class StudentRoutingModule {}

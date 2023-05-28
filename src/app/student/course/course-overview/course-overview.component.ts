@@ -65,9 +65,7 @@ export class CourseOverviewComponent implements OnInit {
   loadCourseInfomation() {
     this.userCourseService
       .getCourseSubscriptionProgress(this.courseId)
-      .result$.subscribe((course) => {
-
-      });
+      .result$.subscribe((course) => {});
 
     this.courseService
       .getCourseById(this.courseId)
@@ -84,23 +82,26 @@ export class CourseOverviewComponent implements OnInit {
         // this.chapters
       });
 
-    combineLatest([this.userCourseService
-      .getCourseSubscriptionProgress(this.courseId)
-      .result$, this.chapterService
-        .getAllChapters(this.courseId)
-      .result$]).subscribe(values => {
-        this.courseProgress = values[0].data;
-        this.joined = !!values[0].data;
-        this.chapters = values[1].data ?? [];
-        this.chapters?.forEach(chapter => {
-          let chProg = this.courseProgress?.chapterProgress.find(cp => cp.chapterId === chapter.id);
-          this.chapterProgress.push({
-            chapter: chapter,
-            progress: chProg?.progress ?? 0,
-          })
+    combineLatest([
+      this.userCourseService.getCourseSubscriptionProgress(this.courseId)
+        .result$,
+      this.chapterService.getAllChapters(this.courseId).result$,
+    ]).subscribe((values) => {
+      this.courseProgress = values[0].data;
+      this.joined = !!values[0].data;
+      this.chapters = values[1].data ?? [];
+      let chapterProgress: IChapterProgress[] = [];
+      this.chapters?.forEach((chapter) => {
+        let chProg = this.courseProgress?.chapterProgress?.find(
+          (cp) => cp.chapterId === chapter.id
+        );
+        chapterProgress.push({
+          chapter: chapter,
+          progress: chProg?.progress ?? 0,
+        });
+      });
 
-        })
-      })
-
+      this.chapterProgress = [...chapterProgress];
+    });
   }
 }
