@@ -30,7 +30,6 @@ export class StudentGuard implements CanActivate {
           this.userProfile$(user.uid).subscribe((docUserProfile) => {
             if (docUserProfile?.payload?.exists) {
               let role = docUserProfile.payload.get('role');
-              console.log(role);
               if (role !== 'student') {
                 if (role === 'teacher') this.router.navigate(['teacher']);
                 else this.router.navigate(['no-role']);

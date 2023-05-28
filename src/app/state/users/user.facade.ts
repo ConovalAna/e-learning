@@ -63,6 +63,8 @@ export class UserFacade implements OnInitEffects {
           map((authData: firebase.default.User | null) => {
             if (authData) {
               /// User logged in
+              console.log('test');
+              console.log(authData);
               this.setUserData(authData).then();
 
               const auth = new Auth(authData.uid, authData.displayName ?? '');
@@ -98,8 +100,7 @@ export class UserFacade implements OnInitEffects {
           return this.facebookLogin()
             .then(() => UserActions.getuser({}))
             .catch((err) => UserActions.error({ payload: err.message }));
-        }
-        else return EMPTY;
+        } else return EMPTY;
       })
     )
   );
@@ -148,7 +149,7 @@ export class UserFacade implements OnInitEffects {
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public authSerive: AuthService
-  ) { }
+  ) {}
 
   ngrxOnInitEffects(): Action {
     return UserActions.getuser({});
@@ -205,7 +206,6 @@ export class UserFacade implements OnInitEffects {
   }
 
   protected facebookLogin(): Promise<any> {
-    debugger
     const provider = new auth.FacebookAuthProvider();
     provider.addScope('email');
     return this.afAuth.signInWithPopup(provider);
