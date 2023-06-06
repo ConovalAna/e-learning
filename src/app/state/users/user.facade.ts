@@ -236,7 +236,6 @@ export class UserFacade implements OnInitEffects {
         /* Call the SendVerificaitonMail() function when new user sign 
           up and returns promise */
         // this.SendVerificationMail();
-
       })
       .catch((error) => {
         window.alert(error.message);
@@ -263,5 +262,16 @@ export class UserFacade implements OnInitEffects {
         merge: true,
       });
     });
+  }
+
+  searchUsersByIds(userIds: string[]) {
+    return this.afs
+      .collection<User>('users', (ref) => ref.where('uid', 'in', userIds))
+      .get()
+      .pipe(
+        map((snapshot) => {
+          return snapshot.docs.map((doc) => doc.data());
+        })
+      );
   }
 }

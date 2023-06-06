@@ -54,6 +54,13 @@ import { PracticeSlideThumbnailComponent } from './practice-slides/practice-slid
 import { PracticeSlidesCarouselComponent } from './practice-slides/practice-slides-carousel/practice-slides-carousel.component';
 import { CollaborationComponent } from './chapters/collaborations/collaboration/collaboration.component';
 import { AddCollaborationComponent } from './chapters/collaborations/add-collaboration/add-collaboration.component';
+import { SubscriptionChartComponent } from './statistics/subscription-chart/subscription-chart.component';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgIf, DatePipe } from '@angular/common';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { StudentsSubscriptionTableComponent } from './statistics/students-subscription-table/students-subscription-table.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +75,7 @@ import { AddCollaborationComponent } from './chapters/collaborations/add-collabo
     SlideDetailComponent,
     SlidesCarouselComponent,
     StatisticsComponent,
+    SubscriptionChartComponent,
     CourseCardComponent,
     ChaptersListComponent,
     ChapterAddComponent,
@@ -90,6 +98,7 @@ import { AddCollaborationComponent } from './chapters/collaborations/add-collabo
     PracticeSlidesCarouselComponent,
     CollaborationComponent,
     AddCollaborationComponent,
+    StudentsSubscriptionTableComponent,
   ],
   imports: [
     FormsModule,
@@ -105,6 +114,12 @@ import { AddCollaborationComponent } from './chapters/collaborations/add-collabo
     IgxIconModule,
     IgxDragDropModule,
     ShareModule,
+    NgIf,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    DatePipe,
   ],
 })
-export class TeacherModule { }
+export class TeacherModule {}

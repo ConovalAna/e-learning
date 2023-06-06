@@ -13,11 +13,13 @@ import {
 import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
 import { tap } from 'rxjs';
 import { LOADER } from '../../interceptors/loader.interceptor';
+import { IUserCourseStatistic } from './course-statistic.interface';
 
 const queryKeys = {
   teacherCourses: 'teacher-courses',
   studentSubscribedCourses: 'student-subscribed-courses',
   studentTestProgres: 'student-test-courses',
+  statistics: 'user-course-statistics',
 };
 
 @Injectable({
@@ -178,6 +180,18 @@ export class UserCourseService {
           testProgress
         );
       }
+    );
+  }
+
+  getUserCourseStatistics(courseId: string) {
+    return this.useQuery(
+      [queryKeys.statistics, courseId],
+      () => {
+        return this.http.get<IUserCourseStatistic[]>(
+          this.userCourseApiUrl + courseId + '/statistic'
+        );
+      },
+      { staleTime: Infinity, retry: 3 }
     );
   }
 }

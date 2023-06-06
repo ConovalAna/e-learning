@@ -31,7 +31,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NoRoleComponent } from './no-role/no-role.component';
-import { StudentModule } from "./student/student.module";
+import { StudentModule } from './student/student.module';
 import { SharedModule } from './shared/shared.module';
 
 export function playerFactory(): any {
@@ -66,7 +66,7 @@ export function playerFactory(): any {
     FormsModule,
     NgxSpinnerModule,
     StudentModule,
-    SharedModule
-  ]
+    SharedModule,
+  ],
 })
-export class AppModule { }
+export class AppModule {}

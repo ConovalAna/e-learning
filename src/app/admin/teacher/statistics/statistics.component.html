@@ -1,1 +1,58 @@
-<p>statistics works!</p>
+<div class="course-container">
+  <aside class="px-3 pt-2">
+    <h3 class="text-center">Courses</h3>
+    <div class="mt-2 mb-3" *ngFor="let course of courses">
+      <app-courses-card
+        [course]="course"
+        [isSelected]="course.id === currentCourseId"
+        (onClickEvent)="courseClickFunction($event)"
+      />
+    </div>
+  </aside>
+  <main>
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="me-2">description</mat-icon>
+          <div matBadge="4" matBadgeOverlap="false" class="demo-section">
+            Subscription
+          </div>
+        </ng-template>
+        <div class="h-100">
+          <div class="row w-100">
+            <div class="col-12 px-4 pt-4">
+              <app-students-subscription-table
+                [currentCourseId]="currentCourseId"
+              ></app-students-subscription-table>
+            </div>
+            <div class="col-12 px-4 pt-5">
+              <app-subscription-chart
+                [currentCourseId]="currentCourseId"
+              ></app-subscription-chart>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="me-2">insert_drive_file</mat-icon>
+          Lessons
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="me-2">insert_drive_file</mat-icon>
+          Practices
+        </ng-template>
+        Practices
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="me-2">insert_drive_file</mat-icon>
+          Tests
+        </ng-template>
+        Tests
+      </mat-tab>
+    </mat-tab-group>
+  </main>
+</div>

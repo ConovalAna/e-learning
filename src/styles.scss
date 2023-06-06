@@ -8,13 +8,14 @@
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat.core();
+@import "@angular/material/theming";
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$smartbyte-base-color: #dde7e5;
-$smartbyte-primary-color: mat.define-palette(mat.$blue-grey-palette, 500);
-$smartbyte-accent-color: mat.define-palette(mat.$deep-purple-palette, A200);
+$main-palette: mat-palette($mat-teal-palette);
+$accent-palette: mat-palette($mat-cyan-palette);
+$optional-palette: mat-palette($mat-teal-palette, 700);
 
 // Define the $mat-grey variable
 $smartbyte-mat-grey: mat.define-palette(mat.$grey-palette, 800);
@@ -27,14 +28,14 @@ $smartbyte-warn: mat.define-palette(mat.$red-palette);
 $smartbyte-theme: mat.define-light-theme(
   (
     color: (
-      primary: $smartbyte-primary-color,
-      accent: $smartbyte-accent-color,
+      primary: $main-palette,
+      accent: $accent-palette,
       warn: $smartbyte-warn,
+      optional: $optional-palette,
     ),
     background: (
       body: (
         // Use your base color for the background of the app
-        background-color: $smartbyte-base-color,
         color: $smartbyte-mat-grey,
       ),
     ),

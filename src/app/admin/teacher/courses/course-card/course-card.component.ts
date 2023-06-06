@@ -11,6 +11,7 @@ import { ShareComponent } from '../../chapters/share/share.component';
 export class CourseCardComponent {
   @Input() course?: ICourse;
   @Input() disableSpecialOp?: boolean;
+  @Input() isSelected: boolean = false;
 
   @Output() onClickEvent: EventEmitter<string> = new EventEmitter<string>();
 
@@ -21,11 +22,10 @@ export class CourseCardComponent {
     this.onClickEvent.emit(this.course?.id);
   }
 
-  constructor(private courseService: CourseService, public dialog: MatDialog) { }
+  constructor(private courseService: CourseService, public dialog: MatDialog) {}
 
   deleteCourseMutation = this.courseService.deleteCourseByTeacher();
   updateCourseMutation = this.courseService.updateCourseByTeacher();
-
 
   deleteCourse() {
     this.deleteCourseMutation.mutate(this.course?.id).then();
@@ -35,15 +35,14 @@ export class CourseCardComponent {
     const dialogRef = this.dialog.open(ShareComponent, {
       //to do todo update link
       data: 'http://localhost:4200/student/courses/' + this.course?.id,
-      width: '550px'
+      width: '550px',
     });
     dialogRef.afterClosed().subscribe((result) => {
-      new Promise((res) => setTimeout(res, 500)).then(() => { });
+      new Promise((res) => setTimeout(res, 500)).then(() => {});
     });
   }
 
   hideCourse() {
-
     if (this.course != null) {
       this.course.visible = !this.course.visible;
       this.updateCourseMutation.mutate(this.course).then();
@@ -51,7 +50,6 @@ export class CourseCardComponent {
   }
 
   archiveCourse() {
-
     if (this.course != null) {
       // this.course.archived = false;
       this.course.archived = true;
