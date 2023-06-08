@@ -22,6 +22,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [],
@@ -48,7 +49,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatChipsModule,
     MatGridListModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -72,7 +74,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatChipsModule,
     MatGridListModule,
     MatCardModule,
-    MatTabsModule
-  ]
+    MatTabsModule,
+    MatProgressBarModule,
+  ],
 })
-export class SmartbyteMaterialModule { }
+export class SmartbyteMaterialModule {}

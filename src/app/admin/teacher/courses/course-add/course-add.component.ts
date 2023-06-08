@@ -13,8 +13,11 @@ export class CourseAddComponent {
   @Output() onClickBtn: EventEmitter<ICourse> = new EventEmitter<ICourse>();
 
   onChangeImageUrl(imageUrl: string): void {
-    console.log(imageUrl);
     this.course.imageUrl = imageUrl;
+  }
+
+  onChangeDiplomaUrl(diplomaUrl: string): void {
+    this.course.diplomaUrl = diplomaUrl;
   }
 
   onClick() {
@@ -37,6 +40,12 @@ export class CourseAddComponent {
     this.course.level = value;
   }
 
+  getDocumentName(documentUrl: string): string {
+    return documentUrl
+      .substring(documentUrl.indexOf('%2F'), documentUrl.indexOf('?alt'))
+      .replace('%2F', '');
+  }
+
   restrictNumber(event: Event, min: number, max: number): void {
     const inputElement = event.target as HTMLInputElement;
     const value = parseFloat(inputElement.value);
@@ -48,6 +57,5 @@ export class CourseAddComponent {
     if (value > max) {
       inputElement.value = max.toString();
     }
-
   }
 }

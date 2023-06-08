@@ -22,7 +22,6 @@ export class CourseDropdownComponent {
       .result$.subscribe((fetchedCourses) => {
         this.courses = fetchedCourses.data;
         this.filteredCourses = fetchedCourses.data;
-        console.log(this.filteredCourses);
       });
   }
 

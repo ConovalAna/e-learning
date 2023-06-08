@@ -2,20 +2,19 @@
     <div class="position-sticky p-5 pt-4 sidebar-sticky container-fluid">
         <div class="row  justify-content-between">
             <h5 class="col">Profile</h5>
-            <div class="col d-flex justify-content-end">
+            <a class="col d-flex justify-content-end" href="/student/profile">
                 <i class="bi bi-gear" style="font-size: 24px;"></i>
-            </div>
+            </a>
 
         </div>
         <div class="row text-center mb-2">
-            <img src="https://github.com/mdo.png" class="rounded-circle mb-3 m-auto" style="width: 150px;"
-                alt="Avatar" />
+            <img [src]="profileUrl" class="rounded-circle mb-3 m-auto" style="width: 150px;" alt="Avatar" />
 
-            <h5 class="mb-2"><strong>Mister Smith</strong></h5>
+            <h5 class="mb-2"><strong>{{ user?.displayName }}</strong></h5>
             <p class="text-muted">Web designer <span class="badge bg-primary">PRO</span></p>
         </div>
         <div class="row text-center justify-content-between  mb-4">
-            <div class="card col me-2 p-1 d-flex flex-column" style="max-width: 150px;">
+            <div class="card col me-2 p-1 d-flex flex-column" style="max-width: 150pvx;">
                 <i class="bi bi-lightning-charge-fill energy-badge"></i>
                 <i class="fa-solid fa-star"></i>
                 <p>0</p>

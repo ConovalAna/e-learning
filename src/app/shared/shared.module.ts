@@ -15,12 +15,18 @@ import { UserCourseService } from './services/course/user-course.service';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { TestService } from './services/test';
 import { FooterComponent } from './components/footer/footer.component';
+import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
+import { SmartbyteMaterialModule } from '../smartbyte-material.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [AvatarImageComponent, FooterComponent],
+  declarations: [AvatarImageComponent, FooterComponent, FileUploaderComponent],
   imports: [
+    MatIconModule,
     CommonModule,
     HttpClientModule,
+    SmartbyteMaterialModule,
+
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideStorage(() => {
       const storage = getStorage();
@@ -29,7 +35,7 @@ import { FooterComponent } from './components/footer/footer.component';
       return storage;
     }),
   ],
-  exports: [AvatarImageComponent, FooterComponent],
+  exports: [AvatarImageComponent, FooterComponent, FileUploaderComponent],
   providers: [
     CourseService,
     UserCourseService,
@@ -49,4 +55,4 @@ import { FooterComponent } from './components/footer/footer.component';
     },
   ],
 })
-export class SharedModule { }
+export class SharedModule {}

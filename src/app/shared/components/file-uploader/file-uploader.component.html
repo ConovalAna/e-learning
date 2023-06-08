@@ -1,0 +1,21 @@
+<input
+  type="file"
+  class="file-input"
+  [accept]="requiredFileType"
+  (change)="onFileSelected($event)"
+  #fileUpload
+  hidden
+/>
+
+<div class="file-upload">
+  {{ fileName || "No file uploaded yet." }}
+
+  <button
+    mat-raised-button
+    color="primary"
+    class="upload-btn w-100"
+    (click)="fileUpload.click()"
+  >
+    <mat-icon>attach_file</mat-icon> Attach diploma
+  </button>
+</div>

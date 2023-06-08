@@ -1,31 +1,42 @@
 <div>
   <div class="container pt-5" style="max-width: 1000px">
-    <div class="row d-flex" style="
+    <div
+      class="row d-flex"
+      style="
         border-bottom: 2px solid rgb(229, 229, 229);
         margin-bottom: 24px;
         padding: 0 0 24px;
-      ">
+      "
+    >
       <div class="col-12 col-sm-4 d-flex justify-content-center">
-        <app-avatar-image [isEditable]="true" [shape]="'rounded-circle'"
-          [imageURL]="'https://images.unsplash.com/photo-1554080353-a576cf803bda?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGhvdG98ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60'">
+        <app-avatar-image
+          *ngIf="profileUrl"
+          [isEditable]="false"
+          [shape]="'rounded-circle'"
+          [imageURL]="profileUrl"
+        >
         </app-avatar-image>
       </div>
       <div class="col-8 col-sm-5 pt-3">
         <h1 data-test="profile-username" class="_1cHvI" dir="ltr">
-          <span class="fs-exclude">Ana Lazarenco</span>
+          <span class="fs-exclude">{{ user?.displayName }}</span>
         </h1>
         <div class="_15MkR">
           <div class="_60ErO">
             <i class="bi bi-clock-fill _2-BXB"></i>
-            <div class="_2Ce44">Регистрация: январь 2023</div>
+            <div class="_2Ce44">Registered: 2023</div>
           </div>
         </div>
       </div>
       <div class="col-4 col-sm-3 pt-3">
         <div class="_3rhkK">
-          <a class="_2NolF _275sd _1ZefG _1-O8t" href="/settings/account" style="background-color: rgb(28, 176, 246)">
-            <i class="bi bi-pen-fill _3612i" style="color: rgb(255, 255, 255)"></i>
-            <div class="_3BEMN">Edit</div>
+          <a
+            class="_2NolF _275sd _1ZefG _1-O8t"
+            href="/settings/account"
+            style="background-color: rgb(28, 176, 246)"
+          >
+            <i class="bi bi-pen _3612i" style="color: rgb(255, 255, 255)"></i>
+            Edit
           </a>
         </div>
       </div>

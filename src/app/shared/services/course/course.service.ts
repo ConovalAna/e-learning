@@ -1,10 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { ICourse, ICourseCollaborations, dbCourseToICourse } from './course.interface';
+import {
+  ICourse,
+  ICourseCollaborations,
+  dbCourseToICourse,
+} from './course.interface';
 import { IdResult } from '../../interfaces/id-result.interface';
 import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
 import { combineLatest, filter, map, merge, switchMap, tap, zip } from 'rxjs';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from '@angular/fire/compat/firestore';
 import { User } from '../user';
 
 const queryKeys = {
@@ -19,8 +26,7 @@ export class CourseService {
   private useQuery = inject(UseQuery);
   private useMutation = inject(UseMutation);
   private queryClient = inject(QueryClientService);
-  constructor(private http: HttpClient,
-    public afs: AngularFirestore) { }
+  constructor(private http: HttpClient, public afs: AngularFirestore) {}
 
   apiUrl = 'https://localhost:44302/Courses/';
   userCourseApiUrl = 'https://localhost:44302/UserCourses';
@@ -36,12 +42,12 @@ export class CourseService {
   getAllPagedFilteredCourses(search: string, offset: number, limit: number) {
     return this.http.get<ICourse[]>(
       this.apiUrl +
-      'search?query=' +
-      search +
-      '&offset=' +
-      offset +
-      '&limit=' +
-      limit
+        'search?query=' +
+        search +
+        '&offset=' +
+        offset +
+        '&limit=' +
+        limit
     );
   }
 
@@ -91,18 +97,22 @@ export class CourseService {
   }
 
   addCollaborator(courseId: string, user: User) {
+    const courseCollaboratorsRef = this.afs
+      .doc<ICourse>(`CourseModel/${courseId}`)
+      .collection('collaborators')
+      .doc(user.uid);
 
-    const courseCollaboratorsRef = this.afs.doc<ICourse>(
-      `CourseModel/${courseId}`
-    ).collection("collaborators").doc(user.uid);
+    const userCourseCollaboratorsRef = this.afs
+      .doc<ICourseCollaborations>(`CollaborationCourseModel/${user.uid}`)
+      .collection('CoursesCollaborattions')
+      .doc(courseId);
 
-    const userCourseCollaboratorsRef = this.afs.doc<ICourseCollaborations>(
-      `CollaborationCourseModel/${user.uid}`
-    ).collection("CoursesCollaborattions").doc(courseId);
-
-    userCourseCollaboratorsRef.set({ id: courseId }, {
-      merge: true,
-    })
+    userCourseCollaboratorsRef.set(
+      { id: courseId },
+      {
+        merge: true,
+      }
+    );
 
     return courseCollaboratorsRef.set(user, {
       merge: true,
@@ -111,63 +121,75 @@ export class CourseService {
 
   getCollaboratorByEmail(collaboratorEmail: string) {
     {
-      const users$ = this.afs.collection<User>('users', ref => ref.where('email', '==', collaboratorEmail)).valueChanges();
+      const users$ = this.afs
+        .collection<User>('users', (ref) =>
+          ref.where('email', '==', collaboratorEmail)
+        )
+        .valueChanges();
       return users$;
     }
   }
 
   getCourseCollaborators(courseId: string) {
     {
-      debugger;
-      const collection = this.afs.collection<User>(`CourseModel/${courseId}/collaborators`).valueChanges();
+      const collection = this.afs
+        .collection<User>(`CourseModel/${courseId}/collaborators`)
+        .valueChanges();
       return collection;
     }
   }
 
   async deleteCollaborator(courseId: string, userId: string) {
+    await this.afs
+      .doc<ICourse>(`CourseModel/${courseId}`)
+      .collection('collaborators')
+      .doc(userId)
+      .delete();
 
-    await this.afs.doc<ICourse>(
-      `CourseModel/${courseId}`
-    ).collection("collaborators").doc(userId).delete();
-
-    await this.afs.doc<ICourseCollaborations>(
-      `CollaborationCourseModel/${userId}`
-    ).collection("CoursesCollaborattions").doc(courseId).delete();
+    await this.afs
+      .doc<ICourseCollaborations>(`CollaborationCourseModel/${userId}`)
+      .collection('CoursesCollaborattions')
+      .doc(courseId)
+      .delete();
   }
 
   getCollaborativeCourses(userId: string) {
     {
-      debugger
-      const collection = this.afs.collection<ICourseCollaborations>(`CollaborationCourseModel/${userId}/CoursesCollaborattions`)
-        .valueChanges().pipe(
+      debugger;
+      const collection = this.afs
+        .collection<ICourseCollaborations>(
+          `CollaborationCourseModel/${userId}/CoursesCollaborattions`
+        )
+        .valueChanges()
+        .pipe(
           switchMap((courseCollaboration) => {
-            let courses$ = courseCollaboration.map(element =>
-              this.afs.doc<any>(
-                `CourseModel/${element.id}`
-              ).valueChanges().pipe(map(course => dbCourseToICourse(course)))
+            let courses$ = courseCollaboration.map((element) =>
+              this.afs
+                .doc<any>(`CourseModel/${element.id}`)
+                .valueChanges()
+                .pipe(map((course) => dbCourseToICourse(course)))
             );
             return zip(courses$);
-          }
-          )
+          })
         );
       return collection;
     }
   }
 }
 
-  // async addCollaborator(courseId: string, collaboratorEmail: string) {
-  //   {
-  //     const course$ = this.afs.doc<ICourse>(
-  //       `CourseModel/${courseId}`
-  //     ).valueChanges();
+// async addCollaborator(courseId: string, collaboratorEmail: string) {
+//   {
+//     const course$ = this.afs.doc<ICourse>(
+//       `CourseModel/${courseId}`
+//     ).valueChanges();
 
-  //     const users$ = this.afs.collection<User>('users', ref => ref.where('email', '==', collaboratorEmail)).valueChanges();
+//     const users$ = this.afs.collection<User>('users', ref => ref.where('email', '==', collaboratorEmail)).valueChanges();
 
-  //     zip([course$, users$]).pipe(filter(values => !!values)).subscribe(values => {
-  //       const [course, users] = values;
-  //       if (users.length) {
-  //         this.updateCourseCollaborators(courseId, users[0]).then();
-  //       }
-  //     })
-  //   }
-  // }
+//     zip([course$, users$]).pipe(filter(values => !!values)).subscribe(values => {
+//       const [course, users] = values;
+//       if (users.length) {
+//         this.updateCourseCollaborators(courseId, users[0]).then();
+//       }
+//     })
+//   }
+// }

@@ -24,9 +24,10 @@ export class CourseAddViewComponent {
     numberOfLessons: 0,
     visible: true,
     archived: false,
+    diplomaUrl: '',
   };
 
-  constructor(private courseService: CourseService, private router: Router) { }
+  constructor(private courseService: CourseService, private router: Router) {}
 
   addCourse(course: ICourse) {
     this.addCourseMutation.mutate(course).then((result) => {

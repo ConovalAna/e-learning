@@ -1,6 +1,10 @@
 <div class="course-image d-flex justify-content-center mb-4">
-  <app-avatar-image [isEditable]="true" [shape]="'rounded-circle'" (onChangeUrlEvent)="onChangeImageUrl($event)"
-    [imageURL]="course.imageUrl">
+  <app-avatar-image
+    [isEditable]="true"
+    [shape]="'rounded-circle'"
+    (onChangeUrlEvent)="onChangeImageUrl($event)"
+    [imageURL]="course.imageUrl"
+  >
   </app-avatar-image>
 </div>
 <mat-form-field class="w-100" appearance="outline">
@@ -10,37 +14,80 @@
 
 <mat-form-field class="w-100" appearance="outline">
   <mat-label>Short description</mat-label>
-  <textarea matInput [(ngModel)]="course.shortDescription" name="shortDescription"></textarea>
+  <textarea
+    matInput
+    [(ngModel)]="course.shortDescription"
+    name="shortDescription"
+  ></textarea>
 </mat-form-field>
 <mat-form-field class="w-100" appearance="outline">
   <mat-label>Long description</mat-label>
-  <textarea matInput [(ngModel)]="course.longDescription" name="longDescription"></textarea>
+  <textarea
+    matInput
+    [(ngModel)]="course.longDescription"
+    name="longDescription"
+  ></textarea>
 </mat-form-field>
 
 <mat-form-field class="w-100" appearance="outline">
   <mat-label>Duration</mat-label>
-  <input matInput type="number" class="example-right-align" [(ngModel)]="course.duration" placeholder="0"
-    (input)="restricDuration($event)" name="duration">
+  <input
+    matInput
+    type="number"
+    class="example-right-align"
+    [(ngModel)]="course.duration"
+    placeholder="0"
+    (input)="restricDuration($event)"
+    name="duration"
+  />
   <span matTextSuffix>h</span>
 </mat-form-field>
 
 <mat-form-field class="w-100" appearance="outline">
   <mat-label>Level</mat-label>
-  <input matInput type="number" class="example-right-align" [(ngModel)]="course.level" placeholder="1"
-    (input)="restricLevel($event)" name="level">
+  <input
+    matInput
+    type="number"
+    class="example-right-align"
+    [(ngModel)]="course.level"
+    placeholder="1"
+    (input)="restricLevel($event)"
+    name="level"
+  />
   <span matTextSuffix><i class="bi bi-star-half"></i></span>
 </mat-form-field>
 
 <mat-form-field class="w-100" appearance="outline">
   <mat-label>Achievements</mat-label>
-  <textarea matInput [(ngModel)]="course.achievements" name="achievements"></textarea>
+  <textarea
+    matInput
+    [(ngModel)]="course.achievements"
+    name="achievements"
+  ></textarea>
 </mat-form-field>
 
 <mat-form-field class="w-100" appearance="outline">
   <mat-label>Requirements</mat-label>
-  <textarea matInput [(ngModel)]="course.requirements" name="requirements"></textarea>
+  <textarea
+    matInput
+    [(ngModel)]="course.requirements"
+    name="requirements"
+  ></textarea>
 </mat-form-field>
 
-<button mat-raised-button color="primary" (click)="onClick()" class="w-100 my-3" style="height: 4em">
-  <span style="font-size: larger">{{isNew? 'Create':'Update' }}</span>
+<app-file-uploader
+  *ngIf="!isNew"
+  (onChangeUrlEvent)="onChangeDiplomaUrl($event)"
+  [path]="this.course.id"
+  [fileName]="getDocumentName(this.course.diplomaUrl)"
+></app-file-uploader>
+
+<button
+  mat-raised-button
+  color="primary"
+  (click)="onClick()"
+  class="w-100 my-3"
+  style="height: 4em"
+>
+  <span style="font-size: larger">{{ isNew ? "Create" : "Update" }}</span>
 </button>

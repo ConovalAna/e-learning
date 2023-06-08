@@ -4,7 +4,7 @@
             <a class="navbar-brand me-lg-5" routerLink="/student/courses">E-Learn</a>
             <app-course-dropdown></app-course-dropdown>
 
-            <button class="navbar-toggler  d-md-none collapsed" type="button" data-bs-toggle="collapse"
+            <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -19,25 +19,32 @@
                         <a class="nav-link" href="#">Paths</a>
                     </li>
                 </ul>
-                <div class="badge rounded-pill text-bg-danger me-2" style="font-size: 20px; max-height: 30px;"> 0
-                    <i class="bi bi-fire streak-badge" style="font-size: 20px; "></i>
+                <div class="badge rounded-pill text-bg-danger me-2" style="font-size: 20px; max-height: 30px">
+                    0
+                    <i class="bi bi-fire streak-badge" style="font-size: 20px"></i>
                 </div>
-                <div class="badge rounded-pill text-bg-warning me-2 py-1" style="font-size: 20px; max-height: 30px;"> 0
-                    <i class=" bi bi-lightning-charge-fill" style="font-size: 20px; "></i>
+                <div class="badge rounded-pill text-bg-warning me-2 py-1" style="font-size: 20px; max-height: 30px">
+                    0
+                    <i class="bi bi-lightning-charge-fill" style="font-size: 20px"></i>
                 </div>
 
                 <div class="flex-shrink-0 dropdown">
-                    <a href="#" class="d-block link-dark text-decoration-none  show" data-bs-toggle="dropdown"
+                    <a href="#" class="d-block link-dark text-decoration-none show" data-bs-toggle="dropdown"
                         aria-expanded="true">
-                        <img src="https://github.com/mdo.png" alt="mdo" width="41" height="41" class="rounded-circle">
+                        <img [src]="profileUrl" alt="mdo" width="41" height="41" class="rounded-circle" />
                     </a>
-                    <ul class="dropdown-menu text-small shadow"
-                        style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 34.4px, 0px);"
-                        data-popper-placement="bottom-end">
+                    <ul class="dropdown-menu text-small shadow" style="
+              position: absolute;
+              inset: 0px 0px auto auto;
+              margin: 0px;
+              transform: translate3d(0px, 34.4px, 0px);
+            " data-popper-placement="bottom-end">
                         <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="/student/profile">Profile</a></li>
                         <li>
-                            <hr class="dropdown-divider">
+                            <a class="dropdown-item" href="/student/profile">Profile</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider" />
                         </li>
                         <li><a class="dropdown-item" (click)="logOut()">Sign out</a></li>
                     </ul>
@@ -45,8 +52,8 @@
             </div>
         </div>
     </nav>
-    <button type="button"
-        class="btn btn-light   rounded-circle border position-absolute bottom-0 end-0 mb-5 me-3 d-md-none">
-        <i class="bi bi-bookmarks-fill " style="font-size: 30px"></i>
-    </button>
+    <!-- <button type="button"
+        class="btn btn-light rounded-circle border position-absolute bottom-0 end-0 mb-5 me-3 d-md-none">
+        <i class="bi bi-bookmarks-fill" style="font-size: 30px"></i>
+    </button> -->
 </header>
