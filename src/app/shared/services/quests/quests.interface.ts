@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 export interface IChallenge {
   id: string;
   type: ChallengeType;
@@ -23,7 +25,7 @@ export type QuestType = {
 };
 
 export interface IDailyScore {
-  Date: any;
+  Date: Timestamp;
   Score: number;
 }
 
