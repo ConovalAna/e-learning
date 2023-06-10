@@ -1,0 +1,42 @@
+<div class="btn-group ms-lg-5">
+    <button class="btn btn-md dropdown-toggle rounded-pill course-dropdown" type="button" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Quests
+    </button>
+    <div class="dropdown-menu course-dropdown-menu shadow rounded-4">
+        <div class="course-dropdown-menu-list py-3 px-2 scrollbar scrollbar-pink bordered-pink thin">
+            <div *ngFor="let challenge of challenges">
+                <div class="card mb-3 border-0 shadow rounded-3 course-dropdown-item" style="max-width: 500px">
+
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-12" *ngIf="challenge.type === 0">
+                                <span class="card-title custom-text-title ">Champion's Way</span>
+                                <span class="card-text custom-text-description">Complete all the daily quests</span>
+                            </div>
+                            <div class="col-12" *ngIf="challenge.type === 1">
+                                <span class="card-title custom-text-title ">Be the Best of the Best</span>
+                                <span class="card-text custom-text-description">Complete weekly quests</span>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-12" *ngFor="let quest of challenge.quests">
+                                <div class="progress" role="progressbar" aria-label="Example with label"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" [style.width.%]="quest.pass/quest.total * 100"
+                                        tyle="position: relative;">
+                                        <div style="position: absolute;" class="px-2">
+                                            {{getText(quest.questName)}} ({{quest.pass}}/{{quest.total}})
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

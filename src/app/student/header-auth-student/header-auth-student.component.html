@@ -19,12 +19,13 @@
                         <a class="nav-link" href="#">Paths</a>
                     </li>
                 </ul>
+                <app-quest-dropdown class="me-2" />
                 <div class="badge rounded-pill text-bg-danger me-2" style="font-size: 20px; max-height: 30px">
-                    0
+                    {{todayScore}}
                     <i class="bi bi-fire streak-badge" style="font-size: 20px"></i>
                 </div>
                 <div class="badge rounded-pill text-bg-warning me-2 py-1" style="font-size: 20px; max-height: 30px">
-                    0
+                    {{score?.TotalScore}}
                     <i class="bi bi-lightning-charge-fill" style="font-size: 20px"></i>
                 </div>
 

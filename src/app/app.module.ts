@@ -9,9 +9,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  provideAnimations,
+} from '@angular/platform-browser/animations';
 
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, provideToastr } from 'ngx-toastr';
 
 import { environment } from '../enviorment/enviorment';
 import { SignInComponent } from './account/sign-in/sign-in.component';
@@ -48,7 +51,10 @@ export function playerFactory(): any {
     ForgotPasswordComponent,
     VerifyEmailComponent,
   ],
-  providers: [],
+  providers: [
+    provideAnimations(), // required animations providers
+    provideToastr({ timeOut: 3000, positionClass: 'toast-bottom-right' }),
+  ],
   bootstrap: [AppComponent],
   imports: [
     BrowserModule,

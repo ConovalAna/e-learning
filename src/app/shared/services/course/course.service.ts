@@ -155,7 +155,6 @@ export class CourseService {
 
   getCollaborativeCourses(userId: string) {
     {
-      debugger;
       const collection = this.afs
         .collection<ICourseCollaborations>(
           `CollaborationCourseModel/${userId}/CoursesCollaborattions`

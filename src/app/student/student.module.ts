@@ -35,6 +35,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { QuestDropdownComponent } from './common/quest-dropdown/quest-dropdown.component';
 
 export function playerFactory(): any {
   return import('lottie-web');
@@ -61,6 +62,7 @@ export function playerFactory(): any {
     CoursesComponent,
     WeekChartComponent,
     AboutUsComponent,
+    QuestDropdownComponent,
   ],
   imports: [
     CommonModule,

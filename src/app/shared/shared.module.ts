@@ -6,7 +6,6 @@ import { SlideService } from './services/slide';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AvatarImageComponent } from './components/avatar-image/avatar-image.component';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/enviorment/enviorment';
 import { CloudStorageService } from './services/firebase';
 import { getStorage, provideStorage } from '@angular/fire/storage';
@@ -18,6 +17,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { SmartbyteMaterialModule } from '../smartbyte-material.module';
 import { MatIconModule } from '@angular/material/icon';
+import { QuestService } from './services/quests';
 
 @NgModule({
   declarations: [AvatarImageComponent, FooterComponent, FileUploaderComponent],
@@ -43,6 +43,7 @@ import { MatIconModule } from '@angular/material/icon';
     SlideService,
     CloudStorageService,
     TestService,
+    QuestService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
