@@ -87,6 +87,24 @@
             </div>
           </mat-card-content>
         </mat-card>
+        <mat-card class="row mt-5">
+          <mat-card-content>
+            <h3>Add label for statistics</h3>
+            <mat-form-field
+              class="example-form-field"
+              appearance="outline"
+              class="w-100"
+            >
+              <input
+                matInput
+                type="text"
+                id="statisticsLabel"
+                name="statisticsLabel"
+                [(ngModel)]="statisticsLabel"
+              />
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </div>

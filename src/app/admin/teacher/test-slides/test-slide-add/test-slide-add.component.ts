@@ -37,6 +37,7 @@ export class TestSlideAddComponent {
   selectedAnswerType: AnswerType = AnswerType.One;
   selectedSingleAnswer: string = '';
   value = 'Clear me';
+  statisticsLabel = '';
   answers: { value: string; completed: boolean }[] = [
     { value: 'Apple', completed: true },
     { value: 'Pear', completed: false },
@@ -63,6 +64,7 @@ export class TestSlideAddComponent {
       this.selectedAnswerType = changes['slide']?.currentValue.answerType;
       this.selectedSingleAnswer =
         changes['slide']?.currentValue.correctAnswers[0];
+      this.statisticsLabel = changes['slide']?.currentValue.statisticsLabel;
       this.answers = changes['slide']?.currentValue.answers.map(
         (value: any) => {
           return {
@@ -88,6 +90,7 @@ export class TestSlideAddComponent {
     this.slide!.delta = JSON.stringify(this.quillChild?.getContents());
     this.slide!.answerType = this.selectedAnswerType;
     this.slide!.answers = this.answers.map((answer) => answer.value);
+    this.slide!.statisticsLabel = this.statisticsLabel;
     if (
       this.selectedAnswerType === AnswerType.One &&
       !!this.selectedSingleAnswer

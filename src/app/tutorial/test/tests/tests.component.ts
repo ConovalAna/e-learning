@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserCourseService } from 'src/app/shared/services/course';
+import {
+  ITestStatistic,
+  UserCourseService,
+} from 'src/app/shared/services/course';
 import {
   ILessonProgress,
   ITestProgress,
@@ -27,6 +30,7 @@ export class TestsComponent implements OnInit {
   testSlides: ITestSlide[] = [];
   totalPassTests: number = 0;
   lastLotie: string = '/assets/lottie/done.json';
+  testStatistics: ITestStatistic;
 
   pointsToEachPassTest = 10;
 
@@ -45,6 +49,7 @@ export class TestsComponent implements OnInit {
       .fetchSlidesForTest(this.testId)
       .result$.subscribe((result) => {
         this.testSlides = result?.data ?? [];
+        this.testStatistics.slideId = this.testSlides[0]?.id;
         this.slidesProcess = this.testSlides.map((slideL) => {
           let slide: ISlideProcess = {
             ...slideL,
@@ -58,9 +63,21 @@ export class TestsComponent implements OnInit {
           this.slidesProcess[0].visible = true;
         }
       });
+
+    this.testStatistics = {
+      courseId: this.courseId,
+      // userId: string;
+      chapterId: this.chapterId,
+      testId: this.testId,
+      testNumber: 0,
+      slideId: '',
+    };
   }
 
   continueToNextSlide(index: number, pass: boolean) {
+    this.testStatistics.testNumber++;
+    this.testStatistics.slideId =
+      this.testSlides[this.testStatistics.testNumber].id;
     if (pass) {
       this.totalPassTests++;
     }

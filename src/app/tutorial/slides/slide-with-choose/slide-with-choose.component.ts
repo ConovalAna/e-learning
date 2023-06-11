@@ -8,6 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { AnimationOptions } from 'ngx-lottie';
+import { CourseService, ITestStatistic } from 'src/app/shared/services/course';
 import { IPracticeSlide, ITestSlide } from 'src/app/shared/services/slide';
 
 @Component({
@@ -21,6 +22,7 @@ export class SlideWithChooseComponent implements OnInit {
   @Input() isLast: boolean | undefined;
   @Input() totalPassTests: number | undefined;
   @Input() totalTests: number | undefined;
+  @Input() testStatistics: ITestStatistic | undefined;
 
   @Output() continueToNext: EventEmitter<{ index: number; pass: boolean }> =
     new EventEmitter<{ index: number; pass: boolean }>();
@@ -49,7 +51,10 @@ export class SlideWithChooseComponent implements OnInit {
   checkAnswers: { value: string; completed: boolean }[] = [];
   lastLotie = '/assets/lottie/finish2.json';
 
-  constructor(private scroller: ViewportScroller) {}
+  constructor(
+    private scroller: ViewportScroller,
+    private courseService: CourseService
+  ) {}
 
   ngOnInit(): void {
     this.scroller.scrollToAnchor(String(this.slide?.id));
@@ -60,8 +65,21 @@ export class SlideWithChooseComponent implements OnInit {
 
     if (this.slide?.answerType === 0) {
       //radio
+      //set response
+      if (this.testStatistics !== null && this.testStatistics !== undefined) {
+        this.testStatistics.answers = [this.radioAnswer];
+      }
+
       this.correctAnswer = this.slide?.correctAnswers[0] === this.radioAnswer;
     } else if (this.slide?.answerType === 1) {
+      //check box
+      //set response
+      if (this.testStatistics !== null && this.testStatistics !== undefined) {
+        this.testStatistics.answers = this.checkAnswers
+          ?.filter((i) => i.completed)
+          .map((i) => i.value);
+      }
+
       let correctAnswerStr = this.checkAnswers
         ?.filter((i) => i.completed)
         .map((i) => i.value)
@@ -70,6 +88,15 @@ export class SlideWithChooseComponent implements OnInit {
         this.slide?.correctAnswers?.toString() == correctAnswerStr;
     } else {
       this.correctAnswer = true;
+    }
+
+    //set response
+    if (this.testStatistics !== null && this.testStatistics !== undefined) {
+      this.courseService.addTestAnswer(
+        this.testStatistics.courseId,
+        this.testStatistics.testId,
+        this.testStatistics
+      );
     }
   }
 

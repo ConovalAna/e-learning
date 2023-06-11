@@ -1,0 +1,67 @@
+<div class="m-2 p-2">
+  <mat-accordion>
+    <mat-expansion-panel
+      hideToggle
+      *ngFor="let chapter of preparedStatistics"
+      class="mt-2 mb-3"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ chapter?.chapterName }}
+        </mat-panel-title>
+        <mat-panel-description>
+          This is a chapter content
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+        *ngFor="let test of chapter?.testsStatistics; let i = index"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title> Test number: {{ i + 1 }} </mat-panel-title>
+          <mat-panel-description>
+            {{ test.testName }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row mb-3" *ngFor="let question of test?.questions">
+          <div class="col">
+            <div class="row mb-2">
+              <p><b>Question: </b>{{ question.statisticsLabel }}</p>
+            </div>
+          </div>
+          <div class="col">
+            <b class="row mb-2"> Answers: </b>
+            <div class="row mb-2" *ngFor="let answers of question?.answers">
+              <div
+                style="color: red"
+                *ngIf="!question?.correctAnswers.includes(answers)"
+              >
+                {{ answers }}: {{ question?.answersCount[answers] }}
+              </div>
+              <div
+                style="color: rgb(9, 153, 9)"
+                *ngIf="question?.correctAnswers.includes(answers)"
+              >
+                {{ answers }}: {{ question?.answersCount[answers] }}
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="chart-wrapper border border-2">
+              <canvas
+                baseChart
+                [type]="'bar'"
+                [datasets]="buildQuestionsDataSet(question)"
+                [labels]="question.answers"
+                [options]="chartOptions"
+              >
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

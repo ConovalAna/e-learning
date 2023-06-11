@@ -79,6 +79,7 @@ export class TestSlidesCarouselComponent implements OnInit {
       id: '',
       order: 0,
       type: '',
+      statisticsLabel: '',
       delta: `{"ops":[{"insert":"Title hero ${this.slides$?.length}"},{"attributes":{"align":"center","header":1},"insert":"\\n"},{"insert":"Example of subtext"},{"attributes":{"align":"center"},"insert":"\\n\\n\\n"},{"insert":"\\n"}]}`,
       answers: ['Apple'],
       answerType: 0,

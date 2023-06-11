@@ -7,12 +7,23 @@ import {
 } from './course.interface';
 import { IdResult } from '../../interfaces/id-result.interface';
 import { QueryClientService, UseMutation, UseQuery } from '@ngneat/query';
-import { combineLatest, filter, map, merge, switchMap, tap, zip } from 'rxjs';
+import {
+  combineLatest,
+  filter,
+  map,
+  merge,
+  mergeMap,
+  switchMap,
+  tap,
+  zip,
+} from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { User } from '../user';
+import { ITestStatistic } from './course-statistic.interface';
+import { dbTestSlideToITestSlide } from '../slide';
 
 const queryKeys = {
   teacherCourses: 'teacher-courses',
@@ -174,7 +185,119 @@ export class CourseService {
       return collection;
     }
   }
+
+  addTestAnswer(
+    courseId: string,
+    testId: string,
+    testStatistic: ITestStatistic
+  ) {
+    const courseStatisticsRef = this.afs.doc(
+      `UserCourseStatisticSetModel/${courseId}/TestStatisticsSetModel/${testId}`
+    );
+    courseStatisticsRef.set(
+      { id: testId },
+      {
+        merge: true,
+      }
+    );
+    return courseStatisticsRef
+      .collection('TestStatisticsModel')
+      .add(testStatistic);
+  }
+
+  getCoursesTests(courseId: string) {
+    const testsCollection = this.afs
+      .collection<any>(`CourseModel/${courseId}/ChapterModel`)
+      .valueChanges()
+      .pipe(
+        switchMap((chapterModel) => {
+          let tests$ = chapterModel.map((element) =>
+            this.afs
+              .collection<any>(`TestSetModel/${element.Id}/TestModel`)
+              .valueChanges()
+              .pipe(
+                map((tests) =>
+                  tests.map((test) => {
+                    return {
+                      testId: test.Id,
+                      testName: test.Name,
+                      testOrder: test.Order,
+                      chapterId: element.Id,
+                      chapterName: element.Name,
+                    };
+                  })
+                )
+              )
+          );
+          return combineLatest(tests$);
+        })
+      )
+      .pipe(
+        switchMap((testModel) => {
+          let tests$ = testModel
+            .flatMap((i) => i)
+            .map((element) =>
+              this.afs
+                .collection<any>(
+                  `TestSlideSetModel/${element.testId}/TestSlideModel`
+                )
+                .valueChanges()
+                .pipe(
+                  map((testsSlide) =>
+                    testsSlide.map((testSlide) => {
+                      return {
+                        testId: element.testId,
+                        testName: element.testName,
+                        chapterId: element.chapterId,
+                        testOrder: element.testOrder,
+                        chapterName: element.chapterName,
+                        slide: dbTestSlideToITestSlide(testSlide),
+                      };
+                    })
+                  )
+                )
+            );
+          return combineLatest(tests$);
+        })
+      );
+
+    return testsCollection;
+  }
+
+  getCoursesTestsStatistics(courseId: string) {
+    const testsCollection = this.afs
+      .collection<any>(
+        `UserCourseStatisticSetModel/${courseId}/TestStatisticsSetModel`
+      )
+      .valueChanges()
+      .pipe(
+        switchMap((testsModel) => {
+          let tests$ = testsModel.map((element) =>
+            this.afs
+              .collection<ITestStatistic>(
+                `UserCourseStatisticSetModel/${courseId}/TestStatisticsSetModel/${element.id}/TestStatisticsModel`
+              )
+              .valueChanges()
+              .pipe(map((tests) => tests.map((test) => test)))
+          );
+          return combineLatest(tests$);
+        })
+      );
+
+    return testsCollection;
+  }
 }
+
+// .pipe(
+//   switchMap((testModel) => {
+//     let testData$ = testModel.map((element) =>
+//       this.afs
+//         .doc<any>(`TestSlideSetModel/${element.testId}`)
+//         .valueChanges()
+//         .pipe(map((test) => { testId: test.Id; chapterId: element.Id }))
+//     );
+//     return zip(tests$).
+//   })
 
 // async addCollaborator(courseId: string, collaboratorEmail: string) {
 //   {

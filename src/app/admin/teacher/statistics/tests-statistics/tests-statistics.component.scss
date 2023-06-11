@@ -1,0 +1,16 @@
+$width: 300px;
+$height: 230px;
+
+.chart-wrapper {
+    width: $width;
+    min-width: $width;
+    max-width: $width;
+    height: $height;
+    min-height: $height;
+    max-height: $height;
+    // color: $midnight-dark;
+    border-radius: 10px;
+    // background-color: rgb(195, 247, 230);
+    // background-image: linear-gradient(to bottom right, $bondi-dark, $bondi-light);
+    background-attachment: fixed;
+}

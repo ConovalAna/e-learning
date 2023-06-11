@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { ITest, ITestUpdateOrder } from './test.interface';
 import { IdResult } from '../../interfaces/id-result.interface';
 import { forkJoin, merge, tap } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ITestStatistic } from '../course';
 
 const queryKeys = {
   tests: 'tests',
@@ -12,7 +14,7 @@ const queryKeys = {
   providedIn: 'root',
 })
 export class TestService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public afs: AngularFirestore) {}
 
   apiUrl = 'https://localhost:44302/tests/';
 
@@ -80,5 +82,15 @@ export class TestService {
       )
     );
     return forkJoin(obs);
+  }
+
+  prepareTestStatistics(
+    testStatistics: ITestStatistic[],
+    coursesTestsStatistics: any
+  ) {
+    return this.http.post<any>(this.apiUrl + 'prepare-statistics', {
+      testStatistics,
+      coursesTestsStatistics,
+    });
   }
 }

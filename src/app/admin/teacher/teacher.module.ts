@@ -61,6 +61,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgIf, DatePipe } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { StudentsSubscriptionTableComponent } from './statistics/students-subscription-table/students-subscription-table.component';
+import { TestsStatisticsComponent } from './statistics/tests-statistics/tests-statistics.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -99,6 +102,7 @@ import { StudentsSubscriptionTableComponent } from './statistics/students-subscr
     CollaborationComponent,
     AddCollaborationComponent,
     StudentsSubscriptionTableComponent,
+    TestsStatisticsComponent
   ],
   imports: [
     FormsModule,
@@ -120,6 +124,8 @@ import { StudentsSubscriptionTableComponent } from './statistics/students-subscr
     MatSortModule,
     MatPaginatorModule,
     DatePipe,
+    MatExpansionModule,
+    NgChartsModule,
   ],
 })
-export class TeacherModule {}
+export class TeacherModule { }

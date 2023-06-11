@@ -2,11 +2,8 @@
   <aside class="px-3 pt-2">
     <h3 class="text-center">Courses</h3>
     <div class="mt-2 mb-3" *ngFor="let course of courses">
-      <app-courses-card
-        [course]="course"
-        [isSelected]="course.id === currentCourseId"
-        (onClickEvent)="courseClickFunction($event)"
-      />
+      <app-courses-card [course]="course" [isSelected]="course.id === currentCourseId"
+        (onClickEvent)="courseClickFunction($event)" />
     </div>
   </aside>
   <main>
@@ -21,14 +18,10 @@
         <div class="h-100">
           <div class="row w-100">
             <div class="col-12 px-4 pt-4">
-              <app-students-subscription-table
-                [currentCourseId]="currentCourseId"
-              ></app-students-subscription-table>
+              <app-students-subscription-table [currentCourseId]="currentCourseId"></app-students-subscription-table>
             </div>
             <div class="col-12 px-4 pt-5">
-              <app-subscription-chart
-                [currentCourseId]="currentCourseId"
-              ></app-subscription-chart>
+              <app-subscription-chart [currentCourseId]="currentCourseId"></app-subscription-chart>
             </div>
           </div>
         </div>
@@ -51,7 +44,7 @@
           <mat-icon class="me-2">insert_drive_file</mat-icon>
           Tests
         </ng-template>
-        Tests
+        <app-tests-statistics [currentCourseId]="currentCourseId"></app-tests-statistics>
       </mat-tab>
     </mat-tab-group>
   </main>
