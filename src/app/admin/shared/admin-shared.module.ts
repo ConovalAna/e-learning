@@ -9,6 +9,7 @@ import {
   IgxDragDropModule,
 } from 'igniteui-angular';
 import { FormsModule } from '@angular/forms';
+import { AdminAuthService } from '../admin-services/admin-auth.service';
 
 @NgModule({
   declarations: [QuillEditorComponent, DragListComponent],
@@ -21,6 +22,6 @@ import { FormsModule } from '@angular/forms';
     IgxDragDropModule,
   ],
   exports: [QuillEditorComponent, DragListComponent],
-  providers: [],
+  providers: [AdminAuthService],
 })
 export class AdminSharedModule {}

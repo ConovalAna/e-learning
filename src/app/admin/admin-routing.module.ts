@@ -4,6 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TeacherGuard } from '../shared/guard/teacher.guard';
+import { AdminDashboardComponent } from './administrator/admin-dashboard/admin-dashboard.component';
+import { TeachersComponent } from './administrator/teachers/teachers.component';
+import { AdminGuard } from '../shared/guard/admin.guard';
 
 const routes: Routes = [
   {
@@ -21,9 +24,21 @@ const routes: Routes = [
           import('./teacher/teacher.module').then((m) => m.TeacherModule),
         canActivate: [TeacherGuard],
       },
+    ],
+  },
+  {
+    path: 'administrator',
+    component: AdminDashboardComponent,
+    canActivate: [AdminGuard],
+    children: [
       {
-        path: '**',
-        redirectTo: 'teacher',
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'teachers',
+      },
+      {
+        path: 'teachers',
+        component: TeachersComponent,
       },
     ],
   },

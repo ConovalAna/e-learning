@@ -7,10 +7,18 @@ import { SharedModule } from '../shared/shared.module';
 import { TeacherModule } from './teacher/teacher.module';
 
 import { FormsModule } from '@angular/forms';
+import { AdminDashboardComponent } from './administrator/admin-dashboard/admin-dashboard.component';
+import { TeachersComponent } from './administrator/teachers/teachers.component';
+import { TeachersTableComponent } from './administrator/teachers/teachers-table.component';
+import { TeacherAddComponent } from './administrator/teachers/teacher-add/teacher-add.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    AdminDashboardComponent,
+    TeachersComponent,
+    TeachersTableComponent,
+    TeacherAddComponent,
   ],
   imports: [
     FormsModule,
@@ -18,7 +26,7 @@ import { FormsModule } from '@angular/forms';
     AdminRoutingModule,
     TeacherModule,
     SharedModule,
-    SmartbyteMaterialModule
-  ]
+    SmartbyteMaterialModule,
+  ],
 })
-export class AdminModule { }
+export class AdminModule {}

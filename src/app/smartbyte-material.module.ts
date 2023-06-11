@@ -76,6 +76,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatCardModule,
     MatTabsModule,
     MatProgressBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
   ],
 })
 export class SmartbyteMaterialModule {}

@@ -26,12 +26,25 @@ import { fromUser } from './user.selector';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import {
   LoginWithEmailModel,
+  RegisterUserModel,
+  RegisterUserResponseModel,
   RegisterWithEmailModel,
   User,
 } from 'src/app/shared/services/user';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class UserFacade implements OnInitEffects {
+  constructor(
+    private store: Store<AppState>,
+    private actions$: Actions,
+    public afs: AngularFirestore, // Inject Firestore service
+    public afAuth: AngularFireAuth, // Inject Firebase auth service
+    public authSerive: AuthService,
+    private http: HttpClient
+  ) {}
+  apiUrl = 'https://localhost:44302/admin/';
+
   // ************************************************
   // Observable Queries available for consumption by views
   // ************************************************
@@ -142,14 +155,6 @@ export class UserFacade implements OnInitEffects {
       )
     )
   );
-
-  constructor(
-    private store: Store<AppState>,
-    private actions$: Actions,
-    public afs: AngularFirestore, // Inject Firestore service
-    public afAuth: AngularFireAuth, // Inject Firebase auth service
-    public authSerive: AuthService
-  ) {}
 
   ngrxOnInitEffects(): Action {
     return UserActions.getuser({});
@@ -273,5 +278,43 @@ export class UserFacade implements OnInitEffects {
           return snapshot.docs.map((doc) => doc.data());
         })
       );
+  }
+
+  registerUserFromAdmin(registerUser: RegisterUserModel) {
+    return this.http
+      .post<RegisterUserResponseModel>(this.apiUrl, registerUser)
+      .subscribe((response) => {
+        const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+          `users/${response.uid}`
+        );
+
+        const userData: User = {
+          uid: response.uid,
+          email: response.email,
+          displayName: response.displayName,
+          photoURL: response.photoUrl,
+          emailVerified: response.emailVerified,
+          role: 'teacher',
+        };
+
+        userRef.set(userData, {
+          merge: true,
+        });
+      });
+  }
+
+  deleteUserFromAdmin(userId: string) {
+    return this.http.delete(this.apiUrl + userId).subscribe(() => {
+      const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+        `users/${userId}`
+      );
+      userRef.delete();
+    });
+  }
+
+  getAllUsers() {
+    return this.afs
+      .collection<User>('users', (ref) => ref.where('role', '==', 'teacher'))
+      .valueChanges();
   }
 }
