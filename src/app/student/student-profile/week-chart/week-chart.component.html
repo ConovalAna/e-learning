@@ -3,13 +3,7 @@
 </div>
 <div class="row">
   <div class="chart-wrapper border border-2">
-    <canvas
-      baseChart
-      [type]="'line'"
-      [datasets]="chartData"
-      [labels]="chartLabels"
-      [options]="chartOptions"
-    >
+    <canvas baseChart [type]="'line'" [datasets]="getChartData()" [labels]="getLabels()" [options]="chartOptions">
     </canvas>
   </div>
 </div>
