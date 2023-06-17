@@ -1,28 +1,39 @@
-<p>collaboration works!</p>
-
 <div class="p-4">
   <div class="row gx-5 pb-4">
     <div class="col-4">
-      <button mat-raised-button class="w-100 my-3" style="height: 4em"
-        (click)="openAddCollaborationDialog('0ms', '0ms')">
+      <button
+        mat-raised-button
+        class="w-100 my-3"
+        style="height: 4em"
+        (click)="openAddCollaborationDialog('0ms', '0ms')"
+      >
         <mat-icon style="transform: scale(1.5)">add</mat-icon>
 
-        <span style="font-size: larger">Add Lesson</span>
+        <span style="font-size: larger">Add Collaborator</span>
       </button>
     </div>
   </div>
 
   <div class="row mb-5">
-    <div class=" fs-5 ps-1 mb-3"><i class="bi bi-people"></i> Collaborators</div>
-    <ng-container *ngFor="let collab of collaborators ">
-      <div class="card rounded-2 shadow  my-2">
-        <div class="card-body p-2 d-flex  align-items-center">
+    <div class="fs-5 ps-1 mb-3"><i class="bi bi-people"></i> Collaborators</div>
+    <ng-container *ngFor="let collab of collaborators">
+      <div class="card rounded-2 shadow my-2">
+        <div class="card-body p-2 d-flex align-items-center">
           <img
-            [src]="collab?.photoURL??'https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o='"
-            class="float-left rounded-circle " style="width: 50px;">
+            [src]="
+              collab?.photoURL ??
+              'https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o='
+            "
+            class="float-left rounded-circle"
+            style="width: 50px"
+          />
 
-          <div class="ms-3 me-5 fs-5 ">{{ collab.email }}</div>
-          <button type="button" class="btn btn-danger ms-auto  " (click)="deleteCollaborator(collab.uid)">
+          <div class="ms-3 me-5 fs-5">{{ collab.email }}</div>
+          <button
+            type="button"
+            class="btn btn-danger ms-auto"
+            (click)="deleteCollaborator(collab.uid)"
+          >
             <i class="bi bi-trash"></i>
           </button>
         </div>

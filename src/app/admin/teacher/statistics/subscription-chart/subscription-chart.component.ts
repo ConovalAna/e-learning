@@ -46,7 +46,7 @@ export class SubscriptionChartComponent {
         if (minDate > date) minDate = date;
         if (maxDate < date) maxDate = date;
       });
-
+    debugger;
     var daylist = this.getDaysArray(minDate, maxDate);
     var daysRecord: Record<string, number> = {};
     daylist
@@ -117,12 +117,12 @@ export class SubscriptionChartComponent {
   }
 
   getDaysArray(start: Date, end: Date) {
-    for (
-      var arr = [], dt = new Date(start);
-      dt <= new Date(end);
-      dt.setDate(dt.getDate() + 1)
-    ) {
+    var arr = [],
+      dt = new Date(start);
+    end.setDate(end.getDate() + 1);
+    while (dt < end) {
       arr.push(new Date(dt));
+      dt.setDate(dt.getDate() + 1);
     }
     return arr;
   }

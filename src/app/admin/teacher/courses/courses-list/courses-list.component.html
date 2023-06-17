@@ -2,23 +2,36 @@
   <div class="p-4">
     <div class="row gx-5 pb-4">
       <div class="col-4 col-xl-3">
-        <button mat-raised-button class="w-100 my-3" style="height: 6em" (click)="newCourseClick()">
+        <button
+          mat-raised-button
+          class="w-100 my-3"
+          style="height: 6em"
+          (click)="newCourseClick()"
+        >
           <mat-icon style="transform: scale(1.5)">add</mat-icon>
           <span style="font-size: larger">Add Course</span>
         </button>
       </div>
     </div>
     <div class="row gx-4 gy-1">
-      <p class="fs-3 "><b>My Curses:</b></p>
+      <p class="fs-3"><b>My Courses:</b></p>
       <div class="col-4 col-xl-3" *ngFor="let course of courses">
-        <app-courses-card [course]="course" [disableSpecialOp]="false" (onClickEvent)="courseClickFunction($event)" />
+        <app-courses-card
+          [course]="course"
+          [disableSpecialOp]="false"
+          (onClickEvent)="courseClickFunction($event)"
+        />
       </div>
     </div>
 
     <div class="row gx-4 gy-1">
-      <p class="fs-3 pt-5 "><b>Collaborative Curses:</b></p>
+      <p class="fs-3 pt-5"><b>Collaborative Courses:</b></p>
       <div class="col-4 col-xl-3" *ngFor="let courseC of collaborativeCourses">
-        <app-courses-card [course]="courseC" [disableSpecialOp]="true" (onClickEvent)="courseClickFunction($event)" />
+        <app-courses-card
+          [course]="courseC"
+          [disableSpecialOp]="true"
+          (onClickEvent)="courseClickFunction($event)"
+        />
       </div>
     </div>
   </div>

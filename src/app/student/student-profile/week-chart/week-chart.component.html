@@ -1,9 +1,15 @@
 <div class="row pb-3">
-  <h2>Activities</h2>
+  <h2 style="text-align: center">Activities</h2>
 </div>
-<div class="row">
+<div class="row" style="display: flex; justify-content: center">
   <div class="chart-wrapper border border-2">
-    <canvas baseChart [type]="'line'" [datasets]="getChartData()" [labels]="getLabels()" [options]="chartOptions">
+    <canvas
+      baseChart
+      [type]="'line'"
+      [datasets]="getChartData()"
+      [labels]="getLabels()"
+      [options]="chartOptions"
+    >
     </canvas>
   </div>
 </div>

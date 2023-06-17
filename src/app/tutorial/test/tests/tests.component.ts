@@ -49,7 +49,7 @@ export class TestsComponent implements OnInit {
       .fetchSlidesForTest(this.testId)
       .result$.subscribe((result) => {
         this.testSlides = result?.data ?? [];
-        this.testStatistics.slideId = this.testSlides[0]?.id;
+        this.testStatistics.slideId = this.testSlides[0]?.id ?? '';
         this.slidesProcess = this.testSlides.map((slideL) => {
           let slide: ISlideProcess = {
             ...slideL,
@@ -75,21 +75,23 @@ export class TestsComponent implements OnInit {
   }
 
   continueToNextSlide(index: number, pass: boolean) {
-    this.testStatistics.testNumber++;
-    this.testStatistics.slideId =
-      this.testSlides[this.testStatistics.testNumber].id;
+    debugger;
     if (pass) {
       this.totalPassTests++;
     }
     if (index !== this.slidesProcess.length - 1) {
       this.slidesProcess[index + 1].visible = true;
+      this.testStatistics.testNumber++;
+      this.testStatistics.slideId =
+        this.testSlides[this.testStatistics.testNumber].id;
     } //test pass
     else {
+      debugger;
       let testProgress: ITestProgress = {
         id: this.testId,
         chapterId: this.chapterId,
         totalPoints: this.totalPassTests * this.pointsToEachPassTest,
-        pass: true,
+        pass: (100 * this.totalPassTests) / this.testSlides.length > 50,
         lastLearnedDate: new Date(),
       };
 

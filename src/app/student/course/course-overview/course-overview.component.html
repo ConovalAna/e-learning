@@ -1,8 +1,16 @@
 <div class="container mt-5 mb-5" style="max-width: 1000px" *ngIf="!!course">
   <div class="row d-flex">
     <div class="col-12 col-sm-4 d-flex justify-content-center">
-      <div class="rounded-circle overflow-hidden" style="height: 20vh; width: 20vh">
-        <img _ngcontent-ylx-c26="" [src]="course.imageUrl" alt="course image" class="h-100" />
+      <div
+        class="rounded-circle overflow-hidden"
+        style="height: 20vh; width: 20vh"
+      >
+        <img
+          _ngcontent-ylx-c26=""
+          [src]="course.imageUrl"
+          alt="course image"
+          class="h-100"
+        />
       </div>
     </div>
     <div class="col-12 col-sm-8 pt-3 px-3">
@@ -15,10 +23,25 @@
       <div class="card shadow-sm p-3">
         <div class="row">
           <div class="col-12 col-sm-4 col-md-2 align-self-center text-center">
-            <circle-progress [percent]="progress" [radius]="40" [outerStrokeWidth]="6" [innerStrokeColor]="'#e7e8ea'"
-              [innerStrokeWidth]="6" [outerStrokeColor]="'#78C000'" [animation]="true" [showSubtitle]="false"
-              [titleFontSize]="'12'" [showInnerStroke]="false" [space]="-6" [animationDuration]="300"
-              [showInnerStroke]="true"></circle-progress>
+            <circle-progress
+              [percent]="
+                !!courseProgress?.progress
+                  ? courseProgress?.progress!
+                  : progress
+              "
+              [radius]="40"
+              [outerStrokeWidth]="6"
+              [innerStrokeColor]="'#e7e8ea'"
+              [innerStrokeWidth]="6"
+              [outerStrokeColor]="'#78C000'"
+              [animation]="true"
+              [showSubtitle]="false"
+              [titleFontSize]="'12'"
+              [showInnerStroke]="false"
+              [space]="-6"
+              [animationDuration]="300"
+              [showInnerStroke]="true"
+            ></circle-progress>
           </div>
           <div class="col-12 col-sm-8 col-md-7">
             <p class="text-success lead">Course overview</p>
@@ -30,61 +53,90 @@
             <div class="row pb-2 pb-lg-0">
               <div class="col-6" *ngIf="!!course">
                 Level:
-                <i class="bi bi-star-fill" *ngFor="let star of [].constructor(course.level)"></i>
-                <i class="bi bi-star" *ngFor="let star of [].constructor(3 - course.level)"></i>
+                <i
+                  class="bi bi-star-fill"
+                  *ngFor="let star of [].constructor(course.level)"
+                ></i>
+                <i
+                  class="bi bi-star"
+                  *ngFor="let star of [].constructor(3 - course.level)"
+                ></i>
               </div>
               <div class="col-6">
                 <i class="bi bi-hourglass-split"></i> {{ course.duration }} h
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-3 d-flex flex-column justify-content-center">
+          <div
+            class="col-12 col-md-3 d-flex flex-column justify-content-center"
+          >
             <div class="row">
               <div class="d-grid w-100 pb-2">
-                <button class="btn btn-success btn-lg" (click)="openDetailsPage()">
+                <button
+                  class="btn btn-success btn-lg"
+                  (click)="openDetailsPage()"
+                >
                   Open more details
                 </button>
               </div>
             </div>
             <div class="row" *ngIf="!joined">
               <div class="d-grid w-100">
-                <button class="btn btn-outline-success btn-lg" (click)="joinTheCourse()">
+                <button
+                  class="btn btn-outline-success btn-lg"
+                  (click)="joinTheCourse()"
+                >
                   Join
                 </button>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- extra progress bar -->
-        <!-- <hr />
-                <div class="flex-row justify-content-between align-items-center d-inline d-sm-flex">
-                    <strong class="me-4 ">Please join our course</strong>
-                    <div class="progress flex-grow-1">
-                        <div class="progress-bar bg-success" role="progressbar" aria-label="Success example"
-                            style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <a class="btn btn-success">Join</a>
-                </div> -->
       </div>
     </div>
   </div>
-  <div class="row top-buffer" *ngFor="let chaptProg of chapterProgress; let isLast = last">
+  <div
+    class="row top-buffer"
+    *ngFor="let chaptProg of chapterProgress; let isLast = last"
+  >
     <div class="col-2 align-self-center" style="position: relative">
-      <div class="d-flex justify-content-center m-auto align-items-center" alt="Avatar" data-bs-toggle="tooltip"
-        data-bs-placement="right" title="You pass {{ 10 }}% from this section">
-        <circle-progress [percent]="chaptProg.progress" [radius]="30" [outerStrokeWidth]="4"
-          [outerStrokeColor]="'#78C000'" [space]="-5" [animation]="true" [showSubtitle]="false" [titleFontSize]="'12'"
-          [showInnerStroke]="true" [animationDuration]="300" [imageSrc]="'assets/img/open-book-64.png'"
-          [showImage]="true" [backgroundColor]="'#fff'" [innerStrokeWidth]="4" [imageHeight]="50" [imageWidth]="50"
-          [backgroundPadding]="0" [innerStrokeColor]="'#e7e8ea'">
+      <div
+        class="d-flex justify-content-center m-auto align-items-center"
+        alt="Avatar"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="You pass {{ chaptProg.progress }}% from this section"
+      >
+        <circle-progress
+          [percent]="chaptProg.progress"
+          [radius]="30"
+          [outerStrokeWidth]="4"
+          [outerStrokeColor]="'#78C000'"
+          [space]="-5"
+          [animation]="true"
+          [showSubtitle]="false"
+          [titleFontSize]="'12'"
+          [showInnerStroke]="true"
+          [animationDuration]="300"
+          [imageSrc]="'assets/img/open-book-64.png'"
+          [showImage]="true"
+          [backgroundColor]="'#fff'"
+          [innerStrokeWidth]="4"
+          [imageHeight]="50"
+          [imageWidth]="50"
+          [backgroundPadding]="0"
+          [innerStrokeColor]="'#e7e8ea'"
+        >
         </circle-progress>
       </div>
 
       <div class="vl" *ngIf="!isLast"></div>
     </div>
     <div class="col-10">
-      <div class="card rounded-3 shadow card-container" style="box-sizing: border-box">
+      <div
+        class="card rounded-3 shadow card-container"
+        style="box-sizing: border-box"
+      >
         <div class="card-body">
           <div class="container">
             <div class="row justify-content-between">
@@ -93,8 +145,14 @@
                 <p class="card-text">{{ chaptProg?.chapter?.description }}</p>
               </div>
               <div class="col-auto align-self-center">
-                <button class="btn btn-outline-primary" (click)="openChapterDetailsPage(chaptProg?.chapter?.id)">
-                  <i class="bi bi-chevron-right" style="-webkit-text-stroke: 3px"></i>
+                <button
+                  class="btn btn-outline-primary"
+                  (click)="openChapterDetailsPage(chaptProg?.chapter?.id)"
+                >
+                  <i
+                    class="bi bi-chevron-right"
+                    style="-webkit-text-stroke: 3px"
+                  ></i>
                 </button>
               </div>
             </div>

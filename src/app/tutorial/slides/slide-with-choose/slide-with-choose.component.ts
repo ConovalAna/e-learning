@@ -102,6 +102,7 @@ export class SlideWithChooseComponent implements OnInit {
 
   continueToNextSlide() {
     if (this.isLastLottie) {
+      debugger;
       this.continueToNext.emit({
         index: this.index ?? 0,
         pass: this.correctAnswer,
