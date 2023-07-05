@@ -29,7 +29,8 @@ export class HeaderAuthStudentComponent {
       if (user) {
         this.questService.getScoreChanges(user.uid).subscribe((score) => {
           if (this.score && score) {
-            this.showScoreSuccess(score?.TotalScore - this.score?.TotalScore);
+            if (score?.TotalScore - this.score?.TotalScore)
+              this.showScoreSuccess(score?.TotalScore - this.score?.TotalScore);
           }
           this.score = score;
           this.getTodayScore();

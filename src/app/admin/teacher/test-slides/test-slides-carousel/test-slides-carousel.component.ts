@@ -85,7 +85,11 @@ export class TestSlidesCarouselComponent implements OnInit {
       answerType: 0,
       correctAnswers: ['Apple'],
     };
-    this.addSlideMutation.mutate({ slide: slide, testId: this.testId });
+    this.addSlideMutation
+      .mutate({ slide: slide, testId: this.testId })
+      .finally(() => {
+        window.location.reload();
+      });
   }
 
   onChangeSlide(slide: ITestSlide) {
