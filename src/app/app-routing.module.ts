@@ -25,7 +25,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./student/student.module').then((m) => m.StudentModule),
     canActivate: [StudentGuard],
-  }, //, canActivate: [AuthGuard]
+  },
   {
     path: 'admin',
     loadChildren: () =>
@@ -37,14 +37,10 @@ const routes: Routes = [
     path: 'no-role',
     component: NoRoleComponent,
   },
-  // {
-  //   path: '**',
-  //   component: NotFoundComponent,
-  // },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

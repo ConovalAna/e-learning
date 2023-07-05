@@ -88,32 +88,6 @@ export class TestsStatisticsComponent {
     else return [];
   }
 
-  baseChartData: ChartDataset[] = [
-    {
-      label: 'my day activity %',
-      data: [100, 95, 30, 20, 60, 80],
-      pointHitRadius: 15, // expands the hover 'detection' area
-      pointHoverRadius: 8, // grows the point when hovered
-      pointRadius: 2,
-      backgroundColor: '#e0f2f1',
-      hoverBackgroundColor: '#e0f2f1',
-      borderColor: '#2D2F33', // main line color aka $midnight-medium from @riapacheco/yutes/seasonal.scss
-      borderWidth: 0, // main line width
-      hoverBorderWidth: 1, // borders on points
-      pointBorderWidth: 0, // removes POINT borders
-      tension: 0.3, // makes line more squiggly
-    },
-  ];
-
-  chartLabels: string[] = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Frinday',
-    'Saturday',
-  ];
-
   buildQuestionsDataSet(question: any) {
     let chartDat: ChartDataset[] = [
       {
@@ -127,8 +101,8 @@ export class TestsStatisticsComponent {
         pointHoverRadius: 8, // grows the point when hovered
         pointRadius: 2,
         backgroundColor: '#e0f2f1',
-        hoverBackgroundColor: '#e0f2f1',
-        borderColor: '#2D2F33', // main line color aka $midnight-medium from @riapacheco/yutes/seasonal.scss
+        hoverBackgroundColor: '#e1f2f1',
+        borderColor: '#000000', // main line color aka $midnight-medium from @riapacheco/yutes/seasonal.scss
         borderWidth: 0, // main line width
         hoverBorderWidth: 1, // borders on points
         pointBorderWidth: 0, // removes POINT borders
